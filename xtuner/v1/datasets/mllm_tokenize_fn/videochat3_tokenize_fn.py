@@ -45,6 +45,8 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         image_max_pixels: int | None = None,  # Min image pixels (H*W) for image
         video_min_frames: int = 4,  # Min frames per video
         video_max_frames: int = 1024,  # Max frames per video
+        frame_min_pixels: int | None = None,  # Max image pixels (H*W) for frame
+        frame_max_pixels: int | None = None,  # Min image pixels (H*W) for frame
         video_min_total_pixels: int = 256 * 4 * 28 * 28,  # Min pixels within a frame
         video_max_total_pixels: int = 5000 * 4 * 28 * 28,  # Max pixels within a frame NOTE: 暂时不对video frame的pixel做限制，只对总体限制
         video_sample_fps: int = 2,  # Sample fps for video
@@ -61,7 +63,11 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             self.image_processor.image_min_pixels = image_min_pixels
         if image_max_pixels is not None:
             self.image_processor.image_max_pixels = image_max_pixels
-        
+        if frame_min_pixels is not None:
+            self.image_processor.frame_min_pixels = frame_min_pixels
+        if frame_max_pixels is not None:
+            self.image_processor.frame_max_pixels = frame_max_pixels
+            
         self.spatial_merge_length = self.image_processor.spatial_merge_length**2
         self.temporal_merge_length = self.image_processor.temporal_merge_length
 
@@ -77,6 +83,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             self.chat_template.default_system = system_message
 
         self.image_token_id = tokenizer.convert_tokens_to_ids(self.chat_template.image_context_token)
+        self.video_token_id = tokenizer.convert_tokens_to_ids(self.chat_template.video_context_token)
 
         # 必须要最后调用
         super().__init__(tokenizer, self.chat_template, max_length, tokenizer_hash, hash)
@@ -126,6 +133,22 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         return ret
 
     def calc_num_tokens_multi_modal_get_item(self, data_item: dict) -> CacheItem:
+        if len(self._video_path) > 0:
+            assert len(self._image_path) == 0, "image and video cannot be mixed"
+            return self.calc_num_tokens_video_get_item(data_item)
+        else:
+            assert len(self._video_path) == 0, "image and video cannot be mixed"
+            return self.calc_num_tokens_image_get_item(data_item)
+
+    def multi_modal_get_item(self, data_item: dict, media_root: str = "") -> VideoChat3DataItem:
+        if len(self._video_path) > 0:
+            assert len(self._image_path) == 0, "image and video cannot be mixed"
+            return self.video_get_item(data_item, media_root)
+        else:
+            assert len(self._video_path) == 0, "image and video cannot be mixed"
+            return self.image_get_item(data_item, media_root)
+
+    def calc_num_tokens_image_get_item(self, data_item: dict) -> CacheItem:
         try:
             assert len(self._image_wh_list) >= 1, "image must have `hw` attribute when packing data"
             for size in self._image_wh_list:
@@ -140,7 +163,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         for size in self._image_wh_list:
             media_grid_thw.append(smart_get_thw(size, self.image_processor))
         media_grid_thw = torch.tensor(media_grid_thw, dtype=torch.int).reshape(-1, 3)  # type: ignore
-        sum_media_grid_thw = media_grid_thw.prod(dim=1) // self.merge_length  # type: ignore
+        sum_media_grid_thw = media_grid_thw.prod(dim=1) // self.spatial_merge_length  # type: ignore
 
         messages = ChatMessages(messages=data_item["messages"])
         replace_image_token(messages, self.chat_template, sum_media_grid_thw)
@@ -161,8 +184,8 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         return {"num_tokens": len(input_ids)}
 
-    def multi_modal_get_item(self, data_item: dict, media_root: str = "") -> VideoChat3DataItem:
-        results = [self.process_image_unified(file, media_root) for file in self._image_path]
+    def image_get_item(self, data_item: dict, media_root: str = "") -> VideoChat3DataItem:
+        results = [self._process_image(file, media_root) for file in self._image_path]
         image, grid_thw = zip(*results)
 
         grid_thw_merged = copy.deepcopy(grid_thw)
