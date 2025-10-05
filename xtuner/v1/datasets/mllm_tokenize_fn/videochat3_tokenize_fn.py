@@ -203,7 +203,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
     def calc_num_tokens_video_get_item(self, data_item: dict) -> CacheItem:
         raise NotImplementedError
 
-    def video_get_item(self, data_item: dict, media_root: str = "") -> BaseMLLMDataItem:
+    def video_get_item(self, data_item: dict, media_root: str = "") -> VideoChat3DataItem:
         raise NotImplementedError
 
 
