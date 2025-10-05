@@ -214,47 +214,8 @@ class InternS1VLTokenizeFunction(BaseMLLMTokenizeFunction[InternS1DataItem]):
             assert len(self._video_path) == 1, "only one video is supported"
             return self.calc_num_tokens_video_get_item(data_item)
         else:
-            try:
-                assert len(self._image_wh_list) >= 1, "image must have `hw` attribute when packing data"
-                for size in self._image_wh_list:
-                    if size[0] == 0 or size[1] == 0:
-                        # Image is corrupted, flag=0, and this data will be removed later
-                        return {"num_tokens": 0}  # type: ignore
-            except Exception as e:
-                print(f"ERROR of image_wh: {e}, data_name: {self.data_name}")
-                return {"num_tokens": 0}  # type: ignore
-
-            num_tiles = []
-            if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
-                for size in self._image_wh_list:
-                    num_patches = dynamic_num_patch(
-                        size,
-                        min_num=self.min_dynamic_patch,
-                        max_num=max(1, self.max_dynamic_patch // len(self._image_path)),
-                        image_size=self.image_size,
-                        use_thumbnail=self.use_thumbnail,
-                    )
-                    num_tiles.append(num_patches)
-            else:  # Otherwise, use the original image as a single patch
-                num_tiles = [1] * len(self._image_wh_list)
-
-            num_image_tokens = [self.num_image_token * num_tile for num_tile in num_tiles]
-
-            messages = ChatMessages(messages=data_item["messages"])
-
-            try:
-                replace_image_token(messages, self.chat_template, num_image_tokens)
-                tokenized = messages.tokenize(self.tokenizer, self.chat_template)
-                input_ids = tokenized["input_ids"]
-                labels = tokenized["labels"]
-                input_ids, _ = self._truncated_input_and_labels(input_ids, labels)
-                return {"num_tokens": len(input_ids)}
-            except Exception as e:
-                print(
-                    f"ERROR of Preprocess function: {e}, data_name: {self.data_name}, "
-                    # f"conversations: {data_item['conversations']}"
-                )
-                return {"num_tokens": 0}
+            assert len(self._video_path) == 0, "image and video cannot be mixed"
+            return self.calc_num_tokens_image_get_item(data_item)
 
     def multi_modal_get_item(self, data_item: dict, media_root: str = "") -> InternS1DataItem:
         if len(self._video_path) > 0:
@@ -262,41 +223,39 @@ class InternS1VLTokenizeFunction(BaseMLLMTokenizeFunction[InternS1DataItem]):
             assert len(self._video_path) == 1, "only one video is supported"
             return self.video_get_item(data_item, media_root)
         else:
-            num_tiles = []
-            images = []
-            for i, image_path_ in enumerate(self._image_path):
-                image_path_ = get_image_path(image_path_, media_root)
-                image = load_image(image_path_)
-                image = apply_exif_orientation(image)
+            assert len(self._video_path) == 0, "image and video cannot be mixed"
+            return self.image_get_item(data_item, media_root)
 
-                if len(self._image_wh_list) >= 1:
-                    image_size = self._image_wh_list[i]
-                    if tuple(image_size) != image.size:
-                        logger.warning(f"Image size mismatch: {image_size} vs {image.size} for image {image_path_}")
-                        raise RuntimeError("Image size mismatch, please check the image file or the annotation file.")
+    def calc_num_tokens_image_get_item(self, data_item) -> CacheItem:
+        try:
+            assert len(self._image_wh_list) >= 1, "image must have `hw` attribute when packing data"
+            for size in self._image_wh_list:
+                if size[0] == 0 or size[1] == 0:
+                    # Image is corrupted, flag=0, and this data will be removed later
+                    return {"num_tokens": 0}  # type: ignore
+        except Exception as e:
+            print(f"ERROR of image_wh: {e}, data_name: {self.data_name}")
+            return {"num_tokens": 0}  # type: ignore
 
-                if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
-                    image = dynamic_preprocess(
-                        image,
-                        min_num=self.min_dynamic_patch,
-                        max_num=max(1, self.max_dynamic_patch // len(self._image_path)),
-                        image_size=self.image_size,
-                        use_thumbnail=self.use_thumbnail,
-                    )
-                    images += image
-                    num_tiles.append(len(image))
-                else:  # Otherwise, use the original image as a single patch
-                    images.append(image)
-                    num_tiles.append(1)
+        num_tiles = []
+        if self.dynamic_image_size:  # If dynamic image size is enabled, preprocess the image dynamically
+            for size in self._image_wh_list:
+                num_patches = dynamic_num_patch(
+                    size,
+                    min_num=self.min_dynamic_patch,
+                    max_num=max(1, self.max_dynamic_patch // len(self._image_path)),
+                    image_size=self.image_size,
+                    use_thumbnail=self.use_thumbnail,
+                )
+                num_tiles.append(num_patches)
+        else:  # Otherwise, use the original image as a single patch
+            num_tiles = [1] * len(self._image_wh_list)
 
-            transform = self._get_transform()
-            pixel_values_list = [transform(image) for image in images]
-            pixel_values = torch.stack(pixel_values_list)
-            num_patches = pixel_values.size(0)
+        num_image_tokens = [self.num_image_token * num_tile for num_tile in num_tiles]
 
-            # Preprocess the conversations and generate the return dictionary
-            num_image_tokens = [self.num_image_token * num_tile for num_tile in num_tiles]
-            messages = ChatMessages(messages=data_item["messages"])
+        messages = ChatMessages(messages=data_item["messages"])
+
+        try:
             replace_image_token(messages, self.chat_template, num_image_tokens)
             tokenized = messages.tokenize(self.tokenizer, self.chat_template)
             input_ids = tokenized["input_ids"]
@@ -358,9 +317,12 @@ class InternS1VLTokenizeFunction(BaseMLLMTokenizeFunction[InternS1DataItem]):
         input_ids = tokenized["input_ids"]
         labels = tokenized["labels"]
         input_ids, labels = self._truncated_input_and_labels(input_ids, labels)
+<<<<<<< HEAD
         assert (torch.tensor(input_ids) == self.image_token_id).sum() == sum(num_image_tokens), (
             "ERROR: image tokens are truncated"
         )
+=======
+>>>>>>> 3fe7cb7 (refactor of multi_modal_get_item)
         ret = InternS1DataItem(
             input_ids=input_ids,
             labels=labels,
