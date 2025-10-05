@@ -15,6 +15,8 @@ from .mllm_tokenize_fn import (
     InternS1VLTokenizeFunction,
     Qwen3VLTokenizeFnConfig,
     Qwen3VLTokenizeFunction,
+    VideoChat3TokenizeFnConfig,
+    VideoChat3TokenizeFunction,
 )
 from .packing import ExpandSoftPackDataset, HardPackDataset, MLLMPretrainHybridPackDataset, _LegacySoftPackDataset
 from .pt_tokenize_fn import PretrainTokenizeFunction, PretrainTokenizeFunctionConfig
@@ -50,6 +52,8 @@ __all__ = [
     "InternS1VLTokenizeFunction",
     "Qwen3VLTokenizeFnConfig",
     "Qwen3VLTokenizeFunction",
+    "VideoChat3TokenizeFnConfig",
+    "VideoChat3TokenizeFunction",
     "VLMJsonlDataset",
     "FTDPTokenizeFnConfig",
     "InternS1VLTokenizeFnConfig",

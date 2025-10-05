@@ -1,3 +1,13 @@
+# BY LXH
+debug/
+videos/
+models/
+VideoViT_CKPT/
+work_dirs/
+work_dir/
+*.safetensors
+dataset_cache/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

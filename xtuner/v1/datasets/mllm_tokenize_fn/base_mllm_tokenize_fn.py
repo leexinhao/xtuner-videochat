@@ -14,10 +14,13 @@ from xtuner.v1.utils import get_logger
 from ..data_item import BaseMLLMDataItem, CacheItem
 from ..utils import CachableTokenizeFunction, tokenizer_xxhash
 
+from .video_utils import VideoChat3VideoMetadata
 
 logger = get_logger()
 
 IMAGE_TOKEN_ALIAS = "XTUNER-ALIAS-ALIAS-XTUNER-2025"
+
+
 
 
 def collect_image_video_paths_and_extra(messages: list[dict]):
@@ -26,6 +29,7 @@ def collect_image_video_paths_and_extra(messages: list[dict]):
     video_wh_list = []
     video_extra_info_list = []
     video_paths = []
+    video_meta_list = []
     for msg in messages:
         if msg["role"] == "user" or msg["role"] == "pretrain":
             content = msg["content"]
@@ -45,43 +49,24 @@ def collect_image_video_paths_and_extra(messages: list[dict]):
                     if c["type"] == "video_url":
                         video_paths.append(c["video_url"]["url"])
 
-                        video_wh = c["video_url"].get("image_wh")
-                        if video_wh is not None:
-                            if isinstance(video_wh[0], (list, tuple)):
-                                assert len(video_wh) == 1, (
-                                    f"Only one video size is supported for each video. but got {video_wh}"
-                                )
-                                video_wh = video_wh[0]
-                            video_wh_list.append(video_wh)
-                            assert len(video_wh) == 2, f"video_wh should be [width, height], but got {video_wh}"
-
-                        video_extra_dict = {}
-                        if "origin_video_length" in c["video_url"]:
-                            video_extra_dict["origin_video_length"] = c["video_url"]["origin_video_length"]
-                        if "origin_fps" in c["video_url"]:
-                            video_extra_dict["origin_fps"] = c["video_url"]["origin_fps"]
-                        if "processed_video_length" in c["video_url"]:
-                            video_extra_dict["processed_video_length"] = c["video_url"]["processed_video_length"]
-                        if "processed_fps" in c["video_url"]:
-                            video_extra_dict["processed_fps"] = c["video_url"]["processed_fps"]
-                        if "frames_timestamp" in c["video_url"]:
-                            video_extra_dict["frames_timestamp"] = c["video_url"]["frames_timestamp"]
-                        if len(video_extra_dict) > 0:
-                            video_extra_info_list.append(video_extra_dict)
+                        if "video_metadata" in c:         
+                            video_meta = VideoChat3VideoMetadata(**c["video_metadata"])
+                            assert 'fps' in c["video_metadata"], f'video_metadata should be dict with "fps", but got {c["video_metadata"]}'
+                            assert video_meta.fps == c["video_metadata"]["fps"], f'video_meta.fps should be {c["video_metadata"]["fps"]}, but got {video_meta.fps}'
+                            assert 'duration' in c["video_metadata"], f'video_metadata should be dict with "duration", but got {c["video_metadata"]}'
+                            assert video_meta.duration == c["video_metadata"]["duration"], f'video_meta.duration should be {c["video_metadata"]["duration"]}, but got {video_meta.duration}'
+                            assert 'width' in c["video_metadata"], f'video_metadata should be dict with "width", but got {c["video_metadata"]}'
+                            assert video_meta.width == c["video_metadata"]["width"], f'video_meta.width should be {c["video_metadata"]["width"]}, but got {video_meta.width}'
+                            assert 'height' in c["video_metadata"], f'video_metadata should be dict with "height", but got {c["video_metadata"]}'
+                            assert video_meta.height == c["video_metadata"]["height"], f'video_meta.height should be {c["video_metadata"]["height"]}, but got {video_meta.height}'
+                            video_meta_list.append(video_meta)
 
     if len(image_wh_list) > 0:
         assert len(image_wh_list) == len(image_paths), "If image_wh is provided, it should match the number of images."
-    if len(video_wh_list) > 0:
-        assert len(video_wh_list) == len(video_paths), "If video_wh is provided, it should match the number of videos."
-    if len(video_extra_info_list) > 0:
-        assert len(video_extra_info_list) == len(video_paths), (
-            "If video_extra_info is provided, it should match the number of videos."
-        )
-    return (
-        image_paths,
-        video_paths,
-        {"image_wh": image_wh_list, "video_wh": video_wh_list, "video_extra_info": video_extra_info_list},
-    )
+    if len(video_meta_list) > 0:
+        assert len(video_meta_list) == len(video_paths), "If video_meta_list is provided, it should match the number of videos."
+        
+    return image_paths, video_paths, {"image_wh_list": image_wh_list, "video_meta_list": video_meta_list}
 
 
 def replace_image_token(
@@ -151,20 +136,15 @@ class BaseMLLMTokenizeFunction(CachableTokenizeFunction[T]):
         self._image_path: list[str] = []
         self._video_path: list[str] = []
         self._image_wh_list: list[list] = []
-        self._video_wh_list: list[list] = []
-        self._video_extra_info_list: list[dict] = []
+        self._video_meta_list: list[list] = []
         super().__init__(tokenizer)
+        
+        
 
     def calc_num_tokens_multi_modal_get_item(self, data_item: dict) -> CacheItem:
         raise NotImplementedError
 
     def multi_modal_get_item(self, data_item: dict, media_root: str = "") -> BaseMLLMDataItem:
-        raise NotImplementedError
-
-    def calc_num_tokens_video_get_item(self, data_item: dict) -> CacheItem:
-        raise NotImplementedError
-
-    def video_get_item(self, data_item: dict, media_root: str = "") -> BaseMLLMDataItem:
         raise NotImplementedError
 
     def calc_num_tokens_pure_text_get_item(self, data_item) -> CacheItem:
@@ -189,28 +169,15 @@ class BaseMLLMTokenizeFunction(CachableTokenizeFunction[T]):
         return input_ids, labels
 
     def __call__(self, item: dict, media_root: str = "", **kwargs) -> T | CacheItem:  # type: ignore[override]
-        try:
-            self._image_path, self._video_path, extra_info = collect_image_video_paths_and_extra(item["messages"])
-            self._image_wh_list = extra_info["image_wh"]
-            self._video_wh_list = extra_info["video_wh"]
-            self._video_extra_info_list = extra_info["video_extra_info"]
-        except RuntimeError as e:
-            if self.state == "cache":
-                print(f"!!!! RuntimeError: {e} of {self.data_name} when tokenize cache item. skip {item}!")
-                ret = CacheItem(num_tokens=0)
-                return ret
-            else:
-                raise RuntimeError(f"!!!! RuntimeError: {e} of {self.data_name}")
-        if len(self._image_path) > 0:
+        self._image_path, self._video_path, extra_info = collect_image_video_paths_and_extra(item["messages"])
+        self._image_wh_list = extra_info["image_wh_list"]
+        self._video_meta_list = extra_info["video_meta_list"]
+
+        if len(self._image_path) > 0 or len(self._video_path) > 0:
             if self.state == "cache":
                 ret = self.calc_num_tokens_multi_modal_get_item(item)
             else:
                 ret = self.multi_modal_get_item(item, media_root)
-        elif len(self._video_path) > 0:
-            if self.state == "cache":
-                ret = self.calc_num_tokens_video_get_item(item)
-            else:
-                ret = self.video_get_item(item, media_root)
         else:
             if self.state == "cache":
                 ret = self.calc_num_tokens_pure_text_get_item(item)
