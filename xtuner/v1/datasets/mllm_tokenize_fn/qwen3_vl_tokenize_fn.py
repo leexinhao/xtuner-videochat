@@ -144,7 +144,6 @@ class Qwen3VLTokenizeFunction(BaseMLLMTokenizeFunction):
             num_tokens=len(input_ids),
             num_img_tokens=[0],
             num_imgs=[0],
-            num_patches=[0],
         )
         return ret
 
@@ -227,7 +226,6 @@ class Qwen3VLTokenizeFunction(BaseMLLMTokenizeFunction):
             num_tokens=len(input_ids),
             num_img_tokens=[num_img_tokens],
             num_imgs=[len(self._image_path)],
-            num_patches=[0],
         )
         return ret
 

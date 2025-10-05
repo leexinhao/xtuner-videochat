@@ -14,12 +14,12 @@ class DataItem(CacheItem):
 class BaseMLLMDataItem(DataItem):
     num_img_tokens: list[int]
     num_imgs: list[int]
-    num_patches: list[int]
 
 
 class InternS1DataItem(BaseMLLMDataItem):
     pixel_values: torch.Tensor
     image_flags: torch.Tensor
+    num_patches: list[int]
 
 
 class QwenVL3DataItem(BaseMLLMDataItem, total=False):
@@ -33,3 +33,6 @@ class OmniDataItem(BaseMLLMDataItem, total=False):
     image_grid_thw: torch.Tensor
     position_ids: torch.Tensor
     image_flags: torch.Tensor
+class VideoChat3DataItem(BaseMLLMDataItem, total=False):
+    pixel_values: torch.Tensor
+    image_grid_thw: torch.Tensor
