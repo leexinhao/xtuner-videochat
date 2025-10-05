@@ -48,8 +48,8 @@ def collect_image_video_paths_and_extra(messages: list[dict]):
                             video_meta_list.append(c["video_url"]["video_meta"])
                             assert 'video_fps' in c["video_url"]["video_meta"], f'video_meta should be dict with "video_fps", but got {c["video_url"]["video_meta"]}'
                             assert 'video_start_time' in c["video_url"]["video_meta"], f'video_meta should be dict with "video_start_time", but got {c["video_url"]["video_meta"]}'
-                        else:
-                            raise NotImplementedError("video_wht is not provided.")
+                        # else: # 兼容InternVL所以没有强制要求
+                        #     raise NotImplementedError("video_meta is not provided.")
 
                         if "video_wht" in c["video_url"]:
                             video_wht = c["video_url"]["video_wht"]
@@ -58,8 +58,8 @@ def collect_image_video_paths_and_extra(messages: list[dict]):
                             assert isinstance(video_wht[0], int), f"video_wht should be list[int] of [width, height, time], but got {video_wht}"
                             assert isinstance(video_wht[1], int), f"video_wht should be list[int] of [width, height, time], but got {video_wht}"
                             assert isinstance(video_wht[2], int), f"video_wht should be list[int] of [width, height, time], but got {video_wht}"
-                        else:
-                            raise NotImplementedError("video_wht is not provided.")
+                        # else: # 兼容InternVL所以没有强制要求
+                        #     raise NotImplementedError("video_wht is not provided.")
 
     if len(image_wh_list) > 0:
         assert len(image_wh_list) == len(image_paths), "If image_wh is provided, it should match the number of images."
@@ -142,12 +142,6 @@ class BaseMLLMTokenizeFunction(CachableTokenizeFunction[T]):
     def multi_modal_get_item(self, data_item: dict, media_root: str = "") -> BaseMLLMDataItem:
         raise NotImplementedError
 
-    def calc_num_tokens_video_get_item(self, data_item: dict) -> CacheItem:
-        raise NotImplementedError
-
-    def video_get_item(self, data_item: dict, media_root: str = "") -> BaseMLLMDataItem:
-        raise NotImplementedError
-
     def calc_num_tokens_pure_text_get_item(self, data_item) -> CacheItem:
         messages = ChatMessages(messages=data_item["messages"])
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)
@@ -174,16 +168,11 @@ class BaseMLLMTokenizeFunction(CachableTokenizeFunction[T]):
         self._video_wht_list = extra_info["video_wht_list"]
         self._video_meta_list = extra_info["video_meta_list"]
 
-        if len(self._image_path) > 0:
+        if len(self._image_path) > 0 or len(self._video_path) > 0:
             if self.state == "cache":
                 ret = self.calc_num_tokens_multi_modal_get_item(item)
             else:
                 ret = self.multi_modal_get_item(item, media_root)
-        elif len(self._video_path) > 0:
-            if self.state == "cache":
-                ret = self.calc_num_tokens_video_get_item(item)
-            else:
-                ret = self.video_get_item(item, media_root)
         else:
             if self.state == "cache":
                 ret = self.calc_num_tokens_pure_text_get_item(item)
