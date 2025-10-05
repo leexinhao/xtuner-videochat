@@ -40,6 +40,17 @@ CHAT_TEMPLATE_MAP = {
         image_context_token="<|image_pad|>",
         video_context_token="<|video_pad|>",
     ),
+    "videochat3": HybridChatTemplate(
+        system="<|im_start|>system\n{system}<|im_end|>\n",
+        default_system="You are a helpful assistant.",
+        user="<|im_start|>user\n{user}<|im_end|>\n<|im_start|>assistant\n",
+        stop_words=["<|im_end|>", "<|endoftext|>"],
+        assistant="{assistant}<|im_end|>",
+        image_start_token="<|vision_start|>",
+        image_end_token="<|vision_end|>",
+        image_context_token="<|image_pad|>",
+        video_context_token="<|video_pad|>",
+    ),
     "llama3": HybridChatTemplate(
         system="<|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|>",
         user=(
