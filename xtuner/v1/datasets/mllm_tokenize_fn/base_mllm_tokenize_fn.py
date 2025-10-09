@@ -13,17 +13,19 @@ from xtuner.v1.utils import get_logger
 from ..data_item import BaseMLLMDataItem, CacheItem
 from ..utils import CachableTokenizeFunction, tokenizer_xxhash
 
+from .video_utils import VideoChat3VideoMetadata
 
 logger = get_logger()
 
 IMAGE_TOKEN_ALIAS = "XTUNER-ALIAS-ALIAS-XTUNER-2025"
 
 
+
+
 def collect_image_video_paths_and_extra(messages: list[dict]):
     image_paths = []
     image_wh_list = []
     video_paths = []
-    video_wht_list = []
     video_meta_list = []
     for msg in messages:
         if msg["role"] == "user":
@@ -44,29 +46,24 @@ def collect_image_video_paths_and_extra(messages: list[dict]):
                     if c["type"] == "video_url":
                         video_paths.append(c["video_url"]["url"])
 
-                        if "video_meta" in c["video_url"]:
-                            video_meta_list.append(c["video_url"]["video_meta"])
-                            assert 'video_fps' in c["video_url"]["video_meta"], f'video_meta should be dict with "video_fps", but got {c["video_url"]["video_meta"]}'
-                            assert 'video_start_time' in c["video_url"]["video_meta"], f'video_meta should be dict with "video_start_time", but got {c["video_url"]["video_meta"]}'
-                        # else: # 兼容InternVL所以没有强制要求
-                        #     raise NotImplementedError("video_meta is not provided.")
-
-                        if "video_wht" in c["video_url"]:
-                            video_wht = c["video_url"]["video_wht"]
-                            video_wht_list.append(video_wht)
-                            assert len(video_wht) == 3, f"video_wht should be [width, height, time], but got {video_wht}"
-                            assert isinstance(video_wht[0], int), f"video_wht should be list[int] of [width, height, time], but got {video_wht}"
-                            assert isinstance(video_wht[1], int), f"video_wht should be list[int] of [width, height, time], but got {video_wht}"
-                            assert isinstance(video_wht[2], int), f"video_wht should be list[int] of [width, height, time], but got {video_wht}"
-                        # else: # 兼容InternVL所以没有强制要求
-                        #     raise NotImplementedError("video_wht is not provided.")
+                        if "video_meta" in c["video_url"]:         
+                            video_meta = VideoChat3VideoMetadata(**c["video_url"]["video_meta"])
+                            assert 'fps' in c["video_url"]["video_meta"], f'video_meta should be dict with "fps", but got {c["video_url"]["video_meta"]}'
+                            assert video_meta.fps == c["video_url"]["video_meta"]["fps"], f'video_meta.fps should be {c["video_url"]["video_meta"]["fps"]}, but got {video_meta.fps}'
+                            assert 'duration' in c["video_url"]["video_meta"], f'video_meta should be dict with "duration", but got {c["video_url"]["video_meta"]}'
+                            assert video_meta.duration == c["video_url"]["video_meta"]["duration"], f'video_meta.duration should be {c["video_url"]["video_meta"]["duration"]}, but got {video_meta.duration}'
+                            assert 'width' in c["video_url"]["video_meta"], f'video_meta should be dict with "width", but got {c["video_url"]["video_meta"]}'
+                            assert video_meta.width == c["video_url"]["video_meta"]["width"], f'video_meta.width should be {c["video_url"]["video_meta"]["width"]}, but got {video_meta.width}'
+                            assert 'height' in c["video_url"]["video_meta"], f'video_meta should be dict with "height", but got {c["video_url"]["video_meta"]}'
+                            assert video_meta.height == c["video_url"]["video_meta"]["height"], f'video_meta.height should be {c["video_url"]["video_meta"]["height"]}, but got {video_meta.height}'
+                            video_meta_list.append(video_meta)
 
     if len(image_wh_list) > 0:
         assert len(image_wh_list) == len(image_paths), "If image_wh is provided, it should match the number of images."
-    if len(video_wht_list) > 0:
-        assert len(video_wht_list) == len(video_paths) == len(video_meta_list), "If video_wht is provided, it should match the number of videos."
+    if len(video_meta_list) > 0:
+        assert len(video_meta_list) == len(video_paths), "If video_wht is provided, it should match the number of videos."
         
-    return image_paths, video_paths, {"image_wh_list": image_wh_list, "video_wht_list": video_wht_list, "video_meta_list": video_meta_list}
+    return image_paths, video_paths, {"image_wh_list": image_wh_list, "video_meta_list": video_meta_list}
 
 
 def replace_image_token(
@@ -134,7 +131,7 @@ class BaseMLLMTokenizeFunction(CachableTokenizeFunction[T]):
         self._image_path: list[str] = []
         self._video_path: list[str] = []
         self._image_wh_list: list[list] = []
-        self._video_wht_list: list[list] = []
+        self._video_meta_list: list[list] = []
 
     def calc_num_tokens_multi_modal_get_item(self, data_item: dict) -> CacheItem:
         raise NotImplementedError
@@ -165,7 +162,6 @@ class BaseMLLMTokenizeFunction(CachableTokenizeFunction[T]):
     def __call__(self, item: dict, media_root: str = "", **kwargs) -> T | CacheItem:  # type: ignore[override]
         self._image_path, self._video_path, extra_info = collect_image_video_paths_and_extra(item["messages"])
         self._image_wh_list = extra_info["image_wh_list"]
-        self._video_wht_list = extra_info["video_wht_list"]
         self._video_meta_list = extra_info["video_meta_list"]
 
         if len(self._image_path) > 0 or len(self._video_path) > 0:
