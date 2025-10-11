@@ -236,7 +236,7 @@ class VideoChat3VideoProcessor(BaseVideoProcessor):
                     for video, metadata in zip(videos, video_metadata):
                         indices = sample_indices_fn(metadata=metadata)
                         metadata.frames_indices = indices # NOTE: @Lixinhao, for _calculate_timestamps!
-                        sampled_videos.append([images[i] for i in indices])
+                        sampled_videos.append(video[indices])
                     videos = sampled_videos
                 else:
                     videos = [

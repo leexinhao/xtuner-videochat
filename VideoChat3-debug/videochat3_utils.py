@@ -10,7 +10,7 @@ class VideoChat3VideoMetadata(VideoMetadata):
         if self.fps * self.duration != self.total_num_frames:
             raise ValueError(f"fps * duration must be equal to total_num_frames, but got {self.fps * self.duration} != {self.total_num_frames}")
             
-        if self.video_start_time <= 0: or self.video_start_time is None or self.video_start_time >= self.duration:
+        if self.video_start_time <= 0 or self.video_start_time is None or self.video_start_time >= self.duration:
             raise ValueError(f"video_start_time must be greater than 0 and less than duration, but got {self.video_start_time}")
 
         if (self.clip_start_time is None) != (self.clip_end_time is None):

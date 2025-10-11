@@ -46,8 +46,8 @@ def collect_image_video_paths_and_extra(messages: list[dict]):
                     if c["type"] == "video_url":
                         video_paths.append(c["video_url"]["url"])
 
-                        if "video_meta" in c["video_url"]:         
-                            video_meta = VideoChat3VideoMetadata(**c["video_url"]["video_meta"])
+                        if "video_metadata" in c["video_url"]:         
+                            video_meta = VideoChat3VideoMetadata(**c["video_url"]["video_metadata"])
                             assert 'fps' in c["video_url"]["video_meta"], f'video_meta should be dict with "fps", but got {c["video_url"]["video_meta"]}'
                             assert video_meta.fps == c["video_url"]["video_meta"]["fps"], f'video_meta.fps should be {c["video_url"]["video_meta"]["fps"]}, but got {video_meta.fps}'
                             assert 'duration' in c["video_url"]["video_meta"], f'video_meta should be dict with "duration", but got {c["video_url"]["video_meta"]}'

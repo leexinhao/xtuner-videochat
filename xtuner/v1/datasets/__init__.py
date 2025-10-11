@@ -15,6 +15,8 @@ from .mllm_tokenize_fn import (
     InternS1VLTokenizeFunction,
     Qwen3VLTokenizeFnConfig,
     Qwen3VLTokenizeFunction,
+    VideoChat3TokenizeFnConfig,
+    VideoChat3TokenizeFunction,
 )
 from .packing import ExpandSoftPackDataset, _LegacySoftPackDataset
 from .resume import get_dataloader_state, load_dataloader_state
@@ -44,6 +46,8 @@ __all__ = [
     "InternS1VLTokenizeFunction",
     "Qwen3VLTokenizeFnConfig",
     "Qwen3VLTokenizeFunction",
+    "VideoChat3TokenizeFnConfig",
+    "VideoChat3TokenizeFunction",
     "VLMJsonlDataset",
     "FTDPTokenizeFnConfig",
     "InternS1VLTokenizeFnConfig",
