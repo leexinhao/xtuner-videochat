@@ -1,4 +1,7 @@
 {
+    "auto_map": {
+        "AutoVideoProcessor": "video_processing_videochat3.VideoChat3VideoProcessor"
+    },
     "size": {
         "longest_edge": 25165824,
         "shortest_edge": 4096
@@ -17,6 +20,6 @@
         0.5,
         0.5
     ],
-    "processor_class": "VideoChat3Processor",
-    "video_processor_type": "VideoChat3VideoProcessor"
+    "processor_class": "processing_videochat3.VideoChat3Processor",
+    "video_processor_type": "video_processing_videochat3.VideoChat3VideoProcessor"
 }

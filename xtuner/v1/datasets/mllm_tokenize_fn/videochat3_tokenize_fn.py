@@ -4,6 +4,7 @@ import copy
 import os
 import math
 import torch
+import numpy as np
 
 from pydantic import ConfigDict
 from collections.abc import Sequence
@@ -110,7 +111,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         tokenizer_hash: str | None = None,
         hash: str | None = None,
     ):
-        self.media_processor = AutoProcessor.from_pretrained(processor_path)
+        self.media_processor = AutoProcessor.from_pretrained(processor_path, trust_remote_code=True)
         self.image_processor = self.media_processor.image_processor
         self.video_processor = self.media_processor.video_processor
 
@@ -136,7 +137,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         self.data_name = os.path.basename(anno_name)
         logger.info(
-            f"[{self.data_name}] image_min_pixels: {self.image_processor.image_min_pixels}, image_max_pixels: {self.image_processor.image_max_pixels},"
+            f"[{self.data_name}] image_min_pixels: {self.image_processor.min_pixels}, image_max_pixels: {self.image_processor.max_pixels},"
             f"video_max_total_pixels: {self.video_max_total_pixels},"
             f"spatial_merge_length: {self.spatial_merge_length}, temporal_merge_length: {self.temporal_merge_length}"
         )
@@ -191,7 +192,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             assert len(video_tensor) == 1, f"video_tensor should have only one element, but got {len(video_tensor)}"
             video_tensor = video_tensor[0]
         grid_thw = visual_processed["video_grid_thw"][0]
-        video_meta = video_metadata["video_metadata"]
+        video_meta = visual_processed["video_metadata"]
         return video_tensor, grid_thw, video_meta
 
     def _replace_image_token(self, messages: ChatMessages, num_image_tokens_list: list[int]):
@@ -328,7 +329,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         if not isinstance(grid_thw, Sequence):
             grid_thw_merged = [grid_thw_merged]
             grid_thw = [grid_thw]
-        grid_thw_merged = [merged_thw.prod() // self.merge_length for merged_thw in grid_thw_merged]  # type: ignore
+        grid_thw_merged = [merged_thw.prod() // self.spatial_merge_length for merged_thw in grid_thw_merged]  # type: ignore
         messages = ChatMessages(messages=data_item["messages"])
         self._replace_image_token(messages, grid_thw_merged)  # type: ignore
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)

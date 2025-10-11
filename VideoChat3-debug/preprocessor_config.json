@@ -1,4 +1,7 @@
 {
+    "auto_map": {
+        "AutoProcessor": "processing_videochat3.VideoChat3Processor"
+    },
     "size": {
         "longest_edge": 16777216,
         "shortest_edge": 65536
@@ -16,6 +19,6 @@
         0.5,
         0.5
     ],
-    "processor_class": "VideoChat3Processor",
+    "processor_class": "processing_videochat3.VideoChat3Processor",
     "image_processor_type": "Qwen2VLImageProcessorFast"
 }

@@ -27,7 +27,7 @@ from transformers.processing_utils import MultiModalData, ProcessingKwargs, Proc
 from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
 from transformers.utils import logging
 from transformers.video_utils import VideoInput
-from xtuner.v1.datasets.mllm_tokenize_fn.video_utils import VideoChat3VideoMetadata
+from .videochat3_utils import VideoChat3VideoMetadata
 
 logger = logging.get_logger(__name__)
 
@@ -65,14 +65,14 @@ class VideoChat3Processor(ProcessorMixin):
     attributes = ["image_processor", "tokenizer", "video_processor"]
     valid_kwargs = [ "chat_template"]
     image_processor_class = "AutoImageProcessor"
-    video_processor_class = "AutoVideoProcessor"
     tokenizer_class = ("Qwen2Tokenizer", "Qwen2TokenizerFast")
+    video_processor_class = "AutoVideoProcessor"
 
     def __init__(
         self,
         image_processor=None,
-        video_processor=None,
         tokenizer=None,
+        video_processor=None,
         chat_template=None,
         **kwargs,
     ):
@@ -200,7 +200,7 @@ class VideoChat3Processor(ProcessorMixin):
 
                     # if timestamps are not provided, calculate them
                     curr_timestamp = self._calculate_timestamps(
-                        metadata
+                        metadata,
                         self.video_processor.temporal_merge_size,
                     )
 

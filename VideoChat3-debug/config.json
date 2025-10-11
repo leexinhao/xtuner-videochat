@@ -1,9 +1,12 @@
 {
   "architectures": [
-    "Qwen3VLMoeForConditionalGeneration"
+    "VideoChat3MoeForConditionalGeneration"
   ],
+  "auto_map": {
+    "AutoProcessor": "processing_videochat3.VideoChat3Processor"
+  },
   "image_token_id": 151655,
-  "model_type": "qwen3_vl_moe",
+  "model_type": "videochat3",
   "text_config": {
     "attention_bias": false,
     "attention_dropout": 0.0,
@@ -18,7 +21,7 @@
     "intermediate_size": 6144,
     "max_position_embeddings": 262144,
     "mlp_only_layers": [],
-    "model_type": "qwen3_vl_moe_text",
+    "model_type": "qwen3",
     "moe_intermediate_size": 768,
     "norm_topk_prob": true,
     "num_attention_heads": 32,
@@ -55,7 +58,7 @@
     "in_channels": 3,
     "initializer_range": 0.02,
     "intermediate_size": 4304,
-    "model_type": "qwen3_vl_moe",
+    "model_type": "videochat3",
     "num_heads": 16,
     "num_position_embeddings": 2304,
     "out_hidden_size": 2048,
