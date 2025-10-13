@@ -46,16 +46,16 @@ def collect_image_video_paths_and_extra(messages: list[dict]):
                     if c["type"] == "video_url":
                         video_paths.append(c["video_url"]["url"])
 
-                        if "video_metadata" in c["video_url"]:         
-                            video_meta = VideoChat3VideoMetadata(**c["video_url"]["video_metadata"])
-                            assert 'fps' in c["video_url"]["video_meta"], f'video_meta should be dict with "fps", but got {c["video_url"]["video_meta"]}'
-                            assert video_meta.fps == c["video_url"]["video_meta"]["fps"], f'video_meta.fps should be {c["video_url"]["video_meta"]["fps"]}, but got {video_meta.fps}'
-                            assert 'duration' in c["video_url"]["video_meta"], f'video_meta should be dict with "duration", but got {c["video_url"]["video_meta"]}'
-                            assert video_meta.duration == c["video_url"]["video_meta"]["duration"], f'video_meta.duration should be {c["video_url"]["video_meta"]["duration"]}, but got {video_meta.duration}'
-                            assert 'width' in c["video_url"]["video_meta"], f'video_meta should be dict with "width", but got {c["video_url"]["video_meta"]}'
-                            assert video_meta.width == c["video_url"]["video_meta"]["width"], f'video_meta.width should be {c["video_url"]["video_meta"]["width"]}, but got {video_meta.width}'
-                            assert 'height' in c["video_url"]["video_meta"], f'video_meta should be dict with "height", but got {c["video_url"]["video_meta"]}'
-                            assert video_meta.height == c["video_url"]["video_meta"]["height"], f'video_meta.height should be {c["video_url"]["video_meta"]["height"]}, but got {video_meta.height}'
+                        if "video_metadata" in c:         
+                            video_meta = VideoChat3VideoMetadata(**c["video_metadata"])
+                            assert 'fps' in c["video_metadata"], f'video_metadata should be dict with "fps", but got {c["video_metadata"]}'
+                            assert video_meta.fps == c["video_metadata"]["fps"], f'video_meta.fps should be {c["video_metadata"]["fps"]}, but got {video_meta.fps}'
+                            assert 'duration' in c["video_metadata"], f'video_metadata should be dict with "duration", but got {c["video_metadata"]}'
+                            assert video_meta.duration == c["video_metadata"]["duration"], f'video_meta.duration should be {c["video_metadata"]["duration"]}, but got {video_meta.duration}'
+                            assert 'width' in c["video_metadata"], f'video_metadata should be dict with "width", but got {c["video_metadata"]}'
+                            assert video_meta.width == c["video_metadata"]["width"], f'video_meta.width should be {c["video_metadata"]["width"]}, but got {video_meta.width}'
+                            assert 'height' in c["video_metadata"], f'video_metadata should be dict with "height", but got {c["video_metadata"]}'
+                            assert video_meta.height == c["video_metadata"]["height"], f'video_meta.height should be {c["video_metadata"]["height"]}, but got {video_meta.height}'
                             video_meta_list.append(video_meta)
 
     if len(image_wh_list) > 0:

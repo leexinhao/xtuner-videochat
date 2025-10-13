@@ -18,7 +18,7 @@ from xtuner.v1.utils import get_logger
 from ..data_item import CacheItem, VideoChat3DataItem
 from ..vlm_utils import apply_exif_orientation
 from .base_mllm_tokenize_fn import BaseMLLMTokenizeFnConfig, BaseMLLMTokenizeFunction, load_image, replace_image_token
-from transformers.video_utils import load_video
+
 logger = get_logger()
 
 IMAGE_TOKEN_ALIAS = "XTUNER-ALIAS-ALIAS-XTUNER-2025"
@@ -63,8 +63,8 @@ def smart_get_video_thw(video_meta: VideoChat3VideoMetadata, video_processor):
         width=video_meta.width,
         temporal_factor=video_processor.temporal_patch_size,
         factor=video_processor.patch_size * video_processor.merge_size,
-        frame_min_pixels=video_processor.size.shortest_edge,
-        frame_max_pixels=video_processor.size.longest_edge,
+        frame_min_pixels=video_processor.size["shortest_edge"],
+        frame_max_pixels=video_processor.size["longest_edge"],
         video_max_total_pixels=video_processor.video_max_total_pixels,
     )
 
@@ -84,8 +84,8 @@ def smart_get_image_thw(image_size, image_processor):
         orig_height,
         orig_width,
         factor=image_processor.patch_size * image_processor.merge_size,
-        image_min_pixels=image_processor.image_min_pixels,
-        image_max_pixels=image_processor.image_max_pixels,
+        min_pixels=image_processor.size["shortest_edge"],
+        max_pixels=image_processor.size["longest_edge"],
     )
     grid_t = 1  # 单图
     grid_h, grid_w = resized_height // image_processor.patch_size, resized_width // image_processor.patch_size
@@ -97,16 +97,17 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         tokenizer: PreTrainedTokenizer,
         processor_path: str,
         anno_name: str,
-        image_min_pixels: int | None = None,  # Max image pixels (H*W) for image
-        image_max_pixels: int | None = None,  # Min image pixels (H*W) for image
-        frame_min_pixels: int | None = None,  # Max image pixels (H*W) for frame
-        frame_max_pixels: int | None = None,  # Min image pixels (H*W) for frame
-        video_max_total_pixels: int = 5000 * 4 * 28 * 28,  # Max pixels within a video
+        image_min_pixels: int | None = 0,  # Max image pixels (H*W) for image
+        image_max_pixels: int | None = 100000 * 4 * 28 * 28,  # Min image pixels (H*W) for image
+        frame_min_pixels: int | None = 0,  # Max image pixels (H*W) for frame
+        frame_max_pixels: int | None = 100000 * 4 * 28 * 28,  # Min image pixels (H*W) for frame
+        video_max_total_pixels: int = 1000000000 * 4 * 28 * 28,  # Max pixels within a video
         video_min_frames: int = 4,  # Min frames per video
-        video_max_frames: int = 1024,  # Max frames per video
+        video_max_frames: int = 2048,  # Max frames per video
         fixed_num_sampled_frames: int | None = None,
         video_sample_fps: int = 2,  # Sample fps for video
         system_message: str | None = None,
+        add_vision_id: bool = False,
         max_length: int | None = None,
         tokenizer_hash: str | None = None,
         hash: str | None = None,
@@ -131,6 +132,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         self.video_processor.num_frames = fixed_num_sampled_frames
         self.video_processor.fps = video_sample_fps
 
+        self.add_vision_id = add_vision_id
     
         self.spatial_merge_length = self.image_processor.merge_size**2
         self.temporal_merge_length = self.video_processor.temporal_merge_size
@@ -138,7 +140,9 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         self.data_name = os.path.basename(anno_name)
         logger.info(
             f"[{self.data_name}] image_min_pixels: {self.image_processor.min_pixels}, image_max_pixels: {self.image_processor.max_pixels},"
-            f"video_max_total_pixels: {self.video_max_total_pixels},"
+            f"video_max_total_pixels: {self.video_max_total_pixels}, frame_min_pixels: {frame_min_pixels}, frame_max_pixels: {frame_max_pixels},"
+            f"video_min_frames: {video_min_frames}, video_max_frames: {video_max_frames}, fixed_num_sampled_frames: {fixed_num_sampled_frames}, video_sample_fps: {video_sample_fps},"
+            f"add_vision_id: {self.add_vision_id}, "
             f"spatial_merge_length: {self.spatial_merge_length}, temporal_merge_length: {self.temporal_merge_length}"
         )
 
@@ -148,6 +152,23 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         self.image_token_id = tokenizer.convert_tokens_to_ids(self.chat_template.image_context_token)
         self.video_token_id = tokenizer.convert_tokens_to_ids(self.chat_template.video_context_token)
+
+        # Note: 比较重要，防止改了参数但是没有重新 cache
+        self._hash_str = (
+            f"{self.image_processor.min_pixels}_"
+            f"{self.image_processor.max_pixels}_"
+            f"{self.video_max_total_pixels}_"
+            f"{frame_min_pixels}_"
+            f"{frame_max_pixels}_"
+            f"{video_min_frames}_"
+            f"{video_max_frames}_"
+            f"{fixed_num_sampled_frames}_"
+            f"{video_sample_fps}_"
+            f"{self.add_vision_id}_"
+            f"{self.spatial_merge_length}_"
+            f"{self.temporal_merge_length}_"
+            f"{system_message}_{max_length}"
+        )
 
         # 必须要最后调用
         super().__init__(tokenizer, self.chat_template, max_length, tokenizer_hash, hash)
@@ -185,17 +206,26 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             assert video_meta is not None, "video_meta is required for video in directory"
             video_path = sorted(os.listdir(video_path))
 
+
         visual_processed = processor.preprocess(video_path, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
-        
-        video_tensor = visual_processed["pixel_values"]
+        video_tensor = visual_processed["pixel_values_videos"]
+        grid_thw = visual_processed["video_grid_thw"][0]
+
         if isinstance(video_tensor, list):
             assert len(video_tensor) == 1, f"video_tensor should have only one element, but got {len(video_tensor)}"
             video_tensor = video_tensor[0]
-        grid_thw = visual_processed["video_grid_thw"][0]
+        
         video_meta = visual_processed["video_metadata"]
+        # 如果video_meta是tuple，取第一个元素
+        if isinstance(video_meta, tuple):
+            video_meta = video_meta[0]
+        # 如果video_meta是列表，取第一个元素
+        if isinstance(video_meta, list):
+            assert len(video_meta) == 1, f"video_meta should have only one element, but got {len(video_meta)}"
+            video_meta = video_meta[0]
         return video_tensor, grid_thw, video_meta
 
-    def _replace_image_token(self, messages: ChatMessages, num_image_tokens_list: list[int]):
+    def _replace_image_token(self, messages: ChatMessages, num_image_tokens_list: list[int], add_vision_id: bool = False):
         chat_template = self.chat_template
         current_image_idx = 0
         for msg in messages.messages:
@@ -209,7 +239,11 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
                             text = text.replace("<IMG_CONTEXT>", IMAGE_TOKEN_ALIAS)
                             image_cnt = text.count(IMAGE_TOKEN_ALIAS)
                             for _ in range(image_cnt):
-                                image_tokens = f"{chat_template.image_context_token * num_image_tokens_list[current_image_idx]}"  # type: ignore
+                                # 使用完整的vision token格式：<|vision_start|><|image_pad|><|vision_end|>
+                                image_tokens = f"{chat_template.image_start_token}{chat_template.image_context_token * num_image_tokens_list[current_image_idx]}{chat_template.image_end_token}"  # type: ignore
+                                if add_vision_id and image_cnt > 1:
+                                    # add vision id for each image when there are multiple images
+                                    image_tokens = f"Picture {current_image_idx + 1}: " + image_tokens
                                 text = text.replace(IMAGE_TOKEN_ALIAS, image_tokens, 1)
                                 current_image_idx += 1
                             c.text = text
@@ -218,7 +252,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             f"ERROR: current_image_idx: {current_image_idx} != num_image: {len(num_image_tokens_list)}"
         )
 
-    def _replace_video_token(self, messages: ChatMessages, video_grid_thw: list[int]):
+    def _replace_video_token(self, messages: ChatMessages, video_grid_thw: list[int], add_vision_id: bool = False):
         chat_template = self.chat_template
         merge_length = self.video_processor.merge_size ** 2
         current_video_idx = 0
@@ -235,7 +269,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
                             for _ in range(video_cnt):
                                 
-                                curr_timestamp = self.video_processor._calculate_timestamps(self._video_meta_list[current_video_idx], self.video_processor.temporal_merge_size)
+                                curr_timestamp = self.media_processor._calculate_timestamps(self._video_meta_list[current_video_idx], self.video_processor.temporal_merge_size)
                                 video_tokens = ""
                                 frame_seqlen = video_grid_thw[current_video_idx][1:].prod() // merge_length
                                 for curr_time in curr_timestamp:
@@ -244,6 +278,9 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
                                         chat_template.image_start_token + chat_template.video_context_token * frame_seqlen + chat_template.image_end_token
                                     )
 
+                                if add_vision_id and video_cnt > 1:
+                                    # add vision id for each video when there are multiple videos
+                                    video_tokens = f"Video {current_video_idx + 1}: " + video_tokens
                                 text = text.replace(IMAGE_TOKEN_ALIAS, video_tokens, 1)
                                 current_video_idx += 1
                             c.text = text
@@ -303,11 +340,11 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         sum_media_grid_thw = media_grid_thw.prod(dim=1) // self.spatial_merge_length  # type: ignore
 
         messages = ChatMessages(messages=data_item["messages"])
-        self._replace_image_token(messages, sum_media_grid_thw)
+        self._replace_image_token(messages, sum_media_grid_thw, add_vision_id=self.add_vision_id)
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)
         input_ids = tokenized["input_ids"]
 
-        input_ids, _, _ = self._truncated_data_item(input_ids)
+        input_ids, _ = self._truncated_data_item(input_ids)
 
         # 如果图片被截断，则该数据丢弃
         num_image_tokens_1 = (torch.tensor(input_ids) == self.image_token_id).sum()
@@ -331,7 +368,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             grid_thw = [grid_thw]
         grid_thw_merged = [merged_thw.prod() // self.spatial_merge_length for merged_thw in grid_thw_merged]  # type: ignore
         messages = ChatMessages(messages=data_item["messages"])
-        self._replace_image_token(messages, grid_thw_merged)  # type: ignore
+        self._replace_image_token(messages, grid_thw_merged, add_vision_id=self.add_vision_id)  # type: ignore
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)
         input_ids = tokenized["input_ids"]
         labels = tokenized["labels"]
@@ -380,11 +417,11 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         media_grid_thw = torch.tensor(media_grid_thw, dtype=torch.int).reshape(-1, 3)  # type: ignore
 
         messages = ChatMessages(messages=data_item["messages"])
-        self._replace_video_token(messages, media_grid_thw)
+        self._replace_video_token(messages, media_grid_thw, add_vision_id=self.add_vision_id)
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)
         input_ids = tokenized["input_ids"]
 
-        input_ids, _, _ = self._truncated_data_item(input_ids)
+        input_ids, _ = self._truncated_data_item(input_ids)
 
         # 如果视频被截断，则该数据丢弃
         num_video_tokens = sum(num_video_tokens_list)
@@ -412,7 +449,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         num_video_tokens_list = [self.video_processor.get_number_of_video_tokens(grid_t, grid_h, grid_w) for grid_t, grid_h, grid_w in grid_thw_copy]  # type: ignore
         messages = ChatMessages(messages=data_item["messages"])
-        self._replace_video_token(messages, grid_thw_copy)  # type: ignore
+        self._replace_video_token(messages, grid_thw_copy, add_vision_id=self.add_vision_id)  # type: ignore
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)
         input_ids = tokenized["input_ids"]
         labels = tokenized["labels"]
@@ -452,15 +489,17 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 class VideoChat3TokenizeFnConfig(BaseMLLMTokenizeFnConfig):
     model_config = ConfigDict(title="Base dataset config for xtuner", extra="allow")
     processor_path: str
-    image_min_pixels: int | None = None
-    image_max_pixels: int | None = None
-    frame_min_pixels: int | None = None
-    frame_max_pixels: int | None = None
-    video_max_total_pixels: int = 1664 * 28 * 28
+    image_min_pixels: int | None = 0
+    image_max_pixels: int | None = 100000 * 4 * 28 * 28
+    frame_min_pixels: int | None = 0
+    frame_max_pixels: int | None = 100000 * 4 * 28 * 28
+    video_max_total_pixels: int = 1000000000 * 4 * 28 * 28
     video_min_frames: int = 4
     video_max_frames: int = 1024 
     fixed_num_sampled_frames: int | None = None
     video_sample_fps: int = 2 
+    # When handling multiple images, it's helpful to add labels to the images and videos for better reference.
+    add_vision_id: bool = False
 
     def build(
         self, tokenizer, tokenizer_hash: str | None = None, anno_name: str = "", **kwargs
@@ -478,6 +517,7 @@ class VideoChat3TokenizeFnConfig(BaseMLLMTokenizeFnConfig):
             fixed_num_sampled_frames=self.fixed_num_sampled_frames,
             video_sample_fps=self.video_sample_fps,
             video_max_total_pixels=self.video_max_total_pixels,
+            add_vision_id=self.add_vision_id,
             max_length=self.max_length,
             system_message=self.system_message,
             tokenizer_hash=tokenizer_hash,

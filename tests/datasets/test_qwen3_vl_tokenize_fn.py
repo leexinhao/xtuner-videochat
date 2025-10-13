@@ -23,7 +23,7 @@ class TestMLLMTokenizeFn(TestCase):
     def test_qwen3_vl_single_image(self):
         data_path = 'tests/resource/mllm_sft_single_image_example_data.jsonl'
         total_step = 5
-        with open(data_path) as f:
+        with open(data_path, encoding='utf-8') as f:
             for i, line in enumerate(f):
                 if i >= total_step:
                     break
@@ -61,7 +61,7 @@ class TestMLLMTokenizeFn(TestCase):
                                               add_vision_id=add_vision_id).build(self.tokenizer)
         data_path = 'tests/resource/mllm_sft_multi_image_example_data.jsonl'
         total_step = 5
-        with open(data_path) as f:
+        with open(data_path, encoding='utf-8') as f:
             for i, line in enumerate(f):
                 if i >= total_step:
                     break
@@ -101,7 +101,7 @@ class TestMLLMTokenizeFn(TestCase):
     def test_qwen3_vl_pure_text(self):
         data_path = 'tests/resource/mllm_sft_text_example_data.jsonl'
         total_step = 5
-        with open(data_path) as f:
+        with open(data_path, encoding='utf-8') as f:
             for i, line in enumerate(f):
                 if i >= total_step:
                     break
