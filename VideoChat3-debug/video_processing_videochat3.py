@@ -31,7 +31,6 @@ from transformers.video_utils import (
     group_videos_by_shape,
     reorder_videos,
     is_valid_video,
-    make_batched_metadata,
     make_batched_videos,
 )
 from .videochat3_utils import VideoChat3VideoMetadata
@@ -213,7 +212,25 @@ class VideoChat3VideoProcessor(BaseVideoProcessor):
         Decode input videos and sample frames if needed.
         """
         videos = make_batched_videos(videos)
-        video_metadata = make_batched_metadata(videos, video_metadata=video_metadata)
+        
+        # 自定义处理video_metadata，避免使用make_batched_metadata
+        if video_metadata is None:
+            video_metadata = [None] * len(videos)
+        elif isinstance(video_metadata, (VideoChat3VideoMetadata, dict)):
+            video_metadata = [video_metadata]
+        elif isinstance(video_metadata, list):
+            # 确保每个元素都是VideoChat3VideoMetadata或dict
+            processed_metadata = []
+            for metadata in video_metadata:
+                if isinstance(metadata, dict):
+                    # 如果是dict，转换为VideoChat3VideoMetadata
+                    processed_metadata.append(VideoChat3VideoMetadata(**metadata))
+                elif isinstance(metadata, VideoChat3VideoMetadata):
+                    processed_metadata.append(metadata)
+                else:
+                    # 如果是其他类型，尝试转换
+                    processed_metadata.append(VideoChat3VideoMetadata(**metadata.__dict__))
+            video_metadata = processed_metadata
 
         _is_valid_video = is_valid_video(videos[0])
         # Only sample frames if an array video is passed, otherwise first decode -> then sample
@@ -244,7 +261,39 @@ class VideoChat3VideoProcessor(BaseVideoProcessor):
                         for images in self.fetch_images(videos)
                     ]
             else:
-                videos, video_metadata = self.fetch_videos(videos, sample_indices_fn=sample_indices_fn)
+                # 使用父类的fetch_videos方法，但不传递sample_indices_fn
+                videos, metadata_list = super().fetch_videos(videos, sample_indices_fn=None)
+                # 将VideoMetadata转换为VideoChat3VideoMetadata
+                video_metadata = []
+                for metadata in metadata_list:
+                    if metadata is None:
+                        # 如果metadata是None，跳过
+                        continue
+                    elif isinstance(metadata, VideoChat3VideoMetadata):
+                        video_metadata.append(metadata)
+                    else:
+                        # 转换为VideoChat3VideoMetadata
+                        video_metadata.append(VideoChat3VideoMetadata(
+                            total_num_frames=metadata.total_num_frames,
+                            fps=metadata.fps,
+                            width=metadata.width,
+                            height=metadata.height,
+                            duration=metadata.duration,
+                            video_backend=metadata.video_backend,
+                            frames_indices=metadata.frames_indices,
+                            video_start_time=0.0,
+                            clip_start_time=None,
+                            clip_end_time=None
+                        ))
+                
+                # 如果需要采样帧，使用我们自己的sample_indices_fn
+                if do_sample_frames and sample_indices_fn is not None:
+                    sampled_videos = []
+                    for video, metadata in zip(videos, video_metadata):
+                        indices = sample_indices_fn(metadata=metadata)
+                        metadata.frames_indices = indices
+                        sampled_videos.append(video[indices])
+                    videos = sampled_videos
 
         return videos, video_metadata
 

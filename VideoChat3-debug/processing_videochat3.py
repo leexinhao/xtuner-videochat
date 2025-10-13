@@ -300,7 +300,7 @@ class VideoChat3Processor(ProcessorMixin):
         )
 
     def _calculate_timestamps(self, video_meta: VideoChat3VideoMetadata, temporal_merge_size: int = 4):
-        timestamps  = video_meta.timestamps()
+        timestamps  = video_meta.timestamps
         # @JJJYmmm frames are merged by self.merge_size, \
         # so we need to average the timestamps between the first/last frame within the temporal patch
         # @lixinhao Special handling is given for cases where the number of frames is not a multiple of the temporal merge size
