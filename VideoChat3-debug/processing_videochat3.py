@@ -27,7 +27,7 @@ from transformers.processing_utils import MultiModalData, ProcessingKwargs, Proc
 from transformers.tokenization_utils_base import PreTokenizedInput, TextInput
 from transformers.utils import logging
 from transformers.video_utils import VideoInput
-from .videochat3_utils import VideoChat3VideoMetadata
+from videochat3_utils import VideoChat3VideoMetadata
 
 logger = logging.get_logger(__name__)
 
@@ -84,11 +84,8 @@ class VideoChat3Processor(ProcessorMixin):
             if getattr(tokenizer, "image_token_id", None)
             else tokenizer.convert_tokens_to_ids(self.image_token)
         )
-        self.video_token_id = (
-            tokenizer.video_token_id
-            if getattr(tokenizer, "video_token_id", None)
-            else tokenizer.convert_tokens_to_ids(self.video_token)
-        )
+        self.video_token_id = self.image_token_id # NOTE: image/video share the same token id
+        
         self.vision_start_token = (
             "<|vision_start|>" if not hasattr(tokenizer, "vision_start_token") else tokenizer.vision_start_token
         )
