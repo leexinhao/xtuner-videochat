@@ -152,7 +152,8 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         self.image_token_id = tokenizer.convert_tokens_to_ids(self.chat_template.image_context_token)
         self.video_token_id = tokenizer.convert_tokens_to_ids(self.chat_template.video_context_token)
-
+        assert self.image_token_id == self.video_token_id, "image_token_id and video_token_id must be the same"
+        
         # Note: 比较重要，防止改了参数但是没有重新 cache
         self._hash_str = (
             f"{self.image_processor.min_pixels}_"

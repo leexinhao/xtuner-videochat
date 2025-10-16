@@ -2,6 +2,7 @@
 debug_import.py
 videos/
 models/
+model.safetensors
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
