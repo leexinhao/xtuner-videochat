@@ -6,8 +6,8 @@ from transformers import AutoTokenizer, AutoProcessor
 import json
 import parametrize
 
-VIDEOCHAT3_PATH = os.environ.get("VIDEOCHAT3_PATH", r"C:\Users\15204\Desktop\codes\xtuner-videochat\VideoChat3-debug")
-VIDEO_ROOT = os.environ.get("VIDEO_ROOT", "videos")
+VIDEOCHAT3_PATH = os.environ.get("VIDEOCHAT3_PATH", "VideoChat3-2B")
+
 
 
 class TestVideoChat3TokenizeFn(TestCase):
@@ -142,7 +142,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 
                 # 验证路径和元数据提取正确
                 self.assertEqual(len(video_paths), 1)
-                self.assertEqual(video_paths[0], 'tennis.mp4')
+                self.assertEqual(video_paths[0], 'resource/tennis.mp4')
                 self.assertEqual(len(extra_info['video_meta_list']), 1)
                 self.assertIsNotNone(extra_info['video_meta_list'][0])
                 

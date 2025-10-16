@@ -6,7 +6,9 @@ VideoViT_CKPT/
 work_dirs/
 work_dir/
 *.safetensors
+model.safetensors
 dataset_cache/
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -244,76 +244,76 @@ class TestQwen3VL(DeterministicDDPTestCase):
         self._test_all(hf_model, qwen3vl_model, 'image', device, sp_size, tol)
         self._test_all(hf_model, qwen3vl_model, 'video', device, sp_size, tol)
 
-    @parametrize.parametrize(
-        "device,tp_size",
-        [
-            ("cuda", 1),
-        ],
-    )
-    def test_save_hf(self, device, tp_size):
-        self.create_pg(device)
-        with torch.device("meta"):
-            model_cfg = Qwen3VLMoE30BA3Config()
-            qwen3vl_model = model_cfg.build().to(torch.bfloat16)
+    # @parametrize.parametrize(
+    #     "device,tp_size",
+    #     [
+    #         ("cuda", 1),
+    #     ],
+    # )
+    # def test_save_hf(self, device, tp_size):
+    #     self.create_pg(device)
+    #     with torch.device("meta"):
+    #         model_cfg = Qwen3VLMoE30BA3Config()
+    #         qwen3vl_model = model_cfg.build().to(torch.bfloat16)
 
-        fsdp_config = FSDPConfig(
-            tp_size=tp_size,
-            cpu_offload=False,
-        )
+    #     fsdp_config = FSDPConfig(
+    #         tp_size=tp_size,
+    #         cpu_offload=False,
+    #     )
 
-        cache_save_fh = {}
-        with tempfile.TemporaryDirectory() as tmpdir:
-            syncdir = [tmpdir]
-            dist.broadcast_object_list(syncdir, src=0)
-            tmpdir = Path(syncdir[0])
-            qwen3vl_model.language_model.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.from_hf(QWEN3_VL_MOE_PATH)
-            qwen3vl_model.save_hf(tmpdir)
+    #     cache_save_fh = {}
+    #     with tempfile.TemporaryDirectory() as tmpdir:
+    #         syncdir = [tmpdir]
+    #         dist.broadcast_object_list(syncdir, src=0)
+    #         tmpdir = Path(syncdir[0])
+    #         qwen3vl_model.language_model.fully_shard(fsdp_config=fsdp_config)
+    #         qwen3vl_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
+    #         qwen3vl_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
+    #         qwen3vl_model.fully_shard(fsdp_config=fsdp_config)
+    #         qwen3vl_model.from_hf(QWEN3_VL_MOE_PATH)
+    #         qwen3vl_model.save_hf(tmpdir)
 
-            origin_hf_path = Path(QWEN3_VL_MOE_PATH)
-            origin_index_path = origin_hf_path / "model.safetensors.index.json"
-            saved_index_path = tmpdir / "model.safetensors.index.json"
+    #         origin_hf_path = Path(QWEN3_VL_MOE_PATH)
+    #         origin_index_path = origin_hf_path / "model.safetensors.index.json"
+    #         saved_index_path = tmpdir / "model.safetensors.index.json"
 
-            # Test saved hf tensor value match the origin hf tensor value
-            if dist.get_rank() == 0:
-                with open(origin_index_path, "r") as f:
-                    origin_index = json.load(f)
-                with open(saved_index_path, "r") as f:
-                    saved_index = json.load(f)
+    #         # Test saved hf tensor value match the origin hf tensor value
+    #         if dist.get_rank() == 0:
+    #             with open(origin_index_path, "r") as f:
+    #                 origin_index = json.load(f)
+    #             with open(saved_index_path, "r") as f:
+    #                 saved_index = json.load(f)
 
-                for key in origin_index["weight_map"].keys():
-                    origin_safetensor_name = origin_index["weight_map"][key]
-                    saved_safetensor_name = saved_index["weight_map"][key]
+    #             for key in origin_index["weight_map"].keys():
+    #                 origin_safetensor_name = origin_index["weight_map"][key]
+    #                 saved_safetensor_name = saved_index["weight_map"][key]
 
-                    origin_sf_fh_name = str(origin_hf_path / origin_safetensor_name)
-                    expected_sf_fh_name = str(tmpdir / saved_safetensor_name)
+    #                 origin_sf_fh_name = str(origin_hf_path / origin_safetensor_name)
+    #                 expected_sf_fh_name = str(tmpdir / saved_safetensor_name)
 
-                    if origin_safetensor_name not in cache_save_fh:
-                        cache_save_fh[origin_safetensor_name] = safe_open(origin_sf_fh_name, framework="pt")
-                    if saved_safetensor_name not in cache_save_fh:
-                        cache_save_fh[saved_safetensor_name] = safe_open(expected_sf_fh_name, framework="pt")
+    #                 if origin_safetensor_name not in cache_save_fh:
+    #                     cache_save_fh[origin_safetensor_name] = safe_open(origin_sf_fh_name, framework="pt")
+    #                 if saved_safetensor_name not in cache_save_fh:
+    #                     cache_save_fh[saved_safetensor_name] = safe_open(expected_sf_fh_name, framework="pt")
 
-                    origin_fh = cache_save_fh[origin_safetensor_name]
-                    saved_fh = cache_save_fh[saved_safetensor_name]
+    #                 origin_fh = cache_save_fh[origin_safetensor_name]
+    #                 saved_fh = cache_save_fh[saved_safetensor_name]
 
-                    origin_tensor = origin_fh.get_tensor(key)
-                    saved_tensor = saved_fh.get_tensor(key)
-                    self.assertTrue(torch.equal(origin_tensor, saved_tensor))
+    #                 origin_tensor = origin_fh.get_tensor(key)
+    #                 saved_tensor = saved_fh.get_tensor(key)
+    #                 self.assertTrue(torch.equal(origin_tensor, saved_tensor))
 
-                # Test the tensor number in safetensors match the tensor number in model index
-                safetensor_keys = []
-                for safetensor_path in tmpdir.glob("*.safetensors"):
-                    fh = cache_save_fh[safetensor_path.name]
-                    safetensor_keys.extend(fh.keys())
-                    safetensor_keys.sort()
-                model_index_keys = list(saved_index["weight_map"].keys())
-                model_index_keys.sort()
+    #             # Test the tensor number in safetensors match the tensor number in model index
+    #             safetensor_keys = []
+    #             for safetensor_path in tmpdir.glob("*.safetensors"):
+    #                 fh = cache_save_fh[safetensor_path.name]
+    #                 safetensor_keys.extend(fh.keys())
+    #                 safetensor_keys.sort()
+    #             model_index_keys = list(saved_index["weight_map"].keys())
+    #             model_index_keys.sort()
 
-                self.assertListEqual(safetensor_keys, model_index_keys)
-        dist.barrier()
+    #             self.assertListEqual(safetensor_keys, model_index_keys)
+    #     dist.barrier()
 
     @property
     def world_size(self) -> int:

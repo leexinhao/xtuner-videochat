@@ -16,7 +16,7 @@ from xtuner.v1.data_proto.templates import CHAT_TEMPLATE_MAP
 from xtuner.v1.utils import get_logger
 
 from ..data_item import CacheItem, VideoChat3DataItem
-from ..vlm_utils import apply_exif_orientation
+from ..utils import apply_exif_orientation
 from .base_mllm_tokenize_fn import BaseMLLMTokenizeFnConfig, BaseMLLMTokenizeFunction, load_image, replace_image_token
 
 logger = get_logger()
@@ -124,7 +124,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         self.image_processor.size["longest_edge"] = self.image_processor.max_pixels
 
         self.video_max_total_pixels = video_max_total_pixels
-        self.video_processor.max_total_pixels = video_max_total_pixels
+        self.video_processor.video_max_total_pixels = video_max_total_pixels
         self.video_processor.size["shortest_edge"] = frame_min_pixels
         self.video_processor.size["longest_edge"] = frame_max_pixels
         self.video_processor.min_frames = video_min_frames
