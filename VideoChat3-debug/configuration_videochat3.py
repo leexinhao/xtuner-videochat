@@ -131,6 +131,7 @@ class VideoChat3Config(PretrainedConfig):
         vision_config: Optional[dict[str, Any]] = None,
         text_config: Optional[dict[str, Any]] = None,
         image_token_id: int = 151655,
+        video_token_id: int = 151656,
         vision_start_token_id: int = 151652,
         vision_end_token_id: int = 151653,
         **kwargs,
@@ -138,6 +139,7 @@ class VideoChat3Config(PretrainedConfig):
         super().__init__(**kwargs)
 
         self.image_token_id = image_token_id
+        self.video_token_id = video_token_id
         self.vision_start_token_id = vision_start_token_id
         self.vision_end_token_id = vision_end_token_id
 
