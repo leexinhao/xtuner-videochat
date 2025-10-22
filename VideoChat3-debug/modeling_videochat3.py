@@ -756,10 +756,11 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
         if input_ids is None:
             special_image_mask = inputs_embeds == self.get_input_embeddings()(
                 torch.tensor(self.config.image_token_id, dtype=torch.long, device=inputs_embeds.device)
-            )
-            special_image_mask = special_image_mask.all(-1)
+            ) | (inputs_embeds == self.get_input_embeddings()(
+                torch.tensor(self.config.video_token_id, dtype=torch.long, device=inputs_embeds.device)
+            ))
         else:
-            special_image_mask = input_ids == self.config.image_token_id
+            special_image_mask = (input_ids == self.config.image_token_id) | (input_ids == self.config.video_token_id)
 
         n_image_tokens = special_image_mask.sum()
         special_image_mask = special_image_mask.unsqueeze(-1).expand_as(inputs_embeds).to(inputs_embeds.device)

@@ -57,7 +57,7 @@ class VideoChat3ForConditionalGeneration(BaseModel):
         self.language_model._init_load_spec()
 
         self.img_context_token_id = config.image_token_id
-        # self.video_context_token_id = config.image_token_id # NOTE use image_token_id for video
+        self.video_context_token_id = config.video_token_id
         self.vision_start_token_id = config.vision_start_token_id
         self.vision_end_token_id = config.vision_end_token_id
         self._hf_path: Path | None = None
@@ -171,7 +171,7 @@ class VideoChat3ForConditionalGeneration(BaseModel):
             B, N, C = inputs_embeds.shape
             inputs_embeds = inputs_embeds.reshape(B * N, C)
             input_ids = cast(torch.LongTensor, input_ids.reshape(B * N))
-            selected = input_ids == self.img_context_token_id
+            selected = (input_ids == self.img_context_token_id) | (input_ids == self.video_context_token_id)
 
             try:
                 inputs_embeds[selected] = inputs_embeds[selected] * 0.0 + vit_embeds.reshape(-1, C)

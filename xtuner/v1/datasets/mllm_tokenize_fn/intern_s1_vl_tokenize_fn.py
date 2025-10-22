@@ -317,12 +317,9 @@ class InternS1VLTokenizeFunction(BaseMLLMTokenizeFunction[InternS1DataItem]):
         input_ids = tokenized["input_ids"]
         labels = tokenized["labels"]
         input_ids, labels = self._truncated_input_and_labels(input_ids, labels)
-<<<<<<< HEAD
         assert (torch.tensor(input_ids) == self.image_token_id).sum() == sum(num_image_tokens), (
             "ERROR: image tokens are truncated"
         )
-=======
->>>>>>> 3fe7cb7 (refactor of multi_modal_get_item)
         ret = InternS1DataItem(
             input_ids=input_ids,
             labels=labels,
