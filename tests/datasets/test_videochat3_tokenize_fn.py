@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, AutoProcessor
 import json
 import parametrize
 
-VIDEOCHAT3_PATH = r"C:\Users\15204\Desktop\codes\xtuner-videochat\VideoChat3-debug" # os.environ.get("VIDEOCHAT3_PATH", "VideoChat3-4B")
+VIDEOCHAT3_PATH = os.environ.get("VIDEOCHAT3_PATH", "VideoChat3-2B")
 
 
 
