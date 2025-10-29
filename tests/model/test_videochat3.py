@@ -3,7 +3,7 @@ from packaging import version
 import parametrize
 import torch
 from xtuner._testing import patch_hf_rms_norm, DeterministicDDPTestCase
-from transformers import AutoTokenizer, AutoModelForVideoTextToText
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch.distributed as dist
 import tempfile
 from pathlib import Path
@@ -11,7 +11,7 @@ import json
 from safetensors import safe_open
 from unittest import skipIf
 import transformers
-from xtuner.v1.model.compose.videochat3.videochat3_config import VideoChat3DenseConfig, VideoChat3MoEConfig
+from xtuner.v1.model.compose.videochat3.videochat3_config import VideoChat3Dense2BConfig
 from xtuner.v1.loss.ce_loss import CELossConfig, CELossContextInputItem
 from xtuner.v1.model.moe.moe import SequenceContext
 from xtuner.v1.config import FSDPConfig
@@ -19,8 +19,7 @@ from xtuner.v1.utils.compile import maybe_compile
 from xtuner.v1.utils.test_utils import init_data_mesh
 
 # 设置环境变量路径 - 需要根据实际情况调整
-VIDEOCHAT3_DENSE_PATH = os.environ.get("VIDEOCHAT3_DENSE_PATH", "./VideoChat3-debug")
-VIDEOCHAT3_MOE_PATH = os.environ.get("VIDEOCHAT3_MOE_PATH", "./VideoChat3-debug")
+VIDEOCHAT3_DENSE_PATH = os.environ.get("VIDEOCHAT3_DENSE_PATH", "./VideoChat3-2B")
 
 
 @skipIf(version.parse(transformers.__version__) < version.parse("4.57.0"),
@@ -38,7 +37,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         maybe_compile.clear_compile_targets()
         
         # 加载 HuggingFace 模型作为参考
-        hf_model = AutoModelForVideoTextToText.from_pretrained(
+        hf_model = AutoModelForCausalLM.from_pretrained(
             VIDEOCHAT3_DENSE_PATH,
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
@@ -63,7 +62,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
 
         # 构建 XTuner VideoChat3 模型
         with torch.device("meta"):
-            model_cfg = VideoChat3DenseConfig()
+            model_cfg = VideoChat3Dense2BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
@@ -101,11 +100,11 @@ class TestVideoChat3(DeterministicDDPTestCase):
             ("cuda", 1, 1e-2)
         ],
     )
-    def test_qwen3vl_image_run(self, device, sp_size, tol):
+    def test_videochat3_image_run(self, device, sp_size, tol):
         self.create_pg(device)
         maybe_compile.clear_compile_targets()
-        hf_model = AutoModelForImageTextToText.from_pretrained(
-            QWEN3_VL_DENSE_PATH,
+        hf_model = AutoModelForCausalLM.from_pretrained(
+            VIDEOCHAT3_DENSE_PATH,
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
             device_map="cuda"
@@ -113,7 +112,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         # patch_hf_rms_norm(hf_model)
 
         rank = dist.get_rank()
-        tokenizer = AutoTokenizer.from_pretrained(QWEN3_VL_DENSE_PATH)
+        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH)
         image_str = '<|vision_start|><|image_pad|><|vision_end|>'
         input_ids = tokenizer(image_str + "吃葡萄不吐葡萄皮" * 20, return_tensors="pt").input_ids.to("cuda")
         pixel_values = torch.randn(4, 1536, device='cuda', dtype=torch.bfloat16)
@@ -135,7 +134,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         torch.cuda.empty_cache()
 
         with torch.device("meta"):
-            model_cfg = VideoChat3DenseConfig()
+            model_cfg = VideoChat3Dense2BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
@@ -175,7 +174,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         seq_ctx = seq_ctx_list[0]
 
         with torch.no_grad():
-            output = qwen3vl_model(
+            output = videochat3_model(
                 seq_ctx=seq_ctx,
                 loss_ctx=loss_ctx,
             )
@@ -195,7 +194,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         maybe_compile.clear_compile_targets()
         
         # 加载 HuggingFace 模型作为参考
-        hf_model = AutoModelForVideoTextToText.from_pretrained(
+        hf_model = AutoModelForCausalLM.from_pretrained(
             VIDEOCHAT3_DENSE_PATH,
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
@@ -230,7 +229,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
 
         # 构建 XTuner VideoChat3 模型
         with torch.device("meta"):
-            model_cfg = VideoChat3DenseConfig()
+            model_cfg = VideoChat3Dense2BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
@@ -289,7 +288,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         maybe_compile.clear_compile_targets()
         
         # 加载 HuggingFace 模型作为参考
-        hf_model = AutoModelForVideoTextToText.from_pretrained(
+        hf_model = AutoModelForCausalLM.from_pretrained(
             VIDEOCHAT3_DENSE_PATH,
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
@@ -315,7 +314,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
 
         # 构建 XTuner VideoChat3 模型
         with torch.device("meta"):
-            model_cfg = VideoChat3DenseConfig()
+            model_cfg = VideoChat3Dense2BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         fsdp_config = FSDPConfig(
@@ -372,7 +371,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
             maybe_compile.clear_compile_targets()
 
         # 加载 HuggingFace 模型作为参考
-        hf_model = AutoModelForVideoTextToText.from_pretrained(
+        hf_model = AutoModelForCausalLM.from_pretrained(
             VIDEOCHAT3_DENSE_PATH,
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
@@ -403,7 +402,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
 
         # 构建 XTuner VideoChat3 模型
         with torch.device("meta"):
-            model_cfg = VideoChat3DenseConfig()
+            model_cfg = VideoChat3Dense2BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         fsdp_config = FSDPConfig(
@@ -467,7 +466,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         """测试保存为 HuggingFace 格式"""
         self.create_pg(device)
         with torch.device("meta"):
-            model_cfg = VideoChat3DenseConfig()
+            model_cfg = VideoChat3Dense2BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         fsdp_config = FSDPConfig(

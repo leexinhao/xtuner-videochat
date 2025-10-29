@@ -6,9 +6,8 @@ from pydantic import BaseModel, ConfigDict
 from typing_extensions import Self
 
 from xtuner.v1.float8 import Float8Config
-from xtuner.v1.model.dense.qwen3 import Qwen3Dense8BConfig
-from xtuner.v1.model.moe.moe import MoEConfig, TransformerConfig
-from xtuner.v1.model.moe.qwen3 import Qwen3MoE235BA22Config
+from xtuner.v1.model.dense.qwen3 import Qwen3Dense8BConfig, Qwen3Dense4BConfig, Qwen3Dense1_7BConfig
+from xtuner.v1.model.moe.moe import TransformerConfig
 from xtuner.v1.utils import get_logger
 
 
@@ -103,38 +102,11 @@ class VideoChat3BaseConfig(BaseModel):
     def from_hf(cls, hf_path: str | Path) -> Self:
         raise NotImplementedError
 
-
-class VideoChat3MoEConfig(VideoChat3BaseConfig):
-    # 基于VideoChat3-debug/config.json的完整配置
+class VideoChat3Dense8BConfig(VideoChat3BaseConfig):
+    # 简化版本，使用dense模型而不是MoE
     vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig()
     projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
-    text_config: MoEConfig = Qwen3MoE235BA22Config(
-        vocab_size=151936,
-        hidden_size=2048,
-        intermediate_size=6144,
-        num_attention_heads=32,
-        num_hidden_layers=48,
-        num_experts=128,
-        num_experts_per_tok=8,
-        num_key_value_heads=4,
-        hidden_act="silu",
-        max_position_embeddings=262144,
-        rms_norm_eps=1e-06,
-        attention_bias=False,
-        attention_dropout=0.0,
-        initializer_range=0.02,
-        head_dim=128,
-        moe_intermediate_size=768,
-        norm_topk_prob=True,
-        mlp_only_layers=[],
-        rope_theta=5000000,
-        use_cache=True,
-        rope_scaling={
-            "rope_type": "default",
-            "mrope_interleaved": True,
-            "mrope_section": [24, 20, 20]
-        }
-    )
+    text_config: Qwen3Dense8BConfig = Qwen3Dense8BConfig(vocab_size=151936)
 
     @property
     def hf_config(self):
@@ -147,12 +119,26 @@ class VideoChat3MoEConfig(VideoChat3BaseConfig):
         )
         return None
 
-
-class VideoChat3DenseConfig(VideoChat3BaseConfig):
-    # 简化版本，使用dense模型而不是MoE
+class VideoChat3Dense4BConfig(VideoChat3BaseConfig):
     vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig()
     projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
-    text_config: Qwen3Dense8BConfig = Qwen3Dense8BConfig(vocab_size=151936)
+    text_config: Qwen3Dense4BConfig = Qwen3Dense4BConfig(vocab_size=151936)
+
+    @property
+    def hf_config(self):
+        # TODO(pppppM) Support saving HuggingFace format config
+        logger.warning(
+            f"{type(self)} does not support conversion to HuggingFace config format. "
+            "Only the original HuggingFace config will be retained in the saved HuggingFace format checkpoint. "
+            f"If you have changed the default values in {type(self)}, it may cause the config in the saved "
+            "HuggingFace format checkpoint to not match the weights."
+        )
+        return None
+
+class VideoChat3Dense2BConfig(VideoChat3BaseConfig):
+    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig()
+    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
+    text_config: Qwen3Dense1_7BConfig = Qwen3Dense1_7BConfig(vocab_size=151936)
 
     @property
     def hf_config(self):
