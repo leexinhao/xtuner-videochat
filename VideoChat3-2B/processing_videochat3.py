@@ -63,7 +63,6 @@ class VideoChat3Processor(ProcessorMixin):
     """
 
     attributes = ["image_processor", "tokenizer", "video_processor"]
-    valid_kwargs = [ "chat_template"]
     image_processor_class = "AutoImageProcessor"
     tokenizer_class = ("Qwen2Tokenizer", "Qwen2TokenizerFast")
     video_processor_class = "AutoVideoProcessor"
@@ -76,7 +75,7 @@ class VideoChat3Processor(ProcessorMixin):
         chat_template=None,
         **kwargs,
     ):
-        super().__init__(image_processor, tokenizer, video_processor, chat_template=chat_template)
+        
         self.image_token = "<|image_pad|>" if not hasattr(tokenizer, "image_token") else tokenizer.image_token
         self.video_token = "<|video_pad|>" if not hasattr(tokenizer, "video_token") else tokenizer.video_token
         self.image_token_id = (
@@ -89,7 +88,7 @@ class VideoChat3Processor(ProcessorMixin):
             if getattr(tokenizer, "video_token_id", None)
             else tokenizer.convert_tokens_to_ids(self.video_token)
         )
-        
+        super().__init__(image_processor, tokenizer, video_processor, chat_template=chat_template)
         self.vision_start_token = (
             "<|vision_start|>" if not hasattr(tokenizer, "vision_start_token") else tokenizer.vision_start_token
         )
@@ -133,10 +132,8 @@ class VideoChat3Processor(ProcessorMixin):
                 tensor, or a nested list of 3D frames. Both channels-first and channels-last formats are supported.
             return_tensors (`str` or [`~utils.TensorType`], *optional*):
                 If set, will return tensors of a particular framework. Acceptable values are:
-                - `'tf'`: Return TensorFlow `tf.constant` objects.
                 - `'pt'`: Return PyTorch `torch.Tensor` objects.
                 - `'np'`: Return NumPy `np.ndarray` objects.
-                - `'jax'`: Return JAX `jnp.ndarray` objects.
 
         Returns:
             [`BatchFeature`]: A [`BatchFeature`] with the following fields:
@@ -147,6 +144,8 @@ class VideoChat3Processor(ProcessorMixin):
               `None`).
             - **pixel_values** -- Pixel values to be fed to a model. Returned when `images` is not `None`.
             - **pixel_values_videos** -- Pixel values of videos to be fed to a model. Returned when `videos` is not `None`.
+            - **image_grid_thw** -- List of image 3D grid in LLM. Returned when `images` is not `None`.
+            - **video_grid_thw** -- List of video 3D grid in LLM. Returned when `videos` is not `None`.
         """
         if images is None and videos is None and text is None:
             raise ValueError("You have to specify at least one of `images` or `text`.")

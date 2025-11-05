@@ -45,7 +45,6 @@ class VideoChat3ForConditionalGeneration(BaseModel):
 
         self.vision_tower = VideoChat3VisionModel(vision_config)
         self.multi_modal_projector = VideoChat3MultiModalProjector(config.projector_config)
-
         self.language_model = text_config.build()
 
         # TODO(YHC): This is a hack to make the language model compatible with HF
@@ -146,6 +145,7 @@ class VideoChat3ForConditionalGeneration(BaseModel):
         vit_embeds = self.multi_modal_projector(vit_embeds)
         return vit_embeds
 
+
     def forward(
         self,
         seq_ctx: SequenceContext,
@@ -154,6 +154,7 @@ class VideoChat3ForConditionalGeneration(BaseModel):
         input_ids = seq_ctx.input_ids
         pixel_values = seq_ctx.pixel_values
         image_grid_thw = seq_ctx.image_grid_thw
+        # NOTE image和video share pixel_values
         sequence_parallel_mesh = seq_ctx.sequence_parallel_mesh
 
         inputs_embeds = self.language_model.embed_tokens(input_ids)  # type: ignore
