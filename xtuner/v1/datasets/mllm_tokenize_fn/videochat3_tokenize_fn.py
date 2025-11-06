@@ -124,7 +124,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         self.image_processor.size["longest_edge"] = self.image_processor.max_pixels
 
         self.video_max_total_pixels = video_max_total_pixels
-        self.video_processor.max_total_pixels = video_max_total_pixels
+        self.video_processor.video_max_total_pixels = video_max_total_pixels
         self.video_processor.size["shortest_edge"] = frame_min_pixels
         self.video_processor.size["longest_edge"] = frame_max_pixels
         self.video_processor.min_frames = video_min_frames
