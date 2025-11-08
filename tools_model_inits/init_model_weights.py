@@ -8,7 +8,7 @@ python init_model_weights.py
 
 该脚本会：
 1. 从ViT-SO-400M加载vision权重
-2. 从Qwen3-1.7B加载language权重  
+2. 从Qwen3加载language权重  
 3. 创建完整的VideoChat3模型并保存
 """
 
@@ -246,18 +246,20 @@ class VideoChat3InterpPosEmb(nn.Module):
         self.max_clip_length = max_clip_length
         self.interpolation_mode = interpolation_mode
         self.weight = nn.Parameter(torch.empty(height, width, dim))
-        self.register_buffer(
-            "time_weight",
-            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(dim, np.arange(max_clip_length, dtype=np.float32)))
-            .float()
-            .unsqueeze(1),
-            persistent=False,
-        )
+        self.time_weight = nn.Parameter(torch.empty(max_clip_length, 1, dim))
+        self.dim = dim 
 
         self.reset_parameters()
 
     def reset_parameters(self):
         nn.init.normal_(self.weight)
+        initial_time_weight = (
+            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(self.dim, np.arange(self.max_clip_length, dtype=np.float32)))
+            .float()
+            .unsqueeze(1)
+        )
+        with torch.no_grad():
+            self.time_weight.copy_(initial_time_weight)
 
     def forward(self, x: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
         pos_embs = []
@@ -841,9 +843,13 @@ class VideoChat3ModelOutputWithPast(BaseModelOutputWithPast):
     image_hidden_states (`torch.FloatTensor`, *optional*):
         A `torch.FloatTensor` of size `(batch_size, num_images, sequence_length, hidden_size)`.
         image_hidden_states of the model produced by the vision encoder and after projecting the last hidden state.
+    video_hidden_states (`torch.FloatTensor`, *optional*):
+        A `torch.FloatTensor` of size `(batch_size, num_videos, sequence_length, hidden_size)`.
+        video_hidden_states of the model produced by the vision encoder and after projecting the last hidden state.
     """
 
     image_hidden_states: Optional[torch.FloatTensor] = None
+    video_hidden_states: Optional[torch.FloatTensor] = None
 
 
 @auto_docstring(
@@ -852,7 +858,7 @@ class VideoChat3ModelOutputWithPast(BaseModelOutputWithPast):
     """
 )
 class VideoChat3Model(VideoChat3PreTrainedModel):
-    _checkpoint_conversion_mapping = {"language_model.model": "language_model"}
+    _checkpoint_conversion_mapping = {}
 
     def __init__(self, config: VideoChat3Config):
         super().__init__(config)
@@ -897,8 +903,27 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
         vision_features = self.multi_modal_projector(vision_features)
         return vision_features
 
+    def get_video_features(
+        self, pixel_values_videos: torch.FloatTensor, video_grid_thw: Optional[torch.LongTensor] = None
+    ):
+        """
+        Encodes videos into continuous embeddings that can be forwarded to the language model. The deepstack visual features are also returned.
+
+        Args:
+            pixel_values_videos (`torch.FloatTensor` of shape `(batch_size, num_channels, image_size, image_size)`):
+                The tensors corresponding to the input videos.
+            video_grid_thw (`torch.LongTensor` of shape `(num_videos, 3)`, *optional*):
+                The temporal, height and width of feature shape of each video in LLM.
+        """
+        # Same implementation as for images
+        return self.get_image_features(pixel_values_videos, video_grid_thw)
+
     def get_placeholder_mask(
-        self, input_ids: torch.LongTensor, inputs_embeds: torch.FloatTensor, image_features: torch.FloatTensor
+        self,
+        input_ids: torch.LongTensor,
+        inputs_embeds: torch.FloatTensor,
+        image_features: Optional[torch.FloatTensor] = None,
+        video_features: Optional[torch.FloatTensor] = None,
     ):
         """
         Obtains multimodal placeholder mask from `input_ids` or `inputs_embeds`, and checks that the placeholder token count is
@@ -907,48 +932,77 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
         if input_ids is None:
             special_image_mask = inputs_embeds == self.get_input_embeddings()(
                 torch.tensor(self.config.image_token_id, dtype=torch.long, device=inputs_embeds.device)
-            ) | (inputs_embeds == self.get_input_embeddings()(
+            )
+            special_image_mask = special_image_mask.all(-1)
+            special_video_mask = inputs_embeds == self.get_input_embeddings()(
                 torch.tensor(self.config.video_token_id, dtype=torch.long, device=inputs_embeds.device)
-            ))
+            )
+            special_video_mask = special_video_mask.all(-1)
         else:
-            special_image_mask = (input_ids == self.config.image_token_id) | (input_ids == self.config.video_token_id)
+            special_image_mask = (input_ids == self.config.image_token_id)
+            special_video_mask = (input_ids == self.config.video_token_id)
 
         n_image_tokens = special_image_mask.sum()
         special_image_mask = special_image_mask.unsqueeze(-1).expand_as(inputs_embeds).to(inputs_embeds.device)
-        n_image_features = image_features.shape[0] * image_features.shape[1]
-        if inputs_embeds[special_image_mask].numel() != image_features.numel():
+        if image_features is not None and inputs_embeds[special_image_mask].numel() != image_features.numel():
             raise ValueError(
-                f"Image features and image tokens do not match: tokens: {n_image_tokens}, features {n_image_features}"
+                f"Image features and image tokens do not match: tokens: {n_image_tokens}, features {image_features.shape[0]}"
             )
-        return special_image_mask
+
+        n_video_tokens = special_video_mask.sum()
+        special_video_mask = special_video_mask.unsqueeze(-1).expand_as(inputs_embeds).to(inputs_embeds.device)
+        if video_features is not None and inputs_embeds[special_video_mask].numel() != video_features.numel():
+            raise ValueError(
+                f"Videos features and video tokens do not match: tokens: {n_video_tokens}, features {video_features.shape[0]}"
+            )
+
+        return special_image_mask, special_video_mask
 
     @can_return_tuple
     @auto_docstring
     def forward(
         self,
-        input_ids: Optional[torch.LongTensor] = None,
-        pixel_values: Optional[torch.FloatTensor] = None,
-        grid_thws: Optional[torch.Tensor] = None,
+        input_ids: torch.LongTensor = None,
         attention_mask: Optional[torch.Tensor] = None,
         position_ids: Optional[torch.LongTensor] = None,
         past_key_values: Optional[Cache] = None,
         inputs_embeds: Optional[torch.FloatTensor] = None,
+        pixel_values: Optional[torch.Tensor] = None,
+        pixel_values_videos: Optional[torch.FloatTensor] = None,
+        image_grid_thw: Optional[torch.LongTensor] = None,
+        video_grid_thw: Optional[torch.LongTensor] = None,
         cache_position: Optional[torch.LongTensor] = None,
         **kwargs: Unpack[TransformersKwargs],
     ) -> Union[tuple, VideoChat3ModelOutputWithPast]:
+        r"""
+        image_grid_thw (`torch.LongTensor` of shape `(num_images, 3)`, *optional*):
+            The temporal, height and width of feature shape of each image in LLM.
+        video_grid_thw (`torch.LongTensor` of shape `(num_videos, 3)`, *optional*):
+            The temporal, height and width of feature shape of each video in LLM.
+        """
         if (input_ids is None) ^ (inputs_embeds is not None):
             raise ValueError("You must specify exactly one of input_ids or inputs_embeds")
 
         if inputs_embeds is None:
             inputs_embeds = self.get_input_embeddings()(input_ids)
 
+
+        image_mask = None
+        video_mask = None
+
         if pixel_values is not None:
-            image_features = self.get_image_features(pixel_values=pixel_values, grid_thws=grid_thws)
-            image_features = image_features.to(inputs_embeds.device, inputs_embeds.dtype)
-            special_image_mask = self.get_placeholder_mask(
-                input_ids, inputs_embeds=inputs_embeds, image_features=image_features
+            image_embeds = self.get_image_features(pixel_values, image_grid_thw).to(inputs_embeds.device, inputs_embeds.dtype)
+            image_mask, _ = self.get_placeholder_mask(
+                input_ids, inputs_embeds=inputs_embeds, image_features=image_embeds
             )
-            inputs_embeds = inputs_embeds.masked_scatter(special_image_mask, image_features)
+            inputs_embeds = inputs_embeds.masked_scatter(image_mask, image_embeds)
+
+        if pixel_values_videos is not None:
+            video_embeds = self.get_video_features(pixel_values_videos, video_grid_thw).to(inputs_embeds.device, inputs_embeds.dtype)
+            _, video_mask = self.get_placeholder_mask(
+                input_ids, inputs_embeds=inputs_embeds, video_features=video_embeds
+            )
+            inputs_embeds = inputs_embeds.masked_scatter(video_mask, video_embeds)
 
         outputs = self.language_model(
             attention_mask=attention_mask,
@@ -964,7 +1018,8 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
             past_key_values=outputs.past_key_values,
             hidden_states=outputs.hidden_states,
             attentions=outputs.attentions,
-            image_hidden_states=image_features if pixel_values is not None else None,
+            image_hidden_states=image_embeds if pixel_values is not None else None,
+            video_hidden_states=video_embeds if pixel_values_videos is not None else None,
         )
 
 
@@ -988,6 +1043,9 @@ class VideoChat3CausalLMOutputWithPast(ModelOutput):
     image_hidden_states (`torch.FloatTensor`, *optional*):
         A `torch.FloatTensor` of size `(batch_size, num_images, sequence_length, hidden_size)`.
         image_hidden_states of the model produced by the vision encoder and after projecting the last hidden state.
+    video_hidden_states (`torch.FloatTensor`, *optional*):
+        A `torch.FloatTensor` of size `(batch_size, num_videos, sequence_length, hidden_size)`.
+        video_hidden_states of the model produced by the vision encoder and after projecting the last hidden state.
     """
 
     loss: Optional[torch.FloatTensor] = None
@@ -996,6 +1054,8 @@ class VideoChat3CausalLMOutputWithPast(ModelOutput):
     hidden_states: Optional[tuple[torch.FloatTensor]] = None
     attentions: Optional[tuple[torch.FloatTensor]] = None
     image_hidden_states: Optional[torch.FloatTensor] = None
+    video_hidden_states: Optional[torch.FloatTensor] = None
+
 
 
 @auto_docstring(
@@ -1004,12 +1064,7 @@ class VideoChat3CausalLMOutputWithPast(ModelOutput):
     """
 )
 class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMixin):
-    _checkpoint_conversion_mapping = {
-        "^language_model.model": "model.language_model",
-        "^vision_tower": "model.vision_tower",
-        "^multi_modal_projector": "model.multi_modal_projector",
-        "^language_model.lm_head": "lm_head",
-    }
+    _checkpoint_conversion_mapping = {}
     _tied_weights_keys = ["lm_head.weight"]
 
     def __init__(self, config: VideoChat3Config):
@@ -1036,12 +1091,24 @@ class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMi
     def get_image_features(
         self,
         pixel_values: torch.FloatTensor,
-        grid_thws: torch.Tensor,
+        image_grid_thw: torch.Tensor,
         **kwargs,
     ):
         return self.model.get_image_features(
             pixel_values=pixel_values,
-            grid_thws=grid_thws,
+            image_grid_thw=image_grid_thw,
+            **kwargs,
+        )
+
+    def get_video_features(
+        self, 
+        pixel_values_videos: torch.FloatTensor,
+        video_grid_thw: torch.Tensor,
+        **kwargs,
+    ):
+        return self.model.get_video_features(
+            pixel_values_videos=pixel_values_videos,
+            video_grid_thw=video_grid_thw,
             **kwargs,
         )
 
@@ -1064,15 +1131,16 @@ class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMi
         self,
         input_ids: Optional[torch.LongTensor] = None,
         pixel_values: Optional[torch.FloatTensor] = None,
+        image_grid_thw: Optional[torch.Tensor] = None,
+        pixel_values_videos: Optional[torch.FloatTensor] = None,
+        video_grid_thw: Optional[torch.LongTensor] = None,
         attention_mask: Optional[torch.Tensor] = None,
         position_ids: Optional[torch.LongTensor] = None,
         past_key_values: Optional[Cache] = None,
         inputs_embeds: Optional[torch.FloatTensor] = None,
-        grid_thws: Optional[torch.Tensor] = None,
         labels: Optional[torch.LongTensor] = None,
         cache_position: Optional[torch.LongTensor] = None,
         logits_to_keep: Union[int, torch.Tensor] = 0,
-        image_sizes: Optional[torch.Tensor] = None,
         **kwargs: Unpack[TransformersKwargs],
     ) -> Union[tuple, VideoChat3CausalLMOutputWithPast]:
         r"""
@@ -1110,13 +1178,14 @@ class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMi
         outputs = self.model(
             input_ids=input_ids,
             pixel_values=pixel_values,
+            image_grid_thw=image_grid_thw,
+            pixel_values_videos=pixel_values_videos,
+            video_grid_thw=video_grid_thw,
             attention_mask=attention_mask,
             position_ids=position_ids,
             past_key_values=past_key_values,
-            inputs_embeds=inputs_embeds,
-            grid_thws=grid_thws,
+            inputs_embeds=inputs_embeds,    
             cache_position=cache_position,
-            image_sizes=image_sizes,
             **kwargs,
         )
 
@@ -1138,6 +1207,7 @@ class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMi
             hidden_states=outputs.hidden_states,
             attentions=outputs.attentions,
             image_hidden_states=outputs.image_hidden_states,
+            video_hidden_states=outputs.video_hidden_states,
         )
 
     def prepare_inputs_for_generation(
@@ -1146,7 +1216,9 @@ class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMi
         past_key_values=None,
         inputs_embeds=None,
         pixel_values=None,
-        grid_thws=None,
+        image_grid_thw=None,
+        pixel_values_videos=None,
+        video_grid_thw=None,
         attention_mask=None,
         cache_position=None,
         logits_to_keep=None,
@@ -1161,14 +1233,19 @@ class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMi
             attention_mask=attention_mask,
             cache_position=cache_position,
             logits_to_keep=logits_to_keep,
-            grid_thws=grid_thws,
+            pixel_values=pixel_values,
+            pixel_values_videos=pixel_values_videos,
+            image_grid_thw=image_grid_thw,
+            video_grid_thw=video_grid_thw,
             **kwargs,
         )
 
-        if cache_position[0] == 0:
+        is_decoding_step = ((model_inputs["inputs_embeds"] is not None) and (model_inputs["inputs_embeds"].shape[1] == 1)) or ((model_inputs["input_ids"] is not None) and (model_inputs["input_ids"].shape[1] == 1)) 
+        if cache_position[0] != 0 and is_decoding_step:
             # If we're in cached decoding stage, pixel values should be None because input ids do not contain special image token anymore
             # Otherwise we need pixel values to be passed to model
-            model_inputs["pixel_values"] = pixel_values
+            model_inputs["pixel_values"] = None
+            model_inputs["pixel_values_videos"] = None
 
         return model_inputs
 
@@ -1214,9 +1291,9 @@ def main():
     print("=" * 40)
     
     # 设置路径
-    vit_path = "/home/lixinhao/models/MoonViT-SO-400M"
-    qwen3_path = "/home/lixinhao/models/Qwen3-1.7B"
-    current_dir = "/home/lixinhao/xtuner-videochat/VideoChat3-2B"
+    vit_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/MoonViT-SO-400M"
+    qwen3_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-4B-Instruct-2507"
+    current_dir = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-4B"
     output_path = os.path.join(current_dir, "initialized_model")
     
     try:
@@ -1248,7 +1325,7 @@ def main():
         print("  加载MoonViT权重...")
         vit_weights = load_weights_from_safetensors(vit_path)
         print(f"  ✅ 加载了 {len(vit_weights)} 个MoonViT权重")
-        
+
         # 加载Qwen3权重
         print("  加载Qwen3权重...")
         qwen3_weights = load_weights_from_safetensors(qwen3_path)

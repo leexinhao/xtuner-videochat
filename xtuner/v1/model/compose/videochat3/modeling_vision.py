@@ -94,19 +94,22 @@ class VideoChat3InterpPosEmb(nn.Module):
         self.max_clip_length = max_clip_length
         self.interpolation_mode = interpolation_mode
         self.weight = nn.Parameter(torch.empty(height, width, dim))
-        self.register_buffer(
-            "time_weight",
-            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(dim, np.arange(max_clip_length, dtype=np.float32)))
-            .float()
-            .unsqueeze(1),
-            persistent=False,
-        )
+        self.time_weight = nn.Parameter(torch.empty(max_clip_length, 1, dim))
+        self.dim = dim  # Store dim for reset_parameters
 
         self.reset_parameters()
 
     def reset_parameters(self):
         nn.init.normal_(self.weight)
+        initial_time_weight = (
+            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(self.dim, np.arange(self.max_clip_length, dtype=np.float32)))
+            .float()
+            .unsqueeze(1)
+        )
+        with torch.no_grad():
+            self.time_weight.copy_(initial_time_weight)
 
+            
     def forward(self, x: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
         pos_embs = []
         for t, h, w in grid_thws.tolist():
@@ -599,6 +602,19 @@ class VideoChat3VisionModel(BaseModel):
     def get_input_embeddings(self):
         return self.patch_embed.pos_emb
 
+    def split_grid_thws_clip_by_clip(self, grid_thws: torch.Tensor) -> torch.Tensor:
+        # 将grid_t分割成多段，每段的长度为temporal_merge_size
+        tmp_thw_list = []
+        for t, h, w in grid_thws.tolist():
+            if t > self.config.temporal_merge_size:
+                for _ in range(self.config.temporal_merge_size, t, self.config.temporal_merge_size):
+                    tmp_thw_list.append([self.config.temporal_merge_size, h, w])
+                tmp_thw_list.append([t % self.config.temporal_merge_size, h, w])
+            else:
+                tmp_thw_list.append([t, h, w])
+        return torch.tensor(tmp_thw_list, device=grid_thws.device, dtype=grid_thws.dtype)
+        
+        
     def forward(self, pixel_values: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
         """
         Args:
@@ -608,6 +624,7 @@ class VideoChat3VisionModel(BaseModel):
         Returns:
             torch.Tensor: The output tokens.
         """
+        grid_thws = self.split_grid_thws_clip_by_clip(grid_thws)
         hidden_states = self.patch_embed(pixel_values, grid_thws)
         hidden_states = self.encoder(hidden_states, grid_thws)
         hidden_states = patch_merger(hidden_states, grid_thws, merge_kernel_size=self.config.merge_kernel_size)

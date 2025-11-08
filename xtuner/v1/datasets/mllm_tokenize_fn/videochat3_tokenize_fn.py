@@ -209,6 +209,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         visual_processed = processor.preprocess(video_path, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
         video_tensor = visual_processed["pixel_values_videos"]
+        assert len(visual_processed["video_grid_thw"]) == 1, f"video_grid_thw should have only one element, but got {len(visual_processed['video_grid_thw'])}"
         grid_thw = visual_processed["video_grid_thw"][0]
 
         if isinstance(video_tensor, list):
