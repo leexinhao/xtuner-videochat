@@ -99,7 +99,7 @@ class VideoChat3VideoProcessorInitKwargs(VideosKwargs):
 class VideoChat3VideoProcessor(BaseVideoProcessor):
     resample = PILImageResampling.BICUBIC
     size = {"shortest_edge": 128 * 32 * 32, "longest_edge": 768 * 32 * 32}
-    video_max_total_pixels = 768 * 32 * 32
+    video_max_total_pixels = 1000000000 * 32 * 32
     image_mean = [0.5, 0.5, 0.5]
     image_std = [0.5, 0.5, 0.5]
     do_resize = True

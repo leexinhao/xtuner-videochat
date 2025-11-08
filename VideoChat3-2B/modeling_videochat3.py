@@ -95,18 +95,19 @@ class VideoChat3InterpPosEmb(nn.Module):
         self.max_clip_length = max_clip_length
         self.interpolation_mode = interpolation_mode
         self.weight = nn.Parameter(torch.empty(height, width, dim))
-        self.register_buffer(
-            "time_weight",
-            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(dim, np.arange(max_clip_length, dtype=np.float32)))
-            .float()
-            .unsqueeze(1),
-            persistent=False,
-        )
-
+        self.time_weight = nn.Parameter(torch.empty(max_clip_length, 1, dim))
+        self.dim = dim  # Store dim for reset_parameters
         self.reset_parameters()
 
     def reset_parameters(self):
         nn.init.normal_(self.weight)
+        initial_time_weight = (
+            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(self.dim, np.arange(self.max_clip_length, dtype=np.float32)))
+            .float()
+            .unsqueeze(1)
+        )
+        with torch.no_grad():
+            self.time_weight.copy_(initial_time_weight)
 
     def forward(self, x: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
         pos_embs = []
@@ -610,16 +611,30 @@ class VideoChat3VisionModel(VideoChat3VisionPreTrainedModel):
     def get_input_embeddings(self):
         return self.patch_embed.pos_emb
 
+    def split_grid_thws_clip_by_clip(self, grid_thws: torch.Tensor) -> torch.Tensor:
+        # 将grid_t分割成多段，每段的长度为temporal_merge_size
+        tmp_thw_list = []
+        for t, h, w in grid_thws.tolist():
+            if t > self.config.temporal_merge_size:
+                for _ in range(self.config.temporal_merge_size, t, self.config.temporal_merge_size):
+                    tmp_thw_list.append([self.config.temporal_merge_size, h, w])
+                tmp_thw_list.append([t % self.config.temporal_merge_size, h, w])
+            else:
+                tmp_thw_list.append([t, h, w])
+        return torch.tensor(tmp_thw_list, device=grid_thws.device, dtype=grid_thws.dtype)
+        
     @auto_docstring
     def forward(self, pixel_values: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
         """
         Args:
             pixel_values (torch.Tensor): The input pixel values.
-            grid_thws (torch.Tensor): The grid height and width.
+            grid_thws (torch.Tensor): (num_thws, 3)The grid temporal, height and width.
 
         Returns:
             torch.Tensor: The output tokens.
         """
+
+        grid_thws = self.split_grid_thws_clip_by_clip(grid_thws)
         hidden_states = self.patch_embed(pixel_values, grid_thws)
         hidden_states = self.encoder(hidden_states, grid_thws)
         hidden_states = patch_merger(hidden_states, grid_thws, merge_kernel_size=self.config.merge_kernel_size)
@@ -705,7 +720,7 @@ class VideoChat3ModelOutputWithPast(BaseModelOutputWithPast):
     """
 )
 class VideoChat3Model(VideoChat3PreTrainedModel):
-    _checkpoint_conversion_mapping = {"language_model.model": "language_model"}
+    _checkpoint_conversion_mapping = {}
 
     def __init__(self, config: VideoChat3Config):
         super().__init__(config)
@@ -786,20 +801,21 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
             )
             special_video_mask = special_video_mask.all(-1)
         else:
-            special_image_mask = (input_ids == self.config.image_token_id) | (input_ids == self.config.video_token_id)
+            special_image_mask = (input_ids == self.config.image_token_id)
+            special_video_mask = (input_ids == self.config.video_token_id)
 
         n_image_tokens = special_image_mask.sum()
         special_image_mask = special_image_mask.unsqueeze(-1).expand_as(inputs_embeds).to(inputs_embeds.device)
         if image_features is not None and inputs_embeds[special_image_mask].numel() != image_features.numel():
             raise ValueError(
-                f"Image features and image tokens do not match: tokens: {n_image_tokens}, features {image_features.shape[0]}"
+                f"Image features and image tokens do not match: tokens: {n_image_tokens}, features {image_features.shape}"
             )
 
         n_video_tokens = special_video_mask.sum()
         special_video_mask = special_video_mask.unsqueeze(-1).expand_as(inputs_embeds).to(inputs_embeds.device)
         if video_features is not None and inputs_embeds[special_video_mask].numel() != video_features.numel():
             raise ValueError(
-                f"Videos features and video tokens do not match: tokens: {n_video_tokens}, features {video_features.shape[0]}"
+                f"Videos features and video tokens do not match: tokens: {n_video_tokens}, features {video_features.shape}"
             )
 
         return special_image_mask, special_video_mask
@@ -837,16 +853,14 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
         video_mask = None
 
         if pixel_values is not None:
-            image_embeds = self.get_image_features(pixel_values, image_grid_thw)
-            image_embeds = torch.cat(image_embeds, dim=0).to(inputs_embeds.device, inputs_embeds.dtype)
+            image_embeds = self.get_image_features(pixel_values, image_grid_thw).to(inputs_embeds.device, inputs_embeds.dtype)
             image_mask, _ = self.get_placeholder_mask(
                 input_ids, inputs_embeds=inputs_embeds, image_features=image_embeds
             )
             inputs_embeds = inputs_embeds.masked_scatter(image_mask, image_embeds)
 
         if pixel_values_videos is not None:
-            video_embeds = self.get_video_features(pixel_values_videos, video_grid_thw)
-            video_embeds = torch.cat(video_embeds, dim=0).to(inputs_embeds.device, inputs_embeds.dtype)
+            video_embeds = self.get_video_features(pixel_values_videos, video_grid_thw).to(inputs_embeds.device, inputs_embeds.dtype)
             _, video_mask = self.get_placeholder_mask(
                 input_ids, inputs_embeds=inputs_embeds, video_features=video_embeds
             )
@@ -911,12 +925,7 @@ class VideoChat3CausalLMOutputWithPast(ModelOutput):
     """
 )
 class VideoChat3ForConditionalGeneration(VideoChat3PreTrainedModel, GenerationMixin):
-    _checkpoint_conversion_mapping = {
-        "^language_model.model": "model.language_model",
-        "^vision_tower": "model.vision_tower",
-        "^multi_modal_projector": "model.multi_modal_projector",
-        "^language_model.lm_head": "lm_head",
-    }
+    _checkpoint_conversion_mapping = {}
     _tied_weights_keys = ["lm_head.weight"]
 
     def __init__(self, config: VideoChat3Config):
