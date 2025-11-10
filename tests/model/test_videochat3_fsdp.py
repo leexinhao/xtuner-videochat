@@ -131,7 +131,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         # patch_hf_rms_norm(hf_model)
 
         rank = dist.get_rank()
-        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH)
+        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
         image_str = '<|vision_start|><|image_pad|><|vision_end|>'
         input_ids = tokenizer(image_str + "吃葡萄不吐葡萄皮" * 20, return_tensors="pt").input_ids.to("cuda")
         pixel_values = torch.randn(4, 588, device='cuda', dtype=torch.bfloat16)
@@ -168,7 +168,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
         videochat3_model.fully_shard(fsdp_config=fsdp_config)
 
-        videochat3_model.from_hf(VideoChat3Dense2BConfig)
+        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
         videochat3_model.eval()
 
         shift_input_ids = input_ids[:, :-1]
@@ -230,10 +230,10 @@ class TestVideoChat3(DeterministicDDPTestCase):
         # patch_hf_rms_norm(hf_model)
 
         rank = dist.get_rank()
-        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH)
-        image_str = '看这张图 <|vision_start|><|image_pad|><|vision_end|> 和 这张图<|vision_start|><|image_pad|><|vision_end|>'
+        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
+        image_str = '看这张图 <|vision_start|><|image_pad|><|vision_end|> 和 这张图<|vision_start|><|image_pad|><|image_pad|><|image_pad|><|vision_end|>'
         input_ids = tokenizer(image_str + "它们有什么区别" * 20, return_tensors="pt").input_ids.to("cuda")
-        pixel_values = torch.randn(4 + 12, 588, device='cuda', dtype=torch.bfloat16)
+        pixel_values = torch.randn(4 + 12, 588, device='cuda', dtype=torch.bfloat16) # (h*w, 14 * 14 * 3 * 1)
         # TODO: 不合理，为啥一定要每个 rank 数据完全一样才能通过 CI ?
         dist.broadcast(pixel_values, src=0)
         image_grid_thw = torch.tensor([[1, 2, 2], [1, 6, 2]], device='cuda')
@@ -267,7 +267,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
         videochat3_model.fully_shard(fsdp_config=fsdp_config)
 
-        videochat3_model.from_hf(VideoChat3Dense2BConfig)
+        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
         videochat3_model.eval()
 
         shift_input_ids = input_ids[:, :-1]
@@ -334,13 +334,13 @@ class TestVideoChat3(DeterministicDDPTestCase):
         # 模拟视频数据
         pixel_values_videos = torch.randn(7*2*2, 3 * 14 * 14, device='cuda', dtype=torch.bfloat16)
         dist.broadcast(pixel_values_videos, src=0)
-        video_grid_thw = torch.tensor([[4, 2, 2], [3, 2, 2]], device='cuda')
+        video_grid_thw = torch.tensor([[7, 2, 2]], device='cuda')
 
         with torch.no_grad():
             output = hf_model(
                 input_ids=input_ids,
                 labels=input_ids.clone(),
-                pixel_values=pixel_values_videos,
+                pixel_values_videos=pixel_values_videos,
                 video_grid_thw=video_grid_thw,
             )
         expected_loss = output.loss

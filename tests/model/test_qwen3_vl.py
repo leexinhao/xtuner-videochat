@@ -447,7 +447,7 @@ class TestQwen3VL(DeterministicDDPTestCase):
     def test_save_hf(self, device, tp_size):
         self.create_pg(device)
         with torch.device("meta"):
-            model_cfg = Qwen3VLMoE30BA3Config()
+            model_cfg = Qwen3VLDense4BConfig()
             qwen3vl_model = model_cfg.build().to(torch.bfloat16)
 
         fsdp_config = FSDPConfig(

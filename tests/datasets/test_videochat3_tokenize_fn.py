@@ -57,7 +57,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 self.assertEqual(image_grid_thw_xtuner.shape, image_grid_thw_hf.shape)
                 self.assertEqual(input_ids_xtuner, input_ids_hf)
                 self.assertTrue(torch.allclose(pixel_values_xtuner, pixel_values_hf))
-                self.assertTrue(torch.allclose(image_grid_thw_xtuner, image_grid_thw_hf))
+                self.assertTrue(torch.equal(image_grid_thw_xtuner, image_grid_thw_hf))
                 
                 # 检查calc_num_tokens_get_item和get_item出来的token数是否一致
                 # 需要加载原始数据备份，因为raw_data被修改了
@@ -109,7 +109,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 image_grid_thw_hf = ret['image_grid_thw']
                 self.assertEqual(input_ids_xtuner, input_ids_hf)
                 self.assertTrue(torch.allclose(pixel_values_xtuner, pixel_values_hf))
-                self.assertTrue(torch.allclose(image_grid_thw_xtuner, image_grid_thw_hf))
+                self.assertTrue(torch.equal(image_grid_thw_xtuner, image_grid_thw_hf))
                 
                 # 检查calc_num_tokens_get_item和get_item出来的token数是否一致
                 # 需要加载原始数据备份，因为raw_data被修改了
@@ -172,21 +172,17 @@ class TestVideoChat3TokenizeFn(TestCase):
                             # 移除<VIDEO_CONTEXT>占位符，因为HF会直接处理video token
                             c['text'] = c['text'].replace('<VIDEO_CONTEXT>', '')
 
-                if len(video_paths) == 1:
-                    ret_hf = self.processor.apply_chat_template(
-                        messages, add_generation_prompt=False, tokenize=True,
-                        return_dict=True, add_vision_id=False)
-                else:
-                    ret_hf = self.processor.apply_chat_template(
-                        messages, add_generation_prompt=False, tokenize=True,
-                        return_dict=True, add_vision_id=add_vision_id)
+                
+                ret_hf = self.processor.apply_chat_template(
+                    messages, add_generation_prompt=False, tokenize=True,
+                    return_dict=True, add_vision_id=add_vision_id)
                 input_ids_hf = ret_hf['input_ids'][0]
                 pixel_values_hf = ret_hf['pixel_values_videos']
                 video_grid_thw_hf = ret_hf['video_grid_thw']
 
                 self.assertEqual(input_ids_xtuner, input_ids_hf)
                 self.assertTrue(torch.allclose(pixel_values_xtuner, pixel_values_hf))
-                self.assertTrue(torch.allclose(video_grid_thw_xtuner, video_grid_thw_hf))
+                self.assertTrue(torch.equal(video_grid_thw_xtuner, video_grid_thw_hf))
                 
                 # 检查calc_num_tokens_get_item和get_item出来的token数是否一致
                 # 需要重新加载原始数据，因为raw_data被修改了
@@ -248,21 +244,21 @@ class TestVideoChat3TokenizeFn(TestCase):
                             # 移除<VIDEO_CONTEXT>占位符，因为HF会直接处理video token
                             c['text'] = c['text'].replace('<VIDEO_CONTEXT>', '')
 
-                if len(video_paths) == 1:
-                    ret_hf = self.processor.apply_chat_template(
-                        messages, add_generation_prompt=False, tokenize=True,
-                        return_dict=True, add_vision_id=False)
-                else:
-                    ret_hf = self.processor.apply_chat_template(
-                        messages, add_generation_prompt=False, tokenize=True,
-                        return_dict=True, add_vision_id=add_vision_id)
+                
+                ret_hf = self.processor.apply_chat_template(
+                    messages, add_generation_prompt=False, tokenize=True,
+                    return_dict=True, add_vision_id=add_vision_id)
                 input_ids_hf = ret_hf['input_ids'][0]
                 pixel_values_hf = ret_hf['pixel_values_videos']
                 video_grid_thw_hf = ret_hf['video_grid_thw']
 
+                # 把input_ids转为字符串看看（用tokenizer解码）
+                # xtuner_str = self.tokenizer.decode(input_ids_xtuner, skip_special_tokens=False)
+                # hf_str = self.tokenizer.decode(input_ids_hf, skip_special_tokens=False)
+                # self.assertEqual(xtuner_str, hf_str)
                 self.assertEqual(input_ids_xtuner, input_ids_hf)
                 self.assertTrue(torch.allclose(pixel_values_xtuner, pixel_values_hf))
-                self.assertTrue(torch.allclose(video_grid_thw_xtuner, video_grid_thw_hf))
+                self.assertTrue(torch.equal(video_grid_thw_xtuner, video_grid_thw_hf))
                 
                 # 检查calc_num_tokens_get_item和get_item出来的token数是否一致
                 # 需要重新加载原始数据，因为raw_data被修改了
