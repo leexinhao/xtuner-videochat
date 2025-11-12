@@ -167,7 +167,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             f"{self.add_vision_id}_"
             f"{self.spatial_merge_length}_"
             f"{self.temporal_merge_length}_"
-            f"{system_message}_{max_length}"
+            f"{self.chat_template.default_system}_{max_length}"
         )
 
         # 必须要最后调用
@@ -242,7 +242,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
                             for _ in range(image_cnt):
                                 # 使用完整的vision token格式：<|vision_start|><|image_pad|><|vision_end|>
                                 image_tokens = f"{chat_template.image_start_token}{chat_template.image_context_token * num_image_tokens_list[current_image_idx]}{chat_template.image_end_token}"  # type: ignore
-                                if add_vision_id and image_cnt > 1:
+                                if add_vision_id:
                                     # add vision id for each image when there are multiple images
                                     image_tokens = f"Picture {current_image_idx + 1}: " + image_tokens
                                 text = text.replace(IMAGE_TOKEN_ALIAS, image_tokens, 1)
@@ -279,9 +279,10 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
                                         chat_template.image_start_token + chat_template.video_context_token * frame_seqlen + chat_template.image_end_token
                                     )
 
-                                if add_vision_id and video_cnt > 1:
+                                if add_vision_id:
                                     # add vision id for each video when there are multiple videos
                                     video_tokens = f"Video {current_video_idx + 1}: " + video_tokens
+
                                 text = text.replace(IMAGE_TOKEN_ALIAS, video_tokens, 1)
                                 current_video_idx += 1
                             c.text = text
@@ -447,6 +448,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         grid_thw_copy = copy.deepcopy(grid_thw)
         if not isinstance(grid_thw, Sequence):
             grid_thw_copy = [grid_thw_copy]
+            grid_thw = [grid_thw]
 
         num_video_tokens_list = [self.video_processor.get_number_of_video_tokens(grid_t, grid_h, grid_w) for grid_t, grid_h, grid_w in grid_thw_copy]  # type: ignore
         messages = ChatMessages(messages=data_item["messages"])
@@ -467,11 +469,11 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         )
 
         num_img_tokens = 0
-        for num_video_token, grid_thw in zip(num_video_tokens_list, grid_thw_copy):
-            if grid_thw[0].item() % self.video_processor.temporal_merge_size == 0:
-                num_clips = grid_thw[0].item() // self.video_processor.temporal_merge_size
+        for num_video_token, _thw in zip(num_video_tokens_list, grid_thw_copy):
+            if _thw[0].item() % self.video_processor.temporal_merge_size == 0:
+                num_clips = _thw[0].item() // self.video_processor.temporal_merge_size
             else:
-                num_clips = grid_thw[0].item() // self.video_processor.temporal_merge_size + 1
+                num_clips = _thw[0].item() // self.video_processor.temporal_merge_size + 1
             num_img_tokens += num_video_token +  num_clips * 2
         
 

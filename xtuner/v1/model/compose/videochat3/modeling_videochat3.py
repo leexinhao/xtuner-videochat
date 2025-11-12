@@ -211,18 +211,4 @@ class VideoChat3ForConditionalGeneration(BaseModel):
         self.language_model.init_weights()
         self.multi_modal_projector.init_weights()
 
-    def save_hf(self, save_path: str | Path):
-        """保存为HuggingFace格式"""
-        save_path = Path(save_path)
-        save_path.mkdir(parents=True, exist_ok=True)
-        
-        # 保存vision tower权重
-        self.vision_tower.save_hf(save_path)
-        
-        # 保存projector权重
-        self.multi_modal_projector.save_hf(save_path)
-        
-        # 保存language model权重
-        self.language_model.save_hf(save_path)
-
 

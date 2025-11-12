@@ -268,6 +268,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
                 loss_ctx=loss_ctx,
             )
         loss = output["loss"]
+        raise ValueError(f"{loss} {expected_loss}")
         self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
 
 
@@ -423,17 +424,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
             trust_remote_code=True,
         ).eval()
 
-        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
-        # 使用视频相关的特殊 token
-        # video_str = '<0 seconds><|vision_start|><|video_pad|><|video_pad|><|vision_end|> <1 seconds><|vision_start|><|video_pad|><|video_pad|><|vision_end|>'
-        video_str = '<0 seconds><|vision_start|><|video_pad|><|vision_end|> <1 seconds><|vision_start|><|video_pad|><|vision_end|>'
-        input_ids = tokenizer(video_str + "这个视频中发生了什么？" * 10, return_tensors="pt").input_ids.to("cuda")
-        
-        # 模拟视频数据：batch_size=1, channels=3, temporal=4, height=28, width=28
-        pixel_values_videos = torch.randn(7*2*2, 3 * 14 * 14, device='cuda', dtype=torch.bfloat16)
-        # 确保所有 rank 使用相同的数据
-        dist.broadcast(pixel_values_videos, src=0)
-        # 视频网格信息：temporal=7, height=28, width=28
+
         video_grid_thw = torch.tensor([[4, 2, 2], [3, 2, 2]], device='cuda')
 
         with torch.no_grad():

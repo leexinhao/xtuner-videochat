@@ -2,6 +2,7 @@
 debug/
 videos/
 models/
+VideoViT_CKPT/
 *.safetensors
 
 # Byte-compiled / optimized / DLL files
