@@ -71,7 +71,7 @@
     "vocab_size": 151936
   },
   "tie_word_embeddings": false,
-  "transformers_version": "4.57.1",
+  "transformers_version": "4.57.0",
   "video_token_id": 151656,
   "vision_config": {
     "_name_or_path": "VideoChat3-2B",

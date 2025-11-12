@@ -1,0 +1,9 @@
+{
+
+    "caption_sharegemini_webvid_core100k_clean": {
+        "media_root": "p2:s3://webvid2m",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_sharegemini_webvid_core100k_clean_with_duration.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1
+    }
+}

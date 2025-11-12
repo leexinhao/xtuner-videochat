@@ -1,0 +1,554 @@
+{
+
+    "caption_sharegemini_webvid_core100k_clean": {
+        "root": "p2:s3://webvid2m",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_sharegemini_webvid_core100k_clean_with_duration.jsonl",
+        "length": 10178,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:10%"
+    },
+    "caption_videochat-videochat-train_7k": {
+        "root": "p2:s3://webvid10m",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_videochat-videochat-train_7k_with_duration.jsonl",
+        "length": 1723,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "caption_youcook2-youcook2-train_debug_9k": {
+        "root": "p2:s3://youcook2/split_videos",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_youcook2-youcook2-train_debug_9k_with_duration.jsonl",
+        "length": 2175,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "moviechat1k_caption-MovieChat-train_caption_1k": {
+        "root": "phdd2:s3://MovieChat/real_video/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/moviechat1k_caption-MovieChat-train_caption_1k_with_duration.jsonl",
+        "length": 808,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "caption_favd-favd-train_10k": {
+        "root": "p2:s3://favd",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_favd-favd-train_10k_with_duration.jsonl",
+        "length": 2500,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "caption_sharegpt4o-sharegpt4o_3k": {
+        "root": "pssd:s3://perception/videos",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_sharegpt4o-sharegpt4o_3k_with_duration.jsonl",
+        "length": 2111,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "vqa_tvqa-tvqa_123k": {
+        "root": "p2:s3://tvqa/frames_fps3_hq/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_tvqa-tvqa_123k_with_duration.jsonl",
+        "length": 30510,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%",
+        "video_read_type": "img"
+    },
+    "reasoning_next_qa-next_qa-train_35k": {
+        "root": "p2:s3://nextqa",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/reasoning_next_qa-next_qa-train_35k_with_duration.jsonl",
+        "length": 34132,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "vqa_tgif_transition_qa-tgif_transition_qa-train_53k": {
+        "root": "p2:s3://tgif",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_tgif_transition_qa-tgif_transition_qa-train_53k_with_duration.jsonl",
+        "length": 13174,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%",
+        "video_read_type": "gif"
+    },
+    "reasoning_clevrer_mc-clevrer_mc-train_43k_debug_43k": {
+        "root": "p2:s3://clevrer/video_train",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/reasoning_clevrer_mc-clevrer_mc-train_43k_debug_43k_with_duration.jsonl",
+        "length": 42620,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "reasoning_clevrer_qa-clevrer_qa-train_mc_40k": {
+        "root": "p2:s3://clevrer/video_train",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/reasoning_clevrer_qa-clevrer_qa-train_mc_40k_with_duration.jsonl",
+        "length": 40000,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "classification_k710-k710-train_40k": {
+        "root": "",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/classification_k710-k710-train_40k_with_duration.jsonl",
+        "length": 10000,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "classification_ssv2-ssv2-train_40k": {
+        "root": "sssd:s3://video_pub/ssv2_video",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/classification_ssv2-ssv2-train_40k_with_duration.jsonl",
+        "length": 10000,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "lsmdc-lsmdc_297k": {
+        "root": "pvideo:s3://LSMDC",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/lsmdc-lsmdc_297k_with_duration.jsonl",
+        "length": 74240,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "vqa_rgbd-nturgbd_clean_110k": {
+        "root": "pssd:s3://nturgbd",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_rgbd-nturgbd_clean_110k_with_duration.jsonl",
+        "length": 27354,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "vqa_perception_train-mc_question_train_forchoice_8k": {
+        "root": "pssd:s3://perception/videos",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_perception_train-mc_question_train_forchoice_8k_with_duration.jsonl",
+        "length": 7392,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "vqa_ego_qa-ego_qa-train_8k_clean_8k": {
+        "root": "p2:s3://egoqa/split_videos",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_ego_qa-ego_qa-train_8k_clean_8k_with_duration.jsonl",
+        "length": 7797,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "vqa_tgif_transition_qa_openend-openend_qa_annos-tgif_transition_qa_train_openend_53k": {
+        "root": "p2:s3://tgif",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_tgif_transition_qa_openend-openend_qa_annos-tgif_transition_qa_train_openend_53k_with_duration.jsonl",
+        "length": 13174,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%",
+        "video_read_type": "gif"
+    },
+    "vqa_tgif_frame_qa-tgif_frame_qa-train_40k": {
+        "root": "p2:s3://tgif",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_tgif_frame_qa-tgif_frame_qa-train_40k_with_duration.jsonl",
+        "length": 9788,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%",
+        "video_read_type": "gif"
+    },
+    "vqa_tgif_count-openend_qa_train_openend_26839": {
+        "root": "p2:s3://tgif",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_tgif_count-openend_qa_train_openend_26839_with_duration.jsonl",
+        "length": 26839,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all",
+        "video_read_type": "gif"
+    },
+    "vqa_tgif_action-openend_qa_train_openend_20471": {
+        "root": "p2:s3://tgif",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_tgif_action-openend_qa_train_openend_20471_with_duration.jsonl",
+        "length": 20471,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all",
+        "video_read_type": "gif"
+    },
+    "reasoning_next_qa_oe-openend_qa_annos-next_qa_train_openend_35k": {
+        "root": "p2:s3://nextqa",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/reasoning_next_qa_oe-openend_qa_annos-next_qa_train_openend_35k_with_duration.jsonl",
+        "length": 34132,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "vqa_webvid_qa-webvid_qa-train_100k": {
+        "root": "p2:s3://webvid2m",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/vqa_webvid_qa-webvid_qa-train_100k_with_duration.jsonl",
+        "length": 25000,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "moviechat1k_global-MovieChat-train_global_1k": {
+        "root": "phdd2:s3://MovieChat/real_video/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/moviechat1k_global-MovieChat-train_global_1k_with_duration.jsonl",
+        "length": 808,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "caption_videochatgpt-videochatgpt-train_101k": {
+        "root": "p2:s3://anet/ANet_320p_fps30",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_videochatgpt-videochatgpt-train_101k_with_duration.jsonl",
+        "length": 25003,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "conversation_videochat1-videochat1-train_5k": {
+        "root": "p2:s3://webvid10m",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/conversation_videochat1-videochat1-train_5k_with_duration.jsonl",
+        "length": 4300,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "conversation_videochat2-videochat2-train_10k": {
+        "root": "pvideo:s3://videointernsegvideos",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/conversation_videochat2-videochat2-train_10k_with_duration.jsonl",
+        "length": 2396,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "first:25%"
+    },
+    "grounding_didemo-didemo-train_66k": {
+        "root": "sssd:s3://yjsBucket/DiDeMo",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/grounding_didemo-didemo-train_66k_with_duration.jsonl",
+        "length": 65566,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "caption_vidln_kinetics-vidln-kinetics_train_28k": {
+        "root": "",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_vidln_kinetics-vidln-kinetics_train_28k_with_duration.jsonl",
+        "length": 27219,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "caption_vidln_oops-vidln-oops_train_11k": {
+        "root": "p2:s3://oops/oops_video/train",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_vidln_oops-vidln-oops_train_11k_with_duration.jsonl",
+        "length": 10697,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "caption_vidln_ovis-vidln-ovis_train_1k": {
+        "root": "p2:s3://ovis/train",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_vidln_ovis-vidln-ovis_train_1k_with_duration.jsonl",
+        "length": 610,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all",
+        "video_read_type": "img"
+    },
+    "caption_vidln_uvo_sparse-vidln-uvo_sparse_train_6k": {
+        "root": "sssd:s3://UVO/uvo_videos_sparse",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_vidln_uvo_sparse-vidln-uvo_sparse_train_6k_with_duration.jsonl",
+        "length": 5702,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "caption_vidln_uvo_dense-vidln-uvo_dense_train_1k": {
+        "root": "sssd:s3://UVO/uvo_videos_dense",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_vidln_uvo_dense-vidln-uvo_dense_train_1k_with_duration.jsonl",
+        "length": 563,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "reasoning_star-star-train_46k": {
+        "root": "p2:s3://star/Charades_v1_480",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/reasoning_star-star-train_46k_with_duration.jsonl",
+        "length": 45731,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_with_duration.jsonl",
+        "length": 6893,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_nextqa_oe_qa_processed_61_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_nextqa_oe_qa_processed_61_with_duration.jsonl",
+        "length": 61,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_with_duration.jsonl",
+        "length": 26302,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_with_duration.jsonl",
+        "length": 39698,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_nextqa_oe_qa_processed_6843_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_nextqa_oe_qa_processed_6843_with_duration.jsonl",
+        "length": 6843,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_with_duration.jsonl",
+        "length": 39951,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_academic_v0_1_cap_processed_3124_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_academic_v0_1_cap_processed_3124_with_duration.jsonl",
+        "length": 3122,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_with_duration.jsonl",
+        "length": 57924,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_youtube_v0_1_cap_processed_24685_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_youtube_v0_1_cap_processed_24685_with_duration.jsonl",
+        "length": 24678,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_with_duration.jsonl",
+        "length": 39923,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_with_duration.jsonl",
+        "length": 2950,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_nextqa_oe_qa_processed_4694_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_nextqa_oe_qa_processed_4694_with_duration.jsonl",
+        "length": 4694,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_with_duration.jsonl",
+        "length": 4241,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_with_duration.jsonl",
+        "length": 39353,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_with_duration.jsonl",
+        "length": 4530,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_with_duration.jsonl",
+        "length": 20346,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_youtube_v0_1_cap_processed_19995_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_youtube_v0_1_cap_processed_19995_with_duration.jsonl",
+        "length": 19992,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_nextqa_mc_qa_processed_5496_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_nextqa_mc_qa_processed_5496_with_duration.jsonl",
+        "length": 5496,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_with_duration.jsonl",
+        "length": 5753,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_nextqa_mc_qa_processed_4633_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_nextqa_mc_qa_processed_4633_with_duration.jsonl",
+        "length": 4633,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_with_duration.jsonl",
+        "length": 7460,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_nextqa_mc_qa_processed_52_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_nextqa_mc_qa_processed_52_with_duration.jsonl",
+        "length": 52,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_with_duration.jsonl",
+        "length": 8590,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_academic_v0_1_cap_processed_4627_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_academic_v0_1_cap_processed_4627_with_duration.jsonl",
+        "length": 4627,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_academic_v0_1_cap_processed_10514_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_academic_v0_1_cap_processed_10514_with_duration.jsonl",
+        "length": 10514,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_1_2_m_youtube_v0_1_cap_processed_24234_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_1_2_m_youtube_v0_1_cap_processed_24234_with_duration.jsonl",
+        "length": 24233,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_nextqa_mc_qa_processed_6843_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_nextqa_mc_qa_processed_6843_with_duration.jsonl",
+        "length": 6843,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_nextqa_oe_qa_processed_5492_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_nextqa_oe_qa_processed_5492_with_duration.jsonl",
+        "length": 5492,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_with_duration.jsonl",
+        "length": 48468,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_youtube_v0_1_cap_processed_79346_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_youtube_v0_1_cap_processed_79346_with_duration.jsonl",
+        "length": 79344,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_with_duration.jsonl",
+        "length": 18122,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_perceptiontest_mc_qa_processed_1785_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_perceptiontest_mc_qa_processed_1785_with_duration.jsonl",
+        "length": 1785,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_30_60_s_perceptiontest_mc_qa_processed_618_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_30_60_s_perceptiontest_mc_qa_processed_618_with_duration.jsonl",
+        "length": 618,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    },
+    "llava-video_0_30_s_academic_v0_1_cap_processed_11985_with_duration": {
+        "root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "annotation": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/llava-video_0_30_s_academic_v0_1_cap_processed_11985_with_duration.jsonl",
+        "length": 11985,
+        "data_augment": false,
+        "repeat_time": 1,
+        "sampling_strategy": "all"
+    }
+}

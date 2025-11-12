@@ -8,7 +8,7 @@ python init_model_weights.py
 
 该脚本会：
 1. 从ViT-SO-400M加载vision权重
-2. 从Qwen3-1.7B加载language权重  
+2. 从Qwen3加载language权重  
 3. 创建完整的VideoChat3模型并保存
 """
 
@@ -1291,9 +1291,9 @@ def main():
     print("=" * 40)
     
     # 设置路径
-    vit_path = "/home/lixinhao/models/MoonViT-SO-400M"
-    qwen3_path = "/home/lixinhao/models/Qwen3-1.7B"
-    current_dir = "/home/lixinhao/xtuner-videochat/VideoChat3-2B"
+    vit_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/MoonViT-SO-400M"
+    qwen3_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-4B-Instruct-2507"
+    current_dir = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-4B"
     output_path = os.path.join(current_dir, "initialized_model")
     
     try:
