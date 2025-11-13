@@ -9,7 +9,7 @@ from xtuner.utils import IGNORE_INDEX
 from xtuner.v1.data_proto.messages.base import BaseMessages
 from xtuner.v1.data_proto.templates import ChatTemplate, HybridChatTemplate
 from xtuner.v1.utils import get_logger
-
+from xtuner.v1.datasets.mllm_tokenize_fn.video_utils import VideoChat3VideoMetadata
 
 logger = get_logger()
 
@@ -52,7 +52,6 @@ class VideoURL(BaseModel):
     processed_fps: Optional[float] = None
     video_length: Optional[int] = None  # deprecated
 
-
 class VideoContentItem(BaseModel):
     model_config = ConfigDict(extra="forbid")
     type: Literal["video_url"] = "video_url"
@@ -61,8 +60,21 @@ class VideoContentItem(BaseModel):
     def apply_chat_template(self, *args, **kwargs) -> str:
         return ""
 
+class VideoURL_videochat3(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    url: str
+    detail: Optional[Literal["auto", "low", "high"]] = None
 
-MultModalContentType = Union[TextContentItem, ImageContentItem, VideoContentItem]
+class VideoContentItem_videochat3(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    type: Literal["video_url"] = "video_url"
+    video_url: VideoURL_videochat3
+    video_metadata: VideoChat3VideoMetadata
+
+    def apply_chat_template(self, *args, **kwargs) -> str:
+        return ""
+
+MultModalContentType = Union[TextContentItem, ImageContentItem, VideoContentItem, VideoContentItem_videochat3]
 ContentType = Union[str, List[MultModalContentType]]
 
 

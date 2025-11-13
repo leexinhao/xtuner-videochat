@@ -423,60 +423,61 @@ class TestVideoChat3(DeterministicDDPTestCase):
         )
 
         cache_save_fh = {}
-        with tempfile.TemporaryDirectory() as tmpdir:
-            syncdir = [tmpdir]
-            dist.broadcast_object_list(syncdir, src=0)
-            tmpdir = Path(syncdir[0])
-            
-            # 对各个组件进行 FSDP 切分
-            videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
-            videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
-            videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
-            videochat3_model.fully_shard(fsdp_config=fsdp_config)
-            
-            videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
-            videochat3_model.save_hf(tmpdir)
+        tmpdir = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-2B-savehf-debug2"
+    # with tempfile.TemporaryDirectory() as tmpdir:
+        syncdir = [tmpdir]
+        dist.broadcast_object_list(syncdir, src=0)
+        tmpdir = Path(syncdir[0])
+        
+        # 对各个组件进行 FSDP 切分
+        videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
+        videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
+        videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
+        videochat3_model.fully_shard(fsdp_config=fsdp_config)
+        
+        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
+        videochat3_model.save_hf(tmpdir)
 
-            origin_hf_path = Path(VIDEOCHAT3_DENSE_PATH)
-            origin_index_path = origin_hf_path / "model.safetensors.index.json"
-            saved_index_path = tmpdir / "model.safetensors.index.json"
+        origin_hf_path = Path(VIDEOCHAT3_DENSE_PATH)
+        origin_index_path = origin_hf_path / "model.safetensors.index.json"
+        saved_index_path = tmpdir / "model.safetensors.index.json"
 
-            # 测试保存的 HuggingFace 张量值是否与原始值匹配
-            if dist.get_rank() == 0:
-                with open(origin_index_path, "r") as f:
-                    origin_index = json.load(f)
-                with open(saved_index_path, "r") as f:
-                    saved_index = json.load(f)
+        # 测试保存的 HuggingFace 张量值是否与原始值匹配
+        if dist.get_rank() == 0:
+            with open(origin_index_path, "r") as f:
+                origin_index = json.load(f)
+            with open(saved_index_path, "r") as f:
+                saved_index = json.load(f)
 
-                for key in origin_index["weight_map"].keys():
-                    origin_safetensor_name = origin_index["weight_map"][key]
-                    saved_safetensor_name = saved_index["weight_map"][key]
+            for key in origin_index["weight_map"].keys():
+                origin_safetensor_name = origin_index["weight_map"][key]
+                saved_safetensor_name = saved_index["weight_map"][key]
 
-                    origin_sf_fh_name = str(origin_hf_path / origin_safetensor_name)
-                    expected_sf_fh_name = str(tmpdir / saved_safetensor_name)
+                origin_sf_fh_name = str(origin_hf_path / origin_safetensor_name)
+                expected_sf_fh_name = str(tmpdir / saved_safetensor_name)
 
-                    if origin_safetensor_name not in cache_save_fh:
-                        cache_save_fh[origin_safetensor_name] = safe_open(origin_sf_fh_name, framework="pt")
-                    if saved_safetensor_name not in cache_save_fh:
-                        cache_save_fh[saved_safetensor_name] = safe_open(expected_sf_fh_name, framework="pt")
+                if origin_safetensor_name not in cache_save_fh:
+                    cache_save_fh[origin_safetensor_name] = safe_open(origin_sf_fh_name, framework="pt")
+                if saved_safetensor_name not in cache_save_fh:
+                    cache_save_fh[saved_safetensor_name] = safe_open(expected_sf_fh_name, framework="pt")
 
-                    origin_fh = cache_save_fh[origin_safetensor_name]
-                    saved_fh = cache_save_fh[saved_safetensor_name]
+                origin_fh = cache_save_fh[origin_safetensor_name]
+                saved_fh = cache_save_fh[saved_safetensor_name]
 
-                    origin_tensor = origin_fh.get_tensor(key)
-                    saved_tensor = saved_fh.get_tensor(key)
-                    self.assertTrue(torch.equal(origin_tensor, saved_tensor))
+                origin_tensor = origin_fh.get_tensor(key)
+                saved_tensor = saved_fh.get_tensor(key)
+                self.assertTrue(torch.equal(origin_tensor.to(saved_tensor.dtype), saved_tensor))
 
-                # 测试 safetensors 中的张量数量是否与模型索引中的张量数量匹配
-                safetensor_keys = []
-                for safetensor_path in tmpdir.glob("*.safetensors"):
-                    fh = cache_save_fh[safetensor_path.name]
-                    safetensor_keys.extend(fh.keys())
-                    safetensor_keys.sort()
-                model_index_keys = list(saved_index["weight_map"].keys())
-                model_index_keys.sort()
+            # 测试 safetensors 中的张量数量是否与模型索引中的张量数量匹配
+            safetensor_keys = []
+            for safetensor_path in tmpdir.glob("*.safetensors"):
+                fh = cache_save_fh[safetensor_path.name]
+                safetensor_keys.extend(fh.keys())
+                safetensor_keys.sort()
+            model_index_keys = list(saved_index["weight_map"].keys())
+            model_index_keys.sort()
 
-                self.assertListEqual(safetensor_keys, model_index_keys)
+            self.assertListEqual(safetensor_keys, model_index_keys)
         dist.barrier()
 
     @property

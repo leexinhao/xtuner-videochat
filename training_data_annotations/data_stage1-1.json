@@ -1,0 +1,14 @@
+{
+    "blip_laion_cc_sbu_558k": {
+        "media_root": "pnorm2:s3://videochat3/image/LLaVA-Pretrain/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/image/blip_laion_cc_sbu_558k.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "caption_smit_481k": {
+        "media_root": "pvideo:s3://S-MiT/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_smit_481k.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1
+    }
+}

@@ -1,5 +1,15 @@
-## VideoChat3 TBD
+# VideoChat3 TBD
 
+## Easy start
+简单测试是否跑通：
+```bash
+srun -p videoop --gres=gpu:8 --quotatype=spot torchrun --nproc_per_node=8 toy_train.py
+```
+标准训练：
+```bash
+bash training_scripts/toy_training.sh
+```
+## CodeBase
 ### Tokenize
 
 |      Tokenize        | 文字 | 图片 | 多图 | 视频 | 多视频 |
@@ -13,8 +23,8 @@
 |-------------------|:----:|:----:|:----:|:----:|:------:|
 | Qwen3VL-Dense     |  ✅  |  ✅  |  🚧  |  🚧  |   🚧   |
 | Qwen3VL-MoE       |  ✅  |  ✅  |  🚧  |  🚧  |   🚧   |
-| VideoChat3-Dense  |  ✅  | ✅🚧 (no fsdp) | 🚧 | ✅🚧 (no fsdp) | 🚧 |
-| VideoChat3-MoE    |  🚧  |  🚧  |  🚧  |  🚧  |   🚧   |
+| VideoChat3-Dense |  ✅  | ✅ | ✅/🚧 (可能有问题，和hf不完全对齐) | ✅ | ✅/🚧 (可能有问题，和hf不完全对齐) |
+| VideoChat3-MoE  |  🚧  |  🚧  |  🚧  |  🚧  |   🚧   |
 
 
 

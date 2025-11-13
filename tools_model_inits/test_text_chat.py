@@ -1,6 +1,6 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model_name = "/home/lixinhao/xtuner-videochat/VideoChat3-2B"
+model_name = "./VideoChat3-4B"
 
 # load the tokenizer and the model
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)

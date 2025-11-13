@@ -17,6 +17,12 @@ from .compose.qwen3_vl import (
     Qwen3VLMoE30BA3Config,
     Qwen3VLMoE235BA22Config,
 )
+
+from .compose.videochat3 import (
+    VideoChat3Dense2BConfig,
+    VideoChat3Dense4BConfig,
+    VideoChat3Dense8BConfig
+)
 from .dense.dense import Dense
 from .dense.qwen2 import Qwen2Dense7BConfig, Qwen2DenseConfig
 from .dense.qwen3 import Qwen3Dense0P6BConfig, Qwen3Dense4BConfig, Qwen3Dense8BConfig, Qwen3DenseConfig

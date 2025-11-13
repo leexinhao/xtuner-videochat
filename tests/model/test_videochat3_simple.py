@@ -193,7 +193,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         maybe_compile.clear_compile_targets()
         hf_model = AutoModelForCausalLM.from_pretrained(
             VIDEOCHAT3_DENSE_PATH,
-            dtype=torch.bfloat16,
+            dtype=torch.float16,
             attn_implementation="flash_attention_2",
             device_map="cuda",
             trust_remote_code=True,
@@ -204,7 +204,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
         image_str = '看这张图 <|vision_start|><|image_pad|><|vision_end|> 和 这张图<|vision_start|><|image_pad|><|image_pad|><|image_pad|><|vision_end|>'
         input_ids = tokenizer(image_str + "它们有什么区别" * 20, return_tensors="pt").input_ids.to("cuda")
-        pixel_values = torch.randn(4 + 12, 588, device='cuda', dtype=torch.bfloat16) # (h*w, 14 * 14 * 3 * 1)
+        pixel_values = torch.randn(4 + 12, 588, device='cuda', dtype=torch.float16) # (h*w, 14 * 14 * 3 * 1)
         # TODO: 不合理，为啥一定要每个 rank 数据完全一样才能通过 CI ?
         dist.broadcast(pixel_values, src=0)
 
@@ -224,7 +224,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
 
         with torch.device("meta"):
             model_cfg = VideoChat3Dense2BConfig()
-            videochat3_model = model_cfg.build().to(torch.bfloat16)
+            videochat3_model = model_cfg.build().to(torch.float16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
         videochat3_model.eval()
@@ -268,6 +268,10 @@ class TestVideoChat3(DeterministicDDPTestCase):
                 loss_ctx=loss_ctx,
             )
         loss = output["loss"]
+<<<<<<< HEAD
+=======
+        raise ValueError(f"{loss} {expected_loss} {torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol)}")
+>>>>>>> 完成VideoChat3-Dense支持
         self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
 
 

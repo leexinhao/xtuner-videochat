@@ -11,6 +11,12 @@ try:
     from decord import VideoReader
 except Exception:
     VideoReader = None
+    
+try:
+    import av
+except Exception:
+    av = None 
+
 
 
 @dataclass
@@ -61,12 +67,100 @@ class VideoChat3VideoMetadata(Mapping):
         "Timestamps of the sampled frames in seconds."
         if self.fps is None:
             raise ValueError("Cannot infer video `timestamps` when `fps` is None.")
+        elif self.frames_indices is None:
+            raise ValueError("Cannot infer video `timestamps` when `frames_indices` is None.")
+            
         return [self.video_start_time + frame_idx / self.fps for frame_idx in self.frames_indices]
 
     def update(self, dictionary):
         for key, value in dictionary.items():
             if hasattr(self, key):
                 setattr(self, key, value)
+
+
+def read_frames_decord(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+    if video_path.endswith('.avi'):
+        return read_frames_av(video_path, frame_sample_indices, client)
+    assert VideoReader is not None, "Please install decord: pip install decord"
+    if "s3://" in video_path:
+        video_bytes = client.get(video_path)
+        video_reader = VideoReader(io.BytesIO(video_bytes), num_threads=1)
+    else:
+        video_reader = VideoReader(video_path, num_threads=1)
+    
+    frames = video_reader.get_batch(frame_sample_indices).asnumpy()  # (T, H, W, C), np.uint8
+    frames = [Image.fromarray(frames[i]) for i in range(frames.shape[0])]
+    return frames
+
+
+def read_frames_av(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+    assert av is not None, "Please install av: pip install av"
+    if 's3://' in video_path:
+        video_bytes = client.get(video_path)
+        byteio = io.BytesIO(video_bytes)
+        byteio.seek(0)
+        reader = av.open(byteio)
+    else:
+        byteio = None
+        reader = av.open(video_path)
+    frames = [f.to_rgb().to_image() for f in reader.decode(video=0)]
+    
+    if byteio != None:
+        byteio.close()
+        
+    reader.close()
+
+    return frames
+
+
+def read_frames_dir(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+    def extract_frame_number(filename):
+        # Extract the numeric part from the filename using regular expressions
+        if filename.endswith('.jpg'):
+            match = re.search(r'_(\d+).jpg$', filename)
+        elif filename.endswith('.jpeg'):
+            match = re.search(r'_(\d+).jpeg$', filename)
+        elif filename.endswith('.png'):
+            match = re.search(r'_(\d+).png$', filename)
+        else:
+            raise NotImplementedError(f"Wrong filename: {filename}")
+
+        return int(match.group(1)) if match else -1
+
+    def sort_frames(frame_paths):
+        # Extract filenames from each path and sort by their numeric part
+        return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
+
+    if "s3://" in video_path:
+        img_list = sort_frames(client.list(video_path))
+    else:
+        img_list = sort_frames(list(os.listdir(video_path)))
+
+    frames = []
+    for idx in frame_sample_indices:
+        frame_fname = os.path.join(video_path, img_list[idx])
+        if "s3://" in video_path:
+            img_bytes = client.get(frame_fname)
+            frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
+        else:
+            with open(frame_fname, 'rb') as f:
+                img_bytes = f.read()
+                frames.append(Image.open(image_path).convert("RGB"))
+
+    return frames
+
 
 def get_frame_indices(num_frames, vlen, sample="rand", fix_start=None, input_fps=1, max_num_frames=-1):
     if sample in ["rand", "middle"]:  # uniform sampling
@@ -109,7 +203,7 @@ def get_frame_indices(num_frames, vlen, sample="rand", fix_start=None, input_fps
     return frame_indices
 
 
-def read_frames_decord(
+def read_frames_decord_old(
     video_path,
     num_frames,
     sample="rand",
@@ -146,3 +240,12 @@ def read_frames_decord(
     frames = video_reader.get_batch(frame_indices).asnumpy()  # (T, H, W, C), np.uint8
     frames = [Image.fromarray(frames[i]) for i in range(frames.shape[0])]
     return frames
+
+
+
+VIDEO_READER_MAP = {
+    "decord": read_frames_decord,
+    "img": read_frames_dir,
+    "frame": read_frames_dir,
+    "av": read_frames_av,
+}

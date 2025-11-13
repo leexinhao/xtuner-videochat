@@ -185,13 +185,17 @@ class VideoChat3ForConditionalGeneration(BaseModel):
                 inputs_embeds[selected] = inputs_embeds[selected] * 0.0 + vit_embeds.sum() * 0
 
             inputs_embeds = inputs_embeds.reshape(B, N, C)
-
-            if sequence_parallel_mesh is not None and sequence_parallel_mesh.size() > 1:
-                inputs_embeds = split_for_sequence_parallel(inputs_embeds, dim=1, sp_mesh=sequence_parallel_mesh)
-
         else:
-            # in-place op on custom-function outputs will spoil autograd
+            # 构建假数据，考虑到 moe 特性，最好不要构建全 0 数据
+            pixel_values_dump = torch.randn(4, 588, device=inputs_embeds.device, dtype=inputs_embeds.dtype)
+            image_grid_thw = torch.tensor([[1, 2, 2]], device=inputs_embeds.device)
+            vit_embeds = self.extract_feature(pixel_values_dump, image_grid_thw)
+            inputs_embeds = inputs_embeds + vit_embeds.sum() * 0.0
             inputs_embeds = inputs_embeds.clone()
+
+
+        if sequence_parallel_mesh is not None and sequence_parallel_mesh.size() > 1:
+            inputs_embeds = split_for_sequence_parallel(inputs_embeds, dim=1, sp_mesh=sequence_parallel_mesh)
 
         seq_ctx.image_grid_thw = None
         seq_ctx.pixel_values = None

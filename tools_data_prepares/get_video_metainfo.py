@@ -124,11 +124,17 @@ def read_frames_decord(
     fps = video_reader.get_avg_fps()
     duration = vlen / float(fps)
 
+    frame_shape = video_reader[0].shape
+
+    # 帧的宽度和高度是尺寸的后两个维度
+    height = frame_shape[0]
+    width = frame_shape[1]
+
     return {
         "total_num_frames": vlen,
         "fps": float(fps),
-        "width": video_reader.width,
-        "height": video_reader.height,
+        "width": width,
+        "height": height,
         "duration": duration,
         "video_backend": "decord",
         "clip_start_time": clip[0] if clip is not None else None,
@@ -216,8 +222,8 @@ def get_video_meta_info(video_file, data_anno, client, video_reader_type):
     return video_meta_info
 
 client = Client(conf_path='~/petreloss.conf')
-data_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/tools_data_prepares/data_list_example_debug.json"
-save_root = "/mnt/hwfile/zengxiangyu/Research_lixinhao/vflash/video_metainfos"
+data_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/tools_data_prepares/data_list_example_debug3.json"
+save_root = "/mnt/hwfile/zengxiangyu/Research_lixinhao/vflash_annotations/video_metainfos"
 
 os.makedirs(save_root, exist_ok=True)
 
@@ -229,7 +235,7 @@ with open(data_path, "r") as froot:
         save_path = os.path.join(save_root, dataset_name + '_metainfos.jsonl')
         # os.makedirs(save_dir, exist_ok=True)
 
-        print(f"Loading {anno_path}, save to {save_dir}")
+        print(f"Loading {anno_path}, save to {save_path}")
 
         if anno_path.endswith(".jsonl"):
             cur_data_dict = []
@@ -253,7 +259,7 @@ with open(data_path, "r") as froot:
             raise ValueError(f"Unsupported file type: {anno_path}")
         
         video_read_type = _data.get("video_read_type", 'decord')
-        data_root = _data.get("data_root", '')
+        data_root = _data.get("media_root", '')
 
         media_type = 'video'
         if 'video' not in cur_data_dict[0].keys():

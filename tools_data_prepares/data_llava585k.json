@@ -1,0 +1,9 @@
+{
+
+    "blip_laion_cc_sbu_558k": {
+        "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/LLaVA-Pretrain/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/LLaVA-Pretrain/blip_laion_cc_sbu_558k.json",
+        "data_augment": false,
+        "sample_ratio": 1
+    }
+}

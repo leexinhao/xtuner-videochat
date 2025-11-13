@@ -7,9 +7,9 @@ import torch
 import parametrize
 from xtuner.v1.utils.test_utils import add_video_root
 
+LOCAL_MEDIA_ROOT = "tests/resource"
 QWEN3_VL_PATH = os.environ["QWEN3_VL_MOE_PATH"]
 VIDEO_ROOT = os.environ["VIDEO_ROOT"]
-
 
 class TestMLLMTokenizeFn(TestCase):
     def setUp(self):
@@ -27,7 +27,7 @@ class TestMLLMTokenizeFn(TestCase):
                     break
                 raw_data = json.loads(line)
 
-                ret = self.tokenize_fn(raw_data, media_root='tests/')
+                ret = self.tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
                 input_ids_xtuner = ret['input_ids']
                 pixel_values_xtuner: torch.Tensor = ret['pixel_values']
                 image_grid_thw_xtuner: torch.Tensor = ret['image_grid_thw']
@@ -35,7 +35,7 @@ class TestMLLMTokenizeFn(TestCase):
                 # to hf openai format
                 messages = raw_data['messages']
                 messages[0]['content'][0]['type'] = 'image'
-                messages[0]['content'][0]['path'] = 'tests/' + messages[0]['content'][0]['image_url']['url']
+                messages[0]['content'][0]['path'] = LOCAL_MEDIA_ROOT + '/' + messages[0]['content'][0]['image_url']['url']
                 del messages[0]['content'][0]['image_url']
 
                 # <IMG_CONTEXT>\n 中的 \n 需要去掉，因为 qwen3 vl chat_template 里面不会加上 \n
@@ -69,7 +69,7 @@ class TestMLLMTokenizeFn(TestCase):
                 messages = raw_data['messages']
                 messages[0]['content'][2]['text'] = messages[0]['content'][2]['text'].replace('\n', '')
 
-                ret = tokenize_fn(raw_data, media_root='tests/')
+                ret = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
                 input_ids_xtuner = ret['input_ids']
                 pixel_values_xtuner: torch.Tensor = ret['pixel_values']
                 image_grid_thw_xtuner: torch.Tensor = ret['image_grid_thw']
@@ -77,9 +77,9 @@ class TestMLLMTokenizeFn(TestCase):
                 # to hf openai format
                 messages = raw_data['messages']
                 messages[0]['content'][0]['type'] = 'image'
-                messages[0]['content'][0]['path'] = 'tests/' + messages[0]['content'][0]['image_url']['url']
+                messages[0]['content'][0]['path'] = LOCAL_MEDIA_ROOT + '/' + messages[0]['content'][0]['image_url']['url']
                 messages[0]['content'][1]['type'] = 'image'
-                messages[0]['content'][1]['path'] = 'tests/' + messages[0]['content'][1]['image_url']['url']
+                messages[0]['content'][1]['path'] = LOCAL_MEDIA_ROOT + '/' + messages[0]['content'][1]['image_url']['url']
                 del messages[0]['content'][0]['image_url']
                 del messages[0]['content'][1]['image_url']
                 messages[0]['content'][2]['text'] = messages[0]['content'][2]['text'].replace('<IMG_CONTEXT>', '')

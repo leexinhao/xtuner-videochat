@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal, Optional
+from typing import TYPE_CHECKING, Literal, Optional, Any
 
 from mmengine import is_installed
 from pydantic import BaseModel, ConfigDict
@@ -20,7 +20,7 @@ logger = get_logger()
 class VideoChat3VisionConfig(BaseModel):
     model_config = ConfigDict(
         title="VideoChat3 vision config for xtuner",
-        extra="allow",
+        extra="forbid",
     )
     # 基于VideoChat3-debug/config.json的vision_config
     model_type: str = "moonvit"
@@ -39,14 +39,12 @@ class VideoChat3VisionConfig(BaseModel):
     initializer_range: float = 0.02
     torch_dtype: str = "bfloat16"  # 新增
     float8_cfg: Optional["Float8Config"] = None
-    attn_impl: Literal["flash_attention", "flex_attention", "eager_attention"] = "eager_attention"
-    _attn_implementation: str = "eager"  # 新增，用于VideoChat3VisionLayer
+    attn_impl: Literal["flash_attention_2", "eager_attention"] = "eager_attention"
 
-    def model_post_init(self, _):
-        if not is_installed("flash-attn") and self.attn_impl == "flash_attention":
-            logger.warning("flash-attn is not installed, using `flex_attention` instead.")
-            self.attn_impl = "flex_attention"
-        return self
+    def model_post_init(self, __context: Any) -> None: 
+        if not is_installed("flash-attn") and self.attn_impl == "flash_attention_2":
+            logger.warning("flash-attn-2 is not installed, using `eager_attention` instead.")
+            self.attn_impl = "eager_attention"
 
     def build(self):
         from .modeling_vision import VideoChat3VisionModel
@@ -70,7 +68,7 @@ class VideoChat3ProjectorConfig(BaseModel):
 class VideoChat3BaseConfig(BaseModel):
     model_config = ConfigDict(
         title="Base VideoChat3 model config for xtuner",
-        extra="allow",
+        extra="forbid",
     )
     vision_config: VideoChat3VisionConfig
     projector_config: VideoChat3ProjectorConfig
@@ -92,6 +90,7 @@ class VideoChat3BaseConfig(BaseModel):
     freeze_vision: bool = False
     freeze_projector: bool = False
     freeze_language: bool = False
+    dcp_ignore_frozen_params: bool = True  # align with VisionComposeConfigProtocol
 
     def build(self) -> "VideoChat3ForConditionalGeneration":
         from .modeling_videochat3 import VideoChat3ForConditionalGeneration
@@ -104,7 +103,7 @@ class VideoChat3BaseConfig(BaseModel):
 
 class VideoChat3Dense8BConfig(VideoChat3BaseConfig):
     # 简化版本，使用dense模型而不是MoE
-    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig()
+    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2")
     projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
     text_config: Qwen3Dense8BConfig = Qwen3Dense8BConfig(vocab_size=151936)
 
@@ -120,7 +119,7 @@ class VideoChat3Dense8BConfig(VideoChat3BaseConfig):
         return None
 
 class VideoChat3Dense4BConfig(VideoChat3BaseConfig):
-    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig()
+    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2")
     projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
     text_config: Qwen3Dense4BConfig = Qwen3Dense4BConfig(vocab_size=151936)
 
@@ -136,7 +135,7 @@ class VideoChat3Dense4BConfig(VideoChat3BaseConfig):
         return None
 
 class VideoChat3Dense2BConfig(VideoChat3BaseConfig):
-    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig()
+    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2")
     projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
     text_config: Qwen3Dense1_7BConfig = Qwen3Dense1_7BConfig(vocab_size=151936)
 

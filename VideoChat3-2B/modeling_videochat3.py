@@ -437,7 +437,7 @@ class VideoChat3VisionLayer(GradientCheckpointingLayer):
         hidden_dim: int,
         mlp_dim: int,
         *,
-        _attn_implementation: str = "eager",
+        attn_impl: str = "eager",
         activation=F.gelu,
         attn_bias: bool = False,
     ):
@@ -445,7 +445,7 @@ class VideoChat3VisionLayer(GradientCheckpointingLayer):
         self.num_heads = num_heads
         self.hidden_dim = hidden_dim
         self.hidden_size_per_attention_head = self.hidden_dim // self.num_heads
-        self._attn_implementation = _attn_implementation
+        self.attn_impl = attn_impl
 
         self.norm0 = nn.LayerNorm(hidden_dim)
         self.norm1 = nn.LayerNorm(hidden_dim)
@@ -477,7 +477,7 @@ class VideoChat3VisionLayer(GradientCheckpointingLayer):
 
         xq, xk = apply_rope(xq, xk, rope_freqs_cis)
 
-        attn_func = VL_VISION_ATTENTION_FUNCTIONS[self._attn_implementation]
+        attn_func = VL_VISION_ATTENTION_FUNCTIONS[self.attn_impl]
         attn_out = attn_func(xq, xk, xv, q_cu_seqlens=cu_seqlens, k_cu_seqlens=cu_seqlens)
 
         attn_out = self.wo(attn_out)
@@ -601,7 +601,7 @@ class VideoChat3VisionModel(VideoChat3VisionPreTrainedModel):
                 "mlp_dim": config.intermediate_size,
                 "activation": ACT2FN["gelu_pytorch_tanh"],
                 "attn_bias": True,
-                "_attn_implementation": config._attn_implementation,
+                "attn_impl": config.attn_impl,
             },
         )
 

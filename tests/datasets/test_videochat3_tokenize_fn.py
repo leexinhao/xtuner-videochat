@@ -6,8 +6,8 @@ from transformers import AutoTokenizer, AutoProcessor
 import json
 import parametrize
 
+LOCAL_MEDIA_ROOT = "tests/resource"
 VIDEOCHAT3_PATH = os.environ.get("VIDEOCHAT3_PATH", "VideoChat3-2B")
-
 
 
 class TestVideoChat3TokenizeFn(TestCase):
@@ -25,8 +25,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                     break
                 raw_data = json.loads(line)
                 
-
-                ret = self.tokenize_fn(raw_data, media_root='tests/')
+                ret = self.tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
                 input_ids_xtuner = ret['input_ids']
                 pixel_values_xtuner: torch.Tensor = ret['pixel_values']
                 image_grid_thw_xtuner: torch.Tensor = ret['image_grid_thw']
@@ -34,7 +33,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 # to hf openai format
                 messages = raw_data['messages']
                 messages[0]['content'][0]['type'] = 'image'
-                messages[0]['content'][0]['path'] = 'tests/' + messages[0]['content'][0]['image_url']['url']
+                messages[0]['content'][0]['path'] = LOCAL_MEDIA_ROOT + '/' + messages[0]['content'][0]['image_url']['url']
                 del messages[0]['content'][0]['image_url']
 
                 messages[0]['content'][1]['text'] = messages[0]['content'][1]['text'].replace('<IMG_CONTEXT>', '')
@@ -63,7 +62,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 # 需要加载原始数据备份，因为raw_data被修改了
                 raw_data_copy = json.loads(line)
                 self.tokenize_fn.state = "cache"
-                cache_result = self.tokenize_fn(raw_data_copy, media_root='tests/')
+                cache_result = self.tokenize_fn(raw_data_copy, media_root=LOCAL_MEDIA_ROOT)
                 self.tokenize_fn.state = "get_item"
                 self.assertEqual(len(input_ids_xtuner), cache_result['num_tokens'], 
                                 "calc_num_tokens_get_item和get_item出来的token数不一致")
@@ -80,27 +79,40 @@ class TestVideoChat3TokenizeFn(TestCase):
                     break
                 raw_data = json.loads(line)
                 
-                # \n 必须去掉，否则和 hf 无法对齐
-                messages = raw_data['messages']
-                messages[0]['content'][2]['text'] = messages[0]['content'][2]['text'].replace('\n', '')
+                # # \n 必须去掉，否则和 hf 无法对齐
+                # messages = raw_data['messages']
+                # messages[0]['content'][2]['text'] = messages[0]['content'][2]['text'].replace('\n', '')
 
-                ret = tokenize_fn(raw_data, media_root='tests/')
+                ret = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
                 input_ids_xtuner = ret['input_ids']
                 pixel_values_xtuner: torch.Tensor = ret['pixel_values']
                 image_grid_thw_xtuner: torch.Tensor = ret['image_grid_thw']
 
                 # to hf openai format
                 messages = raw_data['messages']
-                messages[0]['content'][0]['type'] = 'image'
-                messages[0]['content'][0]['path'] = 'tests/' + messages[0]['content'][0]['image_url']['url']
-                messages[0]['content'][1]['type'] = 'image'
-                messages[0]['content'][1]['path'] = 'tests/' + messages[0]['content'][1]['image_url']['url']
-                del messages[0]['content'][0]['image_url']
-                del messages[0]['content'][1]['image_url']
-                messages[0]['content'][2]['text'] = messages[0]['content'][2]['text'].replace('<IMG_CONTEXT>', '')
                 for msg in messages:
                     if not isinstance(msg['content'], list):
                         msg['content'] = [{"type": "text", "text": msg['content']}]
+                    # 遍历所有 content，做处理
+                    new_content = []
+                    for item in msg['content']:
+                        if item.get("type") == "image_url":
+                            # 转换为 openai 格式
+                            new_item = {
+                                "type": "image",
+                                "path": LOCAL_MEDIA_ROOT + '/' + item["image_url"]["url"]
+                            }
+                            new_content.append(new_item)
+                        elif item.get("type") == "text":
+                            # 去除所有 <IMG_CONTEXT>
+                            new_item = {
+                                "type": "text",
+                                "text": item["text"].replace("<IMG_CONTEXT>", "")
+                            }
+                            new_content.append(new_item)
+                        else:
+                            raise ValueError(item)
+                    msg['content'] = new_content
 
                 ret = self.processor.apply_chat_template(messages, add_generation_prompt=False, tokenize=True,
                                                          return_dict=True, add_vision_id=add_vision_id)
@@ -115,12 +127,12 @@ class TestVideoChat3TokenizeFn(TestCase):
                 # 需要加载原始数据备份，因为raw_data被修改了
                 # cache状态需要保持<IMG_CONTEXT>占位符，因为calc_num_tokens_image_get_item需要它们
                 raw_data_for_cache = json.loads(line)
-                messages_for_cache = raw_data_for_cache['messages']
+                # messages_for_cache = raw_data_for_cache['messages']
                 # 只删除\n，但保持<IMG_CONTEXT>占位符
-                messages_for_cache[0]['content'][2]['text'] = messages_for_cache[0]['content'][2]['text'].replace('\n', '')
+                # messages_for_cache[0]['content'][2]['text'] = messages_for_cache[0]['content'][2]['text'].replace('\n', '')
                 
                 tokenize_fn.state = "cache"
-                cache_result = tokenize_fn(raw_data_for_cache, media_root='tests/')
+                cache_result = tokenize_fn(raw_data_for_cache, media_root=LOCAL_MEDIA_ROOT)
                 tokenize_fn.state = "get_item"
                 self.assertEqual(len(input_ids_xtuner), cache_result['num_tokens'], 
                                "calc_num_tokens_get_item和get_item出来的token数不一致")
@@ -142,7 +154,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 
                 # 验证路径和元数据提取正确
                 self.assertEqual(len(video_paths), 1)
-                self.assertEqual(video_paths[0], 'resource/tennis.mp4')
+                self.assertEqual(video_paths[0], 'tennis.mp4')
                 self.assertEqual(len(extra_info['video_meta_list']), 1)
                 self.assertIsNotNone(extra_info['video_meta_list'][0])
                 
@@ -151,7 +163,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 self.assertIsInstance(raw_data['messages'], list)
                 self.assertGreater(len(raw_data['messages']), 0)
                 # 对xtuner的结果
-                ret_xtuner = tokenize_fn(raw_data, media_root='tests/')
+                ret_xtuner = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
                 input_ids_xtuner = ret_xtuner['input_ids']
                 pixel_values_xtuner: torch.Tensor = ret_xtuner['pixel_values']
                 video_grid_thw_xtuner: torch.Tensor = ret_xtuner['image_grid_thw']
@@ -166,7 +178,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                         if c.get('type') == 'video_url':
                             # 转为HF所需的video type
                             c['type'] = 'video'
-                            c['path'] = 'tests/' + c['video_url']['url']
+                            c['path'] = LOCAL_MEDIA_ROOT + '/' + c['video_url']['url']
                             del c['video_url']
                         elif c.get('type') == 'text' and '<VIDEO_CONTEXT>' in c['text']:
                             # 移除<VIDEO_CONTEXT>占位符，因为HF会直接处理video token
@@ -193,7 +205,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 # cache状态需要保持<VIDEO_CONTEXT>占位符，因为calc_num_tokens_video_get_item需要它们
                 raw_data_copy = json.loads(line)
                 tokenize_fn.state = "cache"
-                cache_result = tokenize_fn(raw_data_copy, media_root='tests/')
+                cache_result = tokenize_fn(raw_data_copy, media_root=LOCAL_MEDIA_ROOT)
                 tokenize_fn.state = "get_item"
                 self.assertEqual(len(input_ids_xtuner), cache_result['num_tokens'], 
                                 "calc_num_tokens_get_item和get_item出来的token数不一致")
@@ -206,8 +218,6 @@ class TestVideoChat3TokenizeFn(TestCase):
         data_path = 'tests/resource/mllm_sft_multi_video_example_data.jsonl'
         with open(data_path, encoding='utf-8') as f:
             for i, line in enumerate(f):
-                if i >= 1:
-                    break
                 raw_data = json.loads(line)
 
                 # 测试collect_image_video_paths_and_extra函数
@@ -216,8 +226,8 @@ class TestVideoChat3TokenizeFn(TestCase):
                 
                 # 验证路径和元数据提取正确
                 self.assertEqual(len(video_paths), 2)
-                self.assertEqual(video_paths[0], 'resource/tennis.mp4')
-                self.assertEqual(video_paths[1], 'resource/tennis.mp4')
+                self.assertEqual(video_paths[0], 'tennis.mp4')
+                self.assertEqual(video_paths[1], 'tennis.mp4')
                 self.assertEqual(len(extra_info['video_meta_list']), 2)
                 self.assertIsNotNone(extra_info['video_meta_list'][0])
                 self.assertIsNotNone(extra_info['video_meta_list'][1])
@@ -227,7 +237,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 self.assertIsInstance(raw_data['messages'], list)
                 self.assertGreater(len(raw_data['messages']), 0)
                 # 对xtuner的结果
-                ret_xtuner = tokenize_fn(raw_data, media_root='tests/')
+                ret_xtuner = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
                 input_ids_xtuner = ret_xtuner['input_ids']
                 pixel_values_xtuner: torch.Tensor = ret_xtuner['pixel_values']
                 video_grid_thw_xtuner: torch.Tensor = ret_xtuner['image_grid_thw']
@@ -242,7 +252,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                         if c.get('type') == 'video_url':
                             # 转为HF所需的video type
                             c['type'] = 'video'
-                            c['path'] = 'tests/' + c['video_url']['url']
+                            c['path'] = LOCAL_MEDIA_ROOT + '/' + c['video_url']['url']
                             del c['video_url']
                         elif c.get('type') == 'text' and '<VIDEO_CONTEXT>' in c['text']:
                             # 移除<VIDEO_CONTEXT>占位符，因为HF会直接处理video token
@@ -269,7 +279,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 # cache状态需要保持<VIDEO_CONTEXT>占位符，因为calc_num_tokens_video_get_item需要它们
                 raw_data_copy = json.loads(line)
                 tokenize_fn.state = "cache"
-                cache_result = tokenize_fn(raw_data_copy, media_root='tests/')
+                cache_result = tokenize_fn(raw_data_copy, media_root=LOCAL_MEDIA_ROOT)
                 tokenize_fn.state = "get_item"
                 self.assertEqual(len(input_ids_xtuner), cache_result['num_tokens'], 
                                 "calc_num_tokens_get_item和get_item出来的token数不一致")

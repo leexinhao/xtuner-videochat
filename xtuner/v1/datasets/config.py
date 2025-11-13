@@ -22,6 +22,7 @@ from .collator import (
     fake_collator,
     intern_s1_vl_sft_collator,
     qwen3_vl_sft_collator,
+    videochat3_sft_collator,
     sft_llm_collator,
 )
 from .dataloader import BaseDataloader, Dataloader
@@ -267,7 +268,7 @@ class DataloaderConfig(BaseDataloaderConfig):
     dataset_config_list: DatasetConfigList | None = None
 
     collator: Annotated[
-        Literal["sft_llm_collator", "intern_s1_vl_sft_collator", "qwen3_vl_sft_collator", "fake_collator"],
+        Literal["sft_llm_collator", "intern_s1_vl_sft_collator", "qwen3_vl_sft_collator", "videochat3_sft_collator", "fake_collator"],
         Parameter(help="collator func name"),
     ] = "sft_llm_collator"
     pack_to_max_length: Annotated[bool, Parameter(help="whether to pack to max length")] = True
@@ -292,6 +293,8 @@ class DataloaderConfig(BaseDataloaderConfig):
             return intern_s1_vl_sft_collator
         elif self.collator == "qwen3_vl_sft_collator":
             return qwen3_vl_sft_collator
+        elif self.collator == "videochat3_sft_collator":
+            return videochat3_sft_collator
         elif self.collator == "fake_collator":
             return fake_collator  # for RL
         else:

@@ -1,0 +1,9 @@
+{
+
+    "smit_caption_481k": {
+        "media_root": "pvideo:s3://S-MiT/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/vflash_annotations/smit_caption_481k.json",
+        "data_augment": false,
+        "sample_ratio": 1
+    }
+}

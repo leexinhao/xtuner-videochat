@@ -65,7 +65,8 @@
     ],
     "temporal_patch_size": 1,
     "temporal_merge_size": 4,
-    "dtype": "bfloat16"
+    "dtype": "bfloat16",
+    "attn_impl": "flash_attention_2"
   },
   "vision_end_token_id": 151653,
   "vision_start_token_id": 151652

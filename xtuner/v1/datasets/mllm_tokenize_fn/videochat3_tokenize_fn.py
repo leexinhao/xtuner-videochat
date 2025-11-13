@@ -1,16 +1,19 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 
 import copy
+import io
 import os
+import sys
 import math
 import torch
 import numpy as np
-
+from PIL import Image
+from petrel_client.client import Client
 from pydantic import ConfigDict
 from collections.abc import Sequence
 from transformers import AutoProcessor, PreTrainedTokenizer
 from transformers.models.qwen2_vl.image_processing_qwen2_vl import smart_resize
-from .video_utils import VideoChat3VideoMetadata
+from .video_utils import VideoChat3VideoMetadata, VIDEO_READER_MAP
 from xtuner.v1.data_proto.messages import ChatMessages
 from xtuner.v1.data_proto.templates import CHAT_TEMPLATE_MAP
 from xtuner.v1.utils import get_logger
@@ -112,6 +115,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         tokenizer_hash: str | None = None,
         hash: str | None = None,
     ):
+        self.ceph_client = Client(conf_path='~/petreloss.conf')       
         self.media_processor = AutoProcessor.from_pretrained(processor_path, trust_remote_code=True)
         self.image_processor = self.media_processor.image_processor
         self.video_processor = self.media_processor.video_processor
@@ -185,9 +189,27 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         return input_ids, labels
 
+    def _my_load_image(self, image_path: str):
+        if "s3://" in image_path:
+            if self.ceph_client is None:
+                raise RuntimeError("Ceph client is not available. Cannot load image from s3:// path.")
+            img_bytes = self.ceph_client.get(image_path)
+            return Image.open(io.BytesIO(img_bytes)).convert("RGB")
+        else:
+            # Local file path
+            return Image.open(image_path).convert("RGB")
+
+
     def _process_image(self, image_file: str, media_root: str = ""):
         processor = copy.deepcopy(self.image_processor)
-        image = load_image(os.path.join(media_root, image_file))
+        if "s3://" in media_root:  # for ceph
+            if media_root[-1] != '/':
+                media_root += '/'
+            image_file = media_root + image_file
+        elif media_root != '':  # for local image
+            image_file = os.path.join(media_root, image_file)
+
+        image = self._my_load_image(image_file)
         image = apply_exif_orientation(image)
 
         visual_processed = processor.preprocess(image, return_tensors="pt")
@@ -198,16 +220,63 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         grid_thw = visual_processed["image_grid_thw"][0]
         return image_tensor, grid_thw
 
+
+    def _my_load_video(self, video_path: str, video_meta: VideoChat3VideoMetadata, frame_sample_indices: list):
+        video_backend = video_meta.video_backend if video_meta and video_meta.video_backend else "decord"
+        if "s3://" in video_path and self.ceph_client is None:
+            raise RuntimeError("Ceph client is not available. Cannot load video from s3:// path.")
+        return VIDEO_READER_MAP[video_backend](video_path, frame_sample_indices, self.ceph_client)
+
+
     def _process_video(self, video_file: str, media_root: str = "", video_meta: VideoChat3VideoMetadata = None): # TODO
         processor = copy.deepcopy(self.video_processor)
-        video_path = os.path.join(media_root, video_file)
+        if "s3://" in media_root:  # for ceph
+            if media_root[-1] != '/':
+                media_root += '/'
+            video_path = media_root + video_file
+        elif media_root != '':  # for local image
+            video_path = os.path.join(media_root, video_file)
+        
+        # if "s3://" in video_path:
+        #     # 让ceph读取操作对hf processor不可见，首先我们需要明白video processor的主要处理逻辑
+        #     """
+        #     def preprocess(self, videos: VideoInput, **kwargs: Unpack[VideosKwargs]) -> BatchFeature:
+        #         ...
+        #         input_data_format = kwargs.pop("input_data_format")
+        #         do_sample_frames = kwargs.pop("do_sample_frames")
+        #         device = kwargs.pop("device")
+        #         video_metadata = kwargs.pop("video_metadata")
+        #         # 1. 进行decode和采帧，_decode_and_sample_videos由video_processing_videochat3.py中重写过
+        #         sample_indices_fn = partial(self.sample_frames, **kwargs) if do_sample_frames else None
+        #         videos, video_metadata = self._decode_and_sample_videos(
+        #             videos,
+        #             video_metadata=video_metadata,
+        #             do_sample_frames=do_sample_frames,
+        #             sample_indices_fn=sample_indices_fn,
+        #         )
+        #         # 2. 转成pytorch tensor并reshape
+        #         videos = self._prepare_input_videos(videos=videos, input_data_format=input_data_format, device=device)
+        #         ...
+        #         # 3. 对读出来的video pixel tensor进行数据预处理
+        #         preprocessed_videos = self._preprocess(videos=videos, **kwargs)
+        #         ...
+        #         return preprocessed_videos
+        #     """
+        #     # 因此我们只需要考虑读取ceph的操作怎么和video_processing_videochat3._decode_and_sample_videos配合,
+        #     # 最方便的办法就是我们在外面decode加采帧，直接给一个PIL.Image list进去然后do_sample_frames设为False即可
+            
+        #     frame_sample_indices = processor.sample_frames(metadata=video_meta, num_frames=processor.num_frames, fps=processor.fps)
+        #     video_meta.frames_indices = frame_sample_indices
+        #     video_path = self._my_load_video(video_path, video_meta, frame_sample_indices)
+        #     visual_processed = processor.preprocess(video_path, do_sample_frames=False, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
+        # else:
         assert os.path.exists(video_path), f"video_path {video_path} does not exist!"
         if os.path.isdir(video_path):
             assert video_meta is not None, "video_meta is required for video in directory"
             video_path = sorted(os.listdir(video_path))
-
-
         visual_processed = processor.preprocess(video_path, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
+
+        
         video_tensor = visual_processed["pixel_values_videos"]
         assert len(visual_processed["video_grid_thw"]) == 1, f"video_grid_thw should have only one element, but got {len(visual_processed['video_grid_thw'])}"
         grid_thw = visual_processed["video_grid_thw"][0]
@@ -491,9 +560,9 @@ class VideoChat3TokenizeFnConfig(BaseMLLMTokenizeFnConfig):
     model_config = ConfigDict(title="Base dataset config for xtuner", extra="allow")
     processor_path: str
     image_min_pixels: int | None = 0
-    image_max_pixels: int | None = 100000 * 4 * 28 * 28
+    image_max_pixels: int | None = 512 * 512 * 28 * 28
     frame_min_pixels: int | None = 0
-    frame_max_pixels: int | None = 100000 * 4 * 28 * 28
+    frame_max_pixels: int | None = 512 * 512 * 28 * 28
     video_max_total_pixels: int = 1000000000 * 4 * 28 * 28
     video_min_frames: int = 4
     video_max_frames: int = 1024 

@@ -1,0 +1,78 @@
+{
+    "id": 4,
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "video_url",
+                    "video_url": {
+                        "url": "tennis.mp4"
+                    },
+                    "video_metadata": {
+                        "total_num_frames": 1035,
+                        "duration": 34.53453453453453,
+                        "fps": 29.97,
+                        "width": 1920,
+                        "height": 1080
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "<VIDEO_CONTEXT>\nWhat is happening in the video?"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": "Playing tennis."
+        },
+        {
+            "type": "video_url",
+            "video_url": {
+                "url": "tennis.mp4"
+            },
+            "video_metadata": {
+                "total_num_frames": 1035,
+                "duration": 34.53453453453453,
+                "fps": 29.97,
+                "width": 1920,
+                "height": 1080
+            }
+        },
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "video_url",
+                    "video_url": {
+                        "url": "tennis.mp4"
+                    },
+                    "video_metadata": {
+                        "total_num_frames": 1035,
+                        "duration": 34.53453453453453,
+                        "fps": 29.97,
+                        "width": 1920,
+                        "height": 1080
+                    }
+                },
+                {
+                    "type": "text",
+                    "text": "<VIDEO_CONTEXT>\nCan you describe the video content?"
+                }
+            ]
+        },
+        {
+            "role": "assistant",
+            "content": "A man and a woman are playing tennis."
+        },
+        {
+            "role": "user",
+            "content": "Can you briefly explain tennis?"
+        },
+        {
+            "role": "assistant",
+            "content": "Tennis is a sport where players use a racket to hit a ball over a net into the opponent's court. The objective is to score points by making the ball land in the opponent's court in a way that they cannot return it. It can be played individually (singles) or in pairs (doubles)."
+        }
+    ]
+}
