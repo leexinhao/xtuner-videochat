@@ -18,8 +18,8 @@ from xtuner.v1.config import FSDPConfig
 from xtuner.v1.utils.compile import maybe_compile
 from xtuner.v1.utils.test_utils import init_data_mesh
 
-QWEN3_VL_MOE_PATH = "/home/lixinhao/models/Qwen3-VL-4B-Instruct" # os.environ["QWEN3_VL_MOE_PATH"]
-QWEN3_VL_DENSE_PATH = "/home/lixinhao/models/Qwen3-VL-4B-Instruct" # os.environ["QWEN3_VL_DENSE_PATH"]
+QWEN3_VL_MOE_PATH = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-VL-4B-Instruct" # os.environ["QWEN3_VL_MOE_PATH"]
+QWEN3_VL_DENSE_PATH = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-VL-4B-Instruct" # os.environ["QWEN3_VL_DENSE_PATH"]
 
 
 class TestQwen3VL(DeterministicDDPTestCase):
@@ -188,7 +188,7 @@ class TestQwen3VL(DeterministicDDPTestCase):
         maybe_compile.clear_compile_targets()
         hf_model = AutoModelForImageTextToText.from_pretrained(
             QWEN3_VL_DENSE_PATH,
-            dtype=torch.bfloat16,
+            dtype=torch.float16,
             attn_implementation="flash_attention_2",
             device_map="cuda"
         ).eval()
@@ -198,7 +198,7 @@ class TestQwen3VL(DeterministicDDPTestCase):
         tokenizer = AutoTokenizer.from_pretrained(QWEN3_VL_DENSE_PATH)
         image_str = '看这张图 <|vision_start|><|image_pad|><|vision_end|> 和 这张图<|vision_start|><|image_pad|><|image_pad|><|image_pad|><|vision_end|>'
         input_ids = tokenizer(image_str + "它们有什么区别" * 20, return_tensors="pt").input_ids.to("cuda")
-        pixel_values = torch.randn(4 + 12, 1536, device='cuda', dtype=torch.bfloat16)
+        pixel_values = torch.randn(4 + 12, 1536, device='cuda', dtype=torch.float16)
         # TODO: 不合理，为啥一定要每个 rank 数据完全一样才能通过 CI ?
         dist.broadcast(pixel_values, src=0)
 
@@ -218,7 +218,7 @@ class TestQwen3VL(DeterministicDDPTestCase):
 
         with torch.device("meta"):
             model_cfg = Qwen3VLDense4BConfig()
-            qwen3vl_model = model_cfg.build().to(torch.bfloat16)
+            qwen3vl_model = model_cfg.build().to(torch.float16)
 
         qwen3vl_model.from_hf(QWEN3_VL_DENSE_PATH)
         qwen3vl_model.eval()
@@ -262,6 +262,7 @@ class TestQwen3VL(DeterministicDDPTestCase):
                 loss_ctx=loss_ctx,
             )
         loss = output["loss"]
+        raise ValueError(f"{loss} {expected_loss} {torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol)}")
         self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
 
 

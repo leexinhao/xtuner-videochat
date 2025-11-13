@@ -13,8 +13,8 @@
 |-------------------|:----:|:----:|:----:|:----:|:------:|
 | Qwen3VL-Dense     |  ✅  |  ✅  |  🚧  |  🚧  |   🚧   |
 | Qwen3VL-MoE       |  ✅  |  ✅  |  🚧  |  🚧  |   🚧   |
-| VideoChat3-Dense (save_hf有问题) |  ✅  | ✅ | 🚧 | ✅ | 🚧 |
-| VideoChat3-MoE  (save_hf有问题)  |  🚧  |  🚧  |  🚧  |  🚧  |   🚧   |
+| VideoChat3-Dense |  ✅  | ✅ | ✅ | ✅ | ✅ |
+| VideoChat3-MoE  |  🚧  |  🚧  |  🚧  |  🚧  |   🚧   |
 
 
 
