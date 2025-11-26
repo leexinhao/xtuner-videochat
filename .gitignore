@@ -5,7 +5,10 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.safetensors
+dataset_cache
+work_dirs
+work_dir
 # Distribution / packaging
 .Python
 build/

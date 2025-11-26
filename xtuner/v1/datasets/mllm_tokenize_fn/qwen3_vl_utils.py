@@ -109,14 +109,16 @@ def read_frames_decord(
     timestamps=None,
     client=None,
 ):
-    decord_video_threads = int(os.getenv("XTUNER_DECORD_VIDEO_THREADS", 0))
+    decord_video_threads = 1
     start_time = time.time()
     oss_read_time = 0
+    byteio = None
     if "s3://" in video_path:
         assert client is not None, "client should be provided for s3 backend"
         video_bytes = client.get(video_path)
         oss_read_time = time.time() - start_time
-        video_reader = VideoReader(io.BytesIO(video_bytes), num_threads=decord_video_threads)
+        byteio = io.BytesIO(video_bytes)
+        video_reader = VideoReader(byteio, num_threads=decord_video_threads)
         start_time = time.time()
     else:
         video_reader = VideoReader(video_path, num_threads=decord_video_threads)
@@ -145,6 +147,11 @@ def read_frames_decord(
         frames = video_reader.get_batch(frames_indices).asnumpy()  # (T, H, W, C), np.uint8
     video_get_batch_time = time.time() - start_time
     frames = numpy_to_tensor(frames)
+
+    video_reader.seek(0)
+
+    if byteio != None:
+        byteio.close()
     return frames, oss_read_time, video_get_batch_time, vlen, frames_indices, timestamps
 
 

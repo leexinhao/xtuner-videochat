@@ -2,9 +2,13 @@ from typing import Optional, Tuple
 
 import torch
 from flash_attn.flash_attn_interface import flash_attn_gpu, round_multiple
-from flash_attn_interface import flash_attn_3_cuda, maybe_contiguous
 
+try:
+    from flash_attn_interface import flash_attn_3_cuda, maybe_contiguous
+except:
+    from flash_attn.flash_attn_interface import maybe_contiguous
 
+    
 @torch.library.custom_op("flash_attn::_flash_attn_varlen_forward_v3", mutates_args=(), device_types="cuda")
 def _flash_attn_varlen_forward_v3(
     q: torch.Tensor,

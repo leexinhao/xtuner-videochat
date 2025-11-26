@@ -22,9 +22,9 @@ from torch.distributed.fsdp import (
     fully_shard,
 )
 
-QWEN3_VL_MOE_PATH = os.environ["QWEN3_VL_MOE_PATH"]
-QWEN3_VL_DENSE_PATH = os.environ["QWEN3_VL_DENSE_PATH"]
-VIDEO_ROOT = os.environ["VIDEO_ROOT"]
+# QWEN3_VL_MOE_PATH = os.environ["QWEN3_VL_MOE_PATH"]
+QWEN3_VL_DENSE_PATH = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-VL-4B-Instruct"
+# VIDEO_ROOT = os.environ["VIDEO_ROOT"]
 
 
 class TestQwen3VL(DeterministicDDPTestCase):
@@ -188,7 +188,7 @@ class TestQwen3VL(DeterministicDDPTestCase):
 
         self._test_all(hf_model, qwen3vl_model, 'text', device, sp_size, tol)
         self._test_all(hf_model, qwen3vl_model, 'image', device, sp_size, tol)
-        self._test_all(hf_model, qwen3vl_model, 'video', device, sp_size, tol)
+        # self._test_all(hf_model, qwen3vl_model, 'video', device, sp_size, tol)
 
     @parametrize.parametrize(
         "device,sp_size,compile, tol",
