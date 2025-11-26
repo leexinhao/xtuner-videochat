@@ -22,6 +22,7 @@ try:
 
     flash_attn_exception = None
 except (ImportError, ModuleNotFoundError) as e:
+    raise e
     flash_attn_varlen_func = None  # type: ignore[assignment]
     flash_attn_exception = e
 

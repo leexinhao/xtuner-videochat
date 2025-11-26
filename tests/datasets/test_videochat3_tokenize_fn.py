@@ -167,7 +167,7 @@ class TestVideoChat3TokenizeFn(TestCase):
                 input_ids_xtuner = ret_xtuner['input_ids']
                 pixel_values_xtuner: torch.Tensor = ret_xtuner['pixel_values']
                 video_grid_thw_xtuner: torch.Tensor = ret_xtuner['image_grid_thw']
-
+                assert len(video_grid_thw_xtuner.shape) == 2, video_grid_thw_xtuner.shape
                 # 转为hf openai格式
                 messages = raw_data['messages']
                 for msg in messages:
@@ -196,6 +196,9 @@ class TestVideoChat3TokenizeFn(TestCase):
                 pixel_values_hf = ret_hf['pixel_values_videos']
                 video_grid_thw_hf = ret_hf['video_grid_thw']
 
+                # 检查pixel_values和image_grid_thw的形状
+                self.assertEqual(pixel_values_xtuner.shape, pixel_values_hf.shape)
+                self.assertEqual(video_grid_thw_xtuner.shape, video_grid_thw_hf.shape)
                 self.assertEqual(input_ids_xtuner, input_ids_hf)
                 self.assertTrue(torch.allclose(pixel_values_xtuner, pixel_values_hf))
                 self.assertTrue(torch.allclose(video_grid_thw_xtuner, video_grid_thw_hf))

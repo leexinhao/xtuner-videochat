@@ -15,30 +15,40 @@ add_vision_id = False
 self_tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_PATH, trust_remote_code=True)
 # self.tokenize_fn = VideoChat3TokenizeFnConfig(processor_path=VIDEOCHAT3_PATH).build(self.tokenizer)
 # self.processor = AutoProcessor.from_pretrained(VIDEOCHAT3_PATH, trust_remote_code=True)
-
-tokenize_fn = VideoChat3TokenizeFnConfig(processor_path=VIDEOCHAT3_PATH,
-                                        add_vision_id=add_vision_id).build(self_tokenizer)
+sample_max_length = 8192
+tokenize_fn = VideoChat3TokenizeFnConfig(
+                    max_length=sample_max_length,
+                    image_min_pixels=28*28,
+                    image_max_pixels=int(sample_max_length * 0.8 * 28 * 28),
+                    frame_min_pixels=28*28,
+                    frame_max_pixels=int(sample_max_length * 0.8 * 28 * 28),
+                    video_max_total_pixels= int(sample_max_length * 0.8 * 4 * 28 * 28),
+                    video_min_frames=1,
+                    video_max_frames=2048, 
+                    fixed_num_sampled_frames=None,
+                    video_sample_fps=4, 
+                    processor_path=VIDEOCHAT3_PATH,
+                    # data_augment=_data.get('data_augment', False),
+                    # system_message=_data.get('system_message', None),
+                    # hash=_data.get('hash', None),
+                    ).build(self_tokenizer)
 data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_smit_481k.jsonl'
 with open(data_path, encoding='utf-8') as f:
     for i, line in enumerate(f):
-        if i >= 100:
+        if i >= 10:
             break
         raw_data = json.loads(line)
 
         # ret_xtuner = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
-        # input_ids_xtuner = ret_xtuner['input_ids']
-        # pixel_values_xtuner: torch.Tensor = ret_xtuner['pixel_values']
-        # video_grid_thw_xtuner: torch.Tensor = ret_xtuner['image_grid_thw']
-
-        ret_xtuner_ceph = tokenize_fn(raw_data, media_root=CEPH_ROOT)
-        input_ids_xtuner_ceph = ret_xtuner_ceph['input_ids']
-        pixel_values_xtuner_ceph: torch.Tensor = ret_xtuner_ceph['pixel_values']
-        video_grid_thw_xtuner_ceph: torch.Tensor = ret_xtuner_ceph['image_grid_thw']
+        ret_xtuner = tokenize_fn(raw_data, media_root=CEPH_ROOT)
+        input_ids_xtuner = ret_xtuner['input_ids']
+        pixel_values_xtuner: torch.Tensor = ret_xtuner['pixel_values']
+        video_grid_thw_xtuner: torch.Tensor = ret_xtuner['image_grid_thw']
         
         raw_data_copy = json.loads(line)
         tokenize_fn.state = "cache"
         cache_result = tokenize_fn(raw_data_copy, media_root=LOCAL_MEDIA_ROOT)
         tokenize_fn.state = "get_item"
-        assert len(input_ids_xtuner_ceph) == cache_result['num_tokens'], f"calc_num_tokens_get_item{cache_result['num_tokens']}和get_item出来的token数{len(input_ids_xtuner_ceph)}不一致！"
+        assert len(input_ids_xtuner) == cache_result['num_tokens'], f"calc_num_tokens_get_item{cache_result['num_tokens']}和get_item出来的token数{len(input_ids_xtuner)}不一致！"
         print(i, f"通过！num_tokens={cache_result['num_tokens']}", flush=True)
     

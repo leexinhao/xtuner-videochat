@@ -268,10 +268,6 @@ class TestVideoChat3(DeterministicDDPTestCase):
                 loss_ctx=loss_ctx,
             )
         loss = output["loss"]
-<<<<<<< HEAD
-=======
-        raise ValueError(f"{loss} {expected_loss} {torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol)}")
->>>>>>> 完成VideoChat3-Dense支持
         self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
 
 

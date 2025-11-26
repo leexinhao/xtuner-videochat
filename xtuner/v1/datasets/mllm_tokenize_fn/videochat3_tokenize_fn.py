@@ -237,44 +237,44 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         elif media_root != '':  # for local image
             video_path = os.path.join(media_root, video_file)
         
-        # if "s3://" in video_path:
-        #     # 让ceph读取操作对hf processor不可见，首先我们需要明白video processor的主要处理逻辑
-        #     """
-        #     def preprocess(self, videos: VideoInput, **kwargs: Unpack[VideosKwargs]) -> BatchFeature:
-        #         ...
-        #         input_data_format = kwargs.pop("input_data_format")
-        #         do_sample_frames = kwargs.pop("do_sample_frames")
-        #         device = kwargs.pop("device")
-        #         video_metadata = kwargs.pop("video_metadata")
-        #         # 1. 进行decode和采帧，_decode_and_sample_videos由video_processing_videochat3.py中重写过
-        #         sample_indices_fn = partial(self.sample_frames, **kwargs) if do_sample_frames else None
-        #         videos, video_metadata = self._decode_and_sample_videos(
-        #             videos,
-        #             video_metadata=video_metadata,
-        #             do_sample_frames=do_sample_frames,
-        #             sample_indices_fn=sample_indices_fn,
-        #         )
-        #         # 2. 转成pytorch tensor并reshape
-        #         videos = self._prepare_input_videos(videos=videos, input_data_format=input_data_format, device=device)
-        #         ...
-        #         # 3. 对读出来的video pixel tensor进行数据预处理
-        #         preprocessed_videos = self._preprocess(videos=videos, **kwargs)
-        #         ...
-        #         return preprocessed_videos
-        #     """
-        #     # 因此我们只需要考虑读取ceph的操作怎么和video_processing_videochat3._decode_and_sample_videos配合,
-        #     # 最方便的办法就是我们在外面decode加采帧，直接给一个PIL.Image list进去然后do_sample_frames设为False即可
-            
-        #     frame_sample_indices = processor.sample_frames(metadata=video_meta, num_frames=processor.num_frames, fps=processor.fps)
-        #     video_meta.frames_indices = frame_sample_indices
-        #     video_path = self._my_load_video(video_path, video_meta, frame_sample_indices)
-        #     visual_processed = processor.preprocess(video_path, do_sample_frames=False, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
+        # if "s3://" in video_path: NOTE: 无论在不在ceph都走这个
+        # 让ceph读取操作对hf processor不可见，首先我们需要明白video processor的主要处理逻辑
+        """
+        def preprocess(self, videos: VideoInput, **kwargs: Unpack[VideosKwargs]) -> BatchFeature:
+            ...
+            input_data_format = kwargs.pop("input_data_format")
+            do_sample_frames = kwargs.pop("do_sample_frames")
+            device = kwargs.pop("device")
+            video_metadata = kwargs.pop("video_metadata")
+            # 1. 进行decode和采帧，_decode_and_sample_videos由video_processing_videochat3.py中重写过
+            sample_indices_fn = partial(self.sample_frames, **kwargs) if do_sample_frames else None
+            videos, video_metadata = self._decode_and_sample_videos(
+                videos,
+                video_metadata=video_metadata,
+                do_sample_frames=do_sample_frames,
+                sample_indices_fn=sample_indices_fn,
+            )
+            # 2. 转成pytorch tensor并reshape
+            videos = self._prepare_input_videos(videos=videos, input_data_format=input_data_format, device=device)
+            ...
+            # 3. 对读出来的video pixel tensor进行数据预处理
+            preprocessed_videos = self._preprocess(videos=videos, **kwargs)
+            ...
+            return preprocessed_videos
+        """
+        # 因此我们只需要考虑读取ceph的操作怎么和video_processing_videochat3._decode_and_sample_videos配合,
+        # 最方便的办法就是我们在外面decode加采帧，直接给一个PIL.Image list进去然后do_sample_frames设为False即可
+        
+        frame_sample_indices = processor.sample_frames(metadata=video_meta, num_frames=processor.num_frames, fps=processor.fps)
+        video_meta.frames_indices = frame_sample_indices
+        video_path = self._my_load_video(video_path, video_meta, frame_sample_indices)
+        visual_processed = processor.preprocess(video_path, do_sample_frames=False, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
         # else:
-        assert os.path.exists(video_path), f"video_path {video_path} does not exist!"
-        if os.path.isdir(video_path):
-            assert video_meta is not None, "video_meta is required for video in directory"
-            video_path = sorted(os.listdir(video_path))
-        visual_processed = processor.preprocess(video_path, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
+        # assert os.path.exists(video_path), f"video_path {video_path} does not exist!"
+        # if os.path.isdir(video_path):
+        #     assert video_meta is not None, "video_meta is required for video in directory"
+        #     video_path = sorted(os.listdir(video_path))
+        # visual_processed = processor.preprocess(video_path, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
 
         
         video_tensor = visual_processed["pixel_values_videos"]
@@ -516,6 +516,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         grid_thw_copy = copy.deepcopy(grid_thw)
         if not isinstance(grid_thw, Sequence):
             grid_thw_copy = [grid_thw_copy]
+            grid_thw = [grid_thw]
 
         num_video_tokens_list = [self.video_processor.get_number_of_video_tokens(grid_t, grid_h, grid_w) for grid_t, grid_h, grid_w in grid_thw_copy]  # type: ignore
         messages = ChatMessages(messages=data_item["messages"])
@@ -536,11 +537,11 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         )
 
         num_img_tokens = 0
-        for num_video_token, grid_thw in zip(num_video_tokens_list, grid_thw_copy):
-            if grid_thw[0].item() % self.video_processor.temporal_merge_size == 0:
-                num_clips = grid_thw[0].item() // self.video_processor.temporal_merge_size
+        for num_video_token, _thw in zip(num_video_tokens_list, grid_thw_copy):
+            if _thw[0].item() % self.video_processor.temporal_merge_size == 0:
+                num_clips = _thw[0].item() // self.video_processor.temporal_merge_size
             else:
-                num_clips = grid_thw[0].item() // self.video_processor.temporal_merge_size + 1
+                num_clips = _thw[0].item() // self.video_processor.temporal_merge_size + 1
             num_img_tokens += num_video_token +  num_clips * 2
         
 

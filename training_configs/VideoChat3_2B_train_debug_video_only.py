@@ -19,7 +19,7 @@ model_cfg = VideoChat3Dense2BConfig(freeze_vision=True, freeze_language=True)
 
 model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-2B"
 meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_debug_video.json'
-work_dir = "work_dir/videochat3_2B_debug_video_only"
+work_dir = "work_dir/VideoChat3_2B_train_debug_video_only"
 cache_dir = "dataset_cache/cache_videochat3_2B_debug_video_only"
 
 
@@ -86,7 +86,7 @@ optim_cfg = AdamWConfig(lr=lr, weight_decay=weight_decay, foreach=False)
 lr_cfg = LRConfig(lr_type="cosine", warmup_ratio=warmup_ratio, lr_min=lr_min)
 fsdp_cfg = FSDPConfig(sp_size=1, recompute_ratio=recompute_ratio, torch_compile=False)
 
-resume_cfg = ResumeConfig(auto_resume=True)
+resume_cfg = ResumeConfig(auto_resume=False)
 
 # trainer config
 trainer = TrainerConfig(

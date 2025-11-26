@@ -616,10 +616,14 @@ class VideoChat3VisionModel(VideoChat3VisionPreTrainedModel):
         tmp_thw_list = []
         for t, h, w in grid_thws.tolist():
             if t > self.config.temporal_merge_size:
+                _t = t
                 for _ in range(self.config.temporal_merge_size, t, self.config.temporal_merge_size):
                     tmp_thw_list.append([self.config.temporal_merge_size, h, w])
-                tmp_thw_list.append([t % self.config.temporal_merge_size, h, w])
+                    _t -= self.config.temporal_merge_size
+                if _t != 0:
+                    tmp_thw_list.append([_t, h, w])
             else:
+                assert t != 0, grid_thws
                 tmp_thw_list.append([t, h, w])
         return torch.tensor(tmp_thw_list, device=grid_thws.device, dtype=grid_thws.dtype)
         

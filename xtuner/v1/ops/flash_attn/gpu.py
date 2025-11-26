@@ -5,8 +5,9 @@ from flash_attn.flash_attn_interface import flash_attn_gpu, round_multiple
 
 try:
     from flash_attn_interface import flash_attn_3_cuda, maybe_contiguous
-except:
+except ImportError:
     from flash_attn.flash_attn_interface import maybe_contiguous
+    print("You need to install FA3!")
 
     
 @torch.library.custom_op("flash_attn::_flash_attn_varlen_forward_v3", mutates_args=(), device_types="cuda")

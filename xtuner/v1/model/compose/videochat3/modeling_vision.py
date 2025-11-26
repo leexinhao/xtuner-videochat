@@ -19,11 +19,11 @@ except:
     has_timm = False
 
 try:
-    from flash_attn import flash_attn_varlen_func
+    from flash_attn import flash_attn_varlen_func as flash_attn_varlen_func_videochat
     has_flash_attn = True
 except:
     has_flash_attn = False
-    flash_attn_varlen_func = None
+    flash_attn_varlen_func_videochat = None
 
 from tqdm import tqdm
 from xtuner.v1.utils import XTUNER_DETERMINISTIC, get_device, get_torch_device_module, init_params
@@ -112,7 +112,11 @@ class VideoChat3InterpPosEmb(nn.Module):
             
     def forward(self, x: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
         pos_embs = []
+        real_num_tokens = x.shape[0]
+
+        num_tokens = 0
         for t, h, w in grid_thws.tolist():
+            num_tokens += t * h * w
             if (h, w) == self.weight.shape[:-1]:
                 pos_emb_2d = self.weight.flatten(end_dim=1)
             else:
@@ -134,6 +138,8 @@ class VideoChat3InterpPosEmb(nn.Module):
 
             pos_embs.append(pos_emb_3d.reshape(-1, pos_emb_3d.shape[-1]))
 
+        if real_num_tokens != num_tokens:
+            raise ValueError(f"x.shape:{x.shape}, grid_thws:{grid_thws}, real_num_tokens={real_num_tokens}, num_tokens={num_tokens}")
         out = x + torch.cat(pos_embs)
         return out
 
@@ -324,7 +330,7 @@ def flash_attention_2(
 
     max_seqlen_q = (q_cu_seqlens[1:] - q_cu_seqlens[:-1]).max().item()
     max_seqlen_k = (k_cu_seqlens[1:] - k_cu_seqlens[:-1]).max().item()
-    attn_out = flash_attn_varlen_func(
+    attn_out = flash_attn_varlen_func_videochat(
         q,
         k,
         v,
@@ -606,10 +612,14 @@ class VideoChat3VisionModel(BaseModel):
         tmp_thw_list = []
         for t, h, w in grid_thws.tolist():
             if t > self.config.temporal_merge_size:
+                _t = t
                 for _ in range(self.config.temporal_merge_size, t, self.config.temporal_merge_size):
                     tmp_thw_list.append([self.config.temporal_merge_size, h, w])
-                tmp_thw_list.append([t % self.config.temporal_merge_size, h, w])
+                    _t -= self.config.temporal_merge_size
+                if _t != 0:
+                    tmp_thw_list.append([_t, h, w])
             else:
+                assert t != 0, grid_thws
                 tmp_thw_list.append([t, h, w])
         return torch.tensor(tmp_thw_list, device=grid_thws.device, dtype=grid_thws.dtype)
         
@@ -623,7 +633,16 @@ class VideoChat3VisionModel(BaseModel):
         Returns:
             torch.Tensor: The output tokens.
         """
+        num_tokens = 0
+        import copy
+        old_grid_thws = copy.deepcopy(grid_thws)
+        for t, h, w in grid_thws.tolist():
+            num_tokens += t * h * w
         grid_thws = self.split_grid_thws_clip_by_clip(grid_thws)
+        num_tokens2 = 0
+        for t, h, w in grid_thws.tolist():
+            num_tokens2 += t * h * w
+        assert num_tokens == num_tokens2, f"{num_tokens} != {num_tokens2}, {old_grid_thws} / {grid_thws}"
         hidden_states = self.patch_embed(pixel_values, grid_thws)
         hidden_states = self.encoder(hidden_states, grid_thws)
         hidden_states = patch_merger(hidden_states, grid_thws, merge_kernel_size=self.config.merge_kernel_size)

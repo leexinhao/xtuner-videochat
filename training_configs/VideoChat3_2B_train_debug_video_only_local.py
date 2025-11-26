@@ -19,7 +19,7 @@ model_cfg = VideoChat3Dense2BConfig(freeze_vision=True, freeze_language=True)
 
 model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-2B"
 meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_debug_video_local.json'
-work_dir = "work_dir/videochat3_2B_debug_video_only_local"
+work_dir = "work_dir/VideoChat3_2B_train_debug_video_only_local"
 cache_dir = "dataset_cache/cache_videochat3_2B_debug_video_only_local"
 
 

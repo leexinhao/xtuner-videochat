@@ -17,6 +17,7 @@ from xtuner.v1.model.moe.moe import SequenceContext
 from xtuner.v1.config import FSDPConfig
 from xtuner.v1.utils.compile import maybe_compile
 from xtuner.v1.utils.test_utils import init_data_mesh
+from xtuner.v1.datasets import VideoChat3TokenizeFnConfig
 
 # 设置环境变量路径 - 需要根据实际情况调整
 VIDEOCHAT3_DENSE_PATH = os.environ.get("VIDEOCHAT3_DENSE_PATH", "./VideoChat3-2B")
@@ -128,21 +129,31 @@ class TestVideoChat3(DeterministicDDPTestCase):
             device_map="cuda",
             trust_remote_code=True,
         ).eval()
-        # patch_hf_rms_norm(hf_model)
+        patch_hf_rms_norm(hf_model)
 
-        rank = dist.get_rank()
-        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH)
-        image_str = '<|vision_start|><|image_pad|><|vision_end|>'
-        input_ids = tokenizer(image_str + "吃葡萄不吐葡萄皮" * 20, return_tensors="pt").input_ids.to("cuda")
-        pixel_values = torch.randn(4, 588, device='cuda', dtype=torch.bfloat16)
-        # TODO: 不合理，为啥一定要每个 rank 数据完全一样才能通过 CI ?
-        dist.broadcast(pixel_values, src=0)
-        image_grid_thw = torch.tensor([[1, 2, 2]], device='cuda')
+        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
+        tokenize_fn = VideoChat3TokenizeFnConfig(processor_path=VIDEOCHAT3_DENSE_PATH, add_vision_id=True).build(tokenizer)
+
+        raw_data = {"id": 3, "messages": [{"role": "user", "content": [{"type": "image_url", "image_url": {
+            "url": "tests/resource/mscoco_twocat_000000039769.jpg", "image_wh": [640, 480]}}, {"type": "image_url",
+                                                                                               "image_url": {
+                                                                                                   "url": "tests/resource/mscoco_dog_000000319154.jpg",
+                                                                                                   "image_wh": [375,
+                                                                                                                500]}},
+                                                                       {"type": "text",
+                                                                        "text": "<IMG_CONTEXT>\n<IMG_CONTEXT>\n请描述下第二幅图片中的狗是什么颜色？"}]},
+                                          {"role": "assistant", "content": "图片中的狗是棕色的。"}]}
+
+        tokenized_data = tokenize_fn(raw_data)
+        input_ids = torch.tensor(tokenized_data['input_ids'])[None].cuda()
+        labels = torch.tensor(tokenized_data['labels'])[None].cuda()
+        pixel_values = tokenized_data['pixel_values'].cuda()
+        image_grid_thw = tokenized_data['image_grid_thw'].cuda()
 
         with torch.no_grad():
             output = hf_model(
                 input_ids=input_ids,
-                labels=input_ids.clone(),
+                labels=labels,
                 pixel_values=pixel_values,
                 image_grid_thw=image_grid_thw,
             )
@@ -168,7 +179,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
         videochat3_model.fully_shard(fsdp_config=fsdp_config)
 
-        videochat3_model.from_hf(VideoChat3Dense2BConfig)
+        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
         videochat3_model.eval()
 
         shift_input_ids = input_ids[:, :-1]
@@ -203,6 +214,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
                 loss_ctx=loss_ctx,
             )
         loss = output["loss"]
+        raise ValueError(f"{loss} {expected_loss.to(loss.dtype)} {torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol)}")
         self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
 
 
@@ -267,7 +279,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
         videochat3_model.fully_shard(fsdp_config=fsdp_config)
 
-        videochat3_model.from_hf(VideoChat3Dense2BConfig)
+        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
         videochat3_model.eval()
 
         shift_input_ids = input_ids[:, :-1]
@@ -423,10 +435,9 @@ class TestVideoChat3(DeterministicDDPTestCase):
         )
 
         cache_save_fh = {}
-        tmpdir = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-2B-savehf-debug2"
-    # with tempfile.TemporaryDirectory() as tmpdir:
-        syncdir = [tmpdir]
-        dist.broadcast_object_list(syncdir, src=0)
+        with tempfile.TemporaryDirectory() as tmpdir:
+            syncdir = [tmpdir]
+            dist.broadcast_object_list(syncdir, src=0)
         tmpdir = Path(syncdir[0])
         
         # 对各个组件进行 FSDP 切分

@@ -18,9 +18,9 @@ import json
 model_cfg = VideoChat3Dense2BConfig(freeze_vision=True, freeze_language=True)
 
 model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-2B"
-meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-1_video_only.json'
-work_dir = "work_dir/VideoChat3_2B_train_stage1-1_video_only"
-cache_dir = "dataset_cache/cache_videochat3_2B_stage1-1_video_only"
+meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-1_video_only_debug.json'
+work_dir = "work_dir/VideoChat3_2B_train_stage1-1_video_only_debug"
+cache_dir = "dataset_cache/cache_videochat3_2B_stage1-1_video_only_debug"
 
 
 
@@ -77,7 +77,7 @@ dataloader_config = DataloaderConfig(
     dataset_config_list=dataset_config,
     pack_max_length=pack_max_length,
     collator="videochat3_sft_collator",
-    num_workers=8,
+    num_workers=2,
     pack_extra_buffer_size=20,
 )
 

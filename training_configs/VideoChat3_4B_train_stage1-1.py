@@ -30,7 +30,7 @@ global_batch_size = 512
 total_epoch = 1
 # total_num_tokens = 105332882
 # total_step = int(total_num_tokens  / pack_max_length / global_batch_size)
-hf_interval = 100
+hf_interval = 20
 checkpoint_interval = 100
 checkpoint_maxkeep = 2
 

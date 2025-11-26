@@ -4,7 +4,7 @@ from xtuner.v1.config import (
 )
 from xtuner.v1.train import TrainerConfig, ResumeConfig
 from xtuner.v1.datasets import VideoChat3TokenizeFnConfig
-from xtuner.v1.model import VideoChat3Dense2BConfig
+from xtuner.v1.model import VideoChat3Dense4BConfig
 from xtuner.v1.loss import CELossConfig
 from xtuner.v1.datasets.config import DatasetConfig, DataloaderConfig
 from xtuner.v1.datasets.mllm_tokenize_fn import OSSLoaderConfig
@@ -15,12 +15,12 @@ import json
 # export XTUNER_USE_FA3=1
 
 # model config
-model_cfg = VideoChat3Dense2BConfig(freeze_vision=True, freeze_language=True)
+model_cfg = VideoChat3Dense4BConfig(freeze_vision=True, freeze_language=True)
 
-model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-2B"
-meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-1_video_only.json'
-work_dir = "work_dir/VideoChat3_2B_train_stage1-1_video_only"
-cache_dir = "dataset_cache/cache_videochat3_2B_stage1-1_video_only"
+model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-4B"
+meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-1_image_only.json'
+work_dir = "work_dir/videochat3_4B_stage1-1_image_only"
+cache_dir = "dataset_cache/cache_videochat3_4B_stage1-1_image_only"
 
 
 
@@ -56,10 +56,10 @@ for name, _data in ds_collections.items():
                     model_cfg=model_cfg,
                     max_length=sample_max_length,
                     image_min_pixels=_data.get('image_min_pixels', 28*28),
-                    image_max_pixels=_data.get('image_max_pixels', int(sample_max_length * 0.8 * 28 * 28)),
+                    image_max_pixels=_data.get('image_max_pixels', int(sample_max_length * 28 * 28 - 4096)),
                     frame_min_pixels=_data.get('frame_min_pixels', 28*28),
-                    frame_max_pixels=_data.get('frame_max_pixels', int(sample_max_length * 0.8 * 28 * 28)),
-                    video_max_total_pixels=_data.get('video_max_total_pixels', int(sample_max_length * 0.8 * 4 * 28 * 28)),
+                    frame_max_pixels=_data.get('frame_max_pixels', int(sample_max_length * 28 * 28 - 4096)),
+                    video_max_total_pixels=_data.get('video_max_total_pixels', int(sample_max_length * 4 * 28 * 28 - 4096)),
                     video_min_frames=_data.get('video_min_frames', 1),
                     video_max_frames=_data.get('video_max_frames', 2048), 
                     fixed_num_sampled_frames=_data.get('fixed_num_sampled_frames', None),
