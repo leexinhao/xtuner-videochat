@@ -84,18 +84,25 @@ def read_frames_decord(
     frame_sample_indices,
     client=None,
 ):
+    byteio = None
     decord_video_threads = int(os.getenv("XTUNER_DECORD_VIDEO_THREADS", 0))
     if video_path.endswith('.avi'):
         return read_frames_av(video_path, frame_sample_indices, client)
     assert VideoReader is not None, "Please install decord: pip install decord"
     if "s3://" in video_path:
         video_bytes = client.get(video_path)
-        video_reader = VideoReader(io.BytesIO(video_bytes), num_threads=decord_video_threads)
+        byteio = io.BytesIO(video_bytes)
+        video_reader = VideoReader(byteio, num_threads=decord_video_threads)
     else:
         video_reader = VideoReader(video_path, num_threads=decord_video_threads)
     
     frames = video_reader.get_batch(frame_sample_indices).asnumpy()  # (T, H, W, C), np.uint8
     frames = [Image.fromarray(frames[i]) for i in range(frames.shape[0])]
+
+    video_reader.seek(0)
+    if byteio != None:
+        byteio.close()
+
     return frames
 
 

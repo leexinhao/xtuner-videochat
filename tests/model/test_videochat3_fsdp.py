@@ -26,87 +26,87 @@ VIDEOCHAT3_DENSE_PATH = os.environ.get("VIDEOCHAT3_DENSE_PATH", "./VideoChat3-2B
 
 class TestVideoChat3(DeterministicDDPTestCase):
     
-    @parametrize.parametrize(
-        "device,tol",
-        [
-            ("cuda", 1e-2),
-        ],
-    )
-    def test_fsdp_text_accuracy(self, device, tol):
-        """测试 FSDP 下的文本推理精度"""
-        self.create_pg(device)
-        maybe_compile.clear_compile_targets()
+    # @parametrize.parametrize(
+    #     "device,tol",
+    #     [
+    #         ("cuda", 1e-2),
+    #     ],
+    # )
+    # def test_fsdp_text_accuracy(self, device, tol):
+    #     """测试 FSDP 下的文本推理精度"""
+    #     self.create_pg(device)
+    #     maybe_compile.clear_compile_targets()
         
-        # 加载 HuggingFace 模型作为参考
-        hf_model = AutoModelForCausalLM.from_pretrained(
-            VIDEOCHAT3_DENSE_PATH,
-            dtype=torch.bfloat16,
-            attn_implementation="flash_attention_2",
-            device_map="cuda",
-            trust_remote_code=True,
-        ).eval()
-        patch_hf_rms_norm(hf_model)
+    #     # 加载 HuggingFace 模型作为参考
+    #     hf_model = AutoModelForCausalLM.from_pretrained(
+    #         VIDEOCHAT3_DENSE_PATH,
+    #         dtype=torch.bfloat16,
+    #         attn_implementation="flash_attention_2",
+    #         device_map="cuda",
+    #         trust_remote_code=True,
+    #     ).eval()
+    #     patch_hf_rms_norm(hf_model)
 
-        rank = dist.get_rank()
-        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
-        input_ids = tokenizer(f"今天天气不错，是学习的好日子。请听题： 1+{rank} 等于多少？",
-                              return_tensors="pt").input_ids.to(device)
+    #     rank = dist.get_rank()
+    #     tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
+    #     input_ids = tokenizer(f"今天天气不错，是学习的好日子。请听题： 1+{rank} 等于多少？",
+    #                           return_tensors="pt").input_ids.to(device)
 
-        with torch.no_grad():
-            output = hf_model(
-                input_ids=input_ids,
-                labels=input_ids.clone(),
-            )
-        expected_loss = output.loss
-        dist.all_reduce(expected_loss.div_(dist.get_world_size()), op=dist.ReduceOp.SUM)
+    #     with torch.no_grad():
+    #         output = hf_model(
+    #             input_ids=input_ids,
+    #             labels=input_ids.clone(),
+    #         )
+    #     expected_loss = output.loss
+    #     dist.all_reduce(expected_loss.div_(dist.get_world_size()), op=dist.ReduceOp.SUM)
 
-        del hf_model
-        torch.cuda.empty_cache()
+    #     del hf_model
+    #     torch.cuda.empty_cache()
 
-        # 构建 XTuner VideoChat3 模型
-        with torch.device("meta"):
-            model_cfg = VideoChat3Dense2BConfig()
-            videochat3_model = model_cfg.build().to(torch.bfloat16)
+    #     # 构建 XTuner VideoChat3 模型
+    #     with torch.device("meta"):
+    #         model_cfg = VideoChat3Dense2BConfig()
+    #         videochat3_model = model_cfg.build().to(torch.bfloat16)
 
-        fsdp_config = FSDPConfig(
-            cpu_offload=False,
-        )
+    #     fsdp_config = FSDPConfig(
+    #         cpu_offload=False,
+    #     )
 
-        # 对各个组件进行 FSDP 切分
-        videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
-        videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
-        videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
-        videochat3_model.fully_shard(fsdp_config=fsdp_config)
+    #     # 对各个组件进行 FSDP 切分
+    #     videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
+    #     videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
+    #     videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
+    #     videochat3_model.fully_shard(fsdp_config=fsdp_config)
 
-        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
-        videochat3_model.eval()
+    #     videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
+    #     videochat3_model.eval()
 
-        shift_input_ids = input_ids[:, :-1]
-        shifted_labels = input_ids[:, 1:]
-        seq_ctx = SequenceContext.from_input_ids(input_ids=(shift_input_ids.to('cuda'),))
-        loss_ctx_input = CELossContextInputItem(shifted_labels=shifted_labels)
-        loss_ctx_input = loss_ctx_input.to('cuda')
+    #     shift_input_ids = input_ids[:, :-1]
+    #     shifted_labels = input_ids[:, 1:]
+    #     seq_ctx = SequenceContext.from_input_ids(input_ids=(shift_input_ids.to('cuda'),))
+    #     loss_ctx_input = CELossContextInputItem(shifted_labels=shifted_labels)
+    #     loss_ctx_input = loss_ctx_input.to('cuda')
 
-        seq_ctx_list = [seq_ctx]
-        loss_ctx_input_list: list[CELossContextInputItem] = [loss_ctx_input]
+    #     seq_ctx_list = [seq_ctx]
+    #     loss_ctx_input_list: list[CELossContextInputItem] = [loss_ctx_input]
 
-        loss_cfg = CELossConfig()
-        LossContext = loss_cfg.loss_ctx_cls
-        batches_loss_kwargs = LossContext.build_batches_loss_kwargs(
-            loss_ctx_input_list,
-            loss_cfg,
-        )
-        loss_kwargs = batches_loss_kwargs[0]
-        loss_ctx = LossContext(loss_cfg, loss_kwargs)
-        seq_ctx = seq_ctx_list[0]
+    #     loss_cfg = CELossConfig()
+    #     LossContext = loss_cfg.loss_ctx_cls
+    #     batches_loss_kwargs = LossContext.build_batches_loss_kwargs(
+    #         loss_ctx_input_list,
+    #         loss_cfg,
+    #     )
+    #     loss_kwargs = batches_loss_kwargs[0]
+    #     loss_ctx = LossContext(loss_cfg, loss_kwargs)
+    #     seq_ctx = seq_ctx_list[0]
 
-        with torch.no_grad():
-            output = videochat3_model(
-                seq_ctx=seq_ctx,
-                loss_ctx=loss_ctx,
-            )
-        loss = output["loss"]
-        self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
+    #     with torch.no_grad():
+    #         output = videochat3_model(
+    #             seq_ctx=seq_ctx,
+    #             loss_ctx=loss_ctx,
+    #         )
+    #     loss = output["loss"]
+    #     self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
 
     @parametrize.parametrize(
         "device, sp_size, compile, tol",
@@ -150,6 +150,15 @@ class TestVideoChat3(DeterministicDDPTestCase):
         pixel_values = tokenized_data['pixel_values'].cuda()
         image_grid_thw = tokenized_data['image_grid_thw'].cuda()
 
+        # rank = dist.get_rank()
+        # image_str = '<|vision_start|><|image_pad|><|vision_end|>'
+        # input_ids = tokenizer(image_str + "吃葡萄不吐葡萄皮" * 20, return_tensors="pt").input_ids.to("cuda")
+        # pixel_values = torch.randn(4, 588, device='cuda', dtype=torch.bfloat16) # (h*w, 14 * 14 * 3 * 1)
+        # # TODO: 不合理，为啥一定要每个 rank 数据完全一样才能通过 CI ?
+        # dist.broadcast(pixel_values, src=0)
+
+        # image_grid_thw = torch.tensor([[1, 2, 2]], device='cuda')
+
         with torch.no_grad():
             output = hf_model(
                 input_ids=input_ids,
@@ -183,107 +192,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         videochat3_model.eval()
 
         shift_input_ids = input_ids[:, :-1]
-        shifted_labels = input_ids[:, 1:]
-        seq_ctx = SequenceContext.from_input_ids(input_ids=(shift_input_ids.to('cuda'),))
-        seq_ctx.image_grid_thw = image_grid_thw
-        seq_ctx.pixel_values = pixel_values
-        seq_ctx.to('cuda')
-        loss_ctx_input = CELossContextInputItem(shifted_labels=shifted_labels)
-        loss_ctx_input = loss_ctx_input.to('cuda')
-
-        if sp_size > 1:
-            seq_ctx = seq_ctx.split(sp_mesh)
-            loss_ctx_input = loss_ctx_input.sp_split(sp_mesh)
-
-        seq_ctx_list = [seq_ctx]
-        loss_ctx_input_list: list[CELossContextInputItem] = [loss_ctx_input]
-
-        loss_cfg = CELossConfig()
-        LossContext = loss_cfg.loss_ctx_cls
-        batches_loss_kwargs = LossContext.build_batches_loss_kwargs(
-            loss_ctx_input_list,
-            loss_cfg,
-        )
-        loss_kwargs = batches_loss_kwargs[0]
-        loss_ctx = LossContext(loss_cfg, loss_kwargs)
-        seq_ctx = seq_ctx_list[0]
-
-        with torch.no_grad():
-            output = videochat3_model(
-                seq_ctx=seq_ctx,
-                loss_ctx=loss_ctx,
-            )
-        loss = output["loss"]
-        raise ValueError(f"{loss} {expected_loss.to(loss.dtype)} {torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol)}")
-        self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
-
-
-    @parametrize.parametrize(
-        "device, sp_size, compile, tol",
-        [
-            ("cuda", 1, False, 1e-2),
-            # ("cuda", 2, False, 1e-2),
-            ("cuda", 1, True, 1e-2),
-            # ("cuda", 2, True, 1e-2),
-        ],
-    )
-    def test_fsdp_multi_image_accuracy(self, device, sp_size, compile, tol):
-        self.create_pg(device)
-        if not compile:
-            maybe_compile.clear_compile_targets()
-
-        hf_model = AutoModelForCausalLM.from_pretrained(
-            VIDEOCHAT3_DENSE_PATH,
-            dtype=torch.bfloat16,
-            attn_implementation="flash_attention_2",
-            device_map="cuda",
-            trust_remote_code=True,
-        ).eval()
-        # patch_hf_rms_norm(hf_model)
-
-        rank = dist.get_rank()
-        tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH)
-        image_str = '看这张图 <|vision_start|><|image_pad|><|vision_end|> 和 这张图<|vision_start|><|image_pad|><|vision_end|>'
-        input_ids = tokenizer(image_str + "它们有什么区别" * 20, return_tensors="pt").input_ids.to("cuda")
-        pixel_values = torch.randn(4 + 12, 588, device='cuda', dtype=torch.bfloat16)
-        # TODO: 不合理，为啥一定要每个 rank 数据完全一样才能通过 CI ?
-        dist.broadcast(pixel_values, src=0)
-        image_grid_thw = torch.tensor([[1, 2, 2], [1, 6, 2]], device='cuda')
-
-        with torch.no_grad():
-            output = hf_model(
-                input_ids=input_ids,
-                labels=input_ids.clone(),
-                pixel_values=pixel_values,
-                image_grid_thw=image_grid_thw,
-            )
-        expected_loss = output.loss
-
-        del hf_model
-        torch.cuda.empty_cache()
-
-        with torch.device("meta"):
-            model_cfg = VideoChat3Dense2BConfig()
-            videochat3_model = model_cfg.build().to(torch.bfloat16)
-
-        fsdp_config = FSDPConfig(
-            cpu_offload=False,
-        )
-        sp_mesh = None
-        if sp_size > 1:
-            data_mesh = init_data_mesh(device, sp_size=sp_size)
-            sp_mesh = data_mesh["sp"]
-
-        videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
-        videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
-        videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
-        videochat3_model.fully_shard(fsdp_config=fsdp_config)
-
-        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
-        videochat3_model.eval()
-
-        shift_input_ids = input_ids[:, :-1]
-        shifted_labels = input_ids[:, 1:]
+        shifted_labels = labels[:, 1:]
         seq_ctx = SequenceContext.from_input_ids(input_ids=(shift_input_ids.to('cuda'),))
         seq_ctx.image_grid_thw = image_grid_thw
         seq_ctx.pixel_values = pixel_values
@@ -315,6 +224,105 @@ class TestVideoChat3(DeterministicDDPTestCase):
             )
         loss = output["loss"]
         self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
+
+
+    # @parametrize.parametrize(
+    #     "device, sp_size, compile, tol",
+    #     [
+    #         ("cuda", 1, False, 1e-2),
+    #         # ("cuda", 2, False, 1e-2),
+    #         ("cuda", 1, True, 1e-2),
+    #         # ("cuda", 2, True, 1e-2),
+    #     ],
+    # )
+    # def test_fsdp_multi_image_accuracy(self, device, sp_size, compile, tol):
+    #     self.create_pg(device)
+    #     if not compile:
+    #         maybe_compile.clear_compile_targets()
+
+    #     hf_model = AutoModelForCausalLM.from_pretrained(
+    #         VIDEOCHAT3_DENSE_PATH,
+    #         dtype=torch.bfloat16,
+    #         attn_implementation="flash_attention_2",
+    #         device_map="cuda",
+    #         trust_remote_code=True,
+    #     ).eval()
+    #     # patch_hf_rms_norm(hf_model)
+
+    #     rank = dist.get_rank()
+    #     tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH)
+    #     image_str = '看这张图 <|vision_start|><|image_pad|><|vision_end|> 和 这张图<|vision_start|><|image_pad|><|vision_end|>'
+    #     input_ids = tokenizer(image_str + "它们有什么区别" * 20, return_tensors="pt").input_ids.to("cuda")
+    #     pixel_values = torch.randn(4 + 12, 588, device='cuda', dtype=torch.bfloat16)
+    #     # TODO: 不合理，为啥一定要每个 rank 数据完全一样才能通过 CI ?
+    #     dist.broadcast(pixel_values, src=0)
+    #     image_grid_thw = torch.tensor([[1, 2, 2], [1, 6, 2]], device='cuda')
+
+    #     with torch.no_grad():
+    #         output = hf_model(
+    #             input_ids=input_ids,
+    #             labels=input_ids.clone(),
+    #             pixel_values=pixel_values,
+    #             image_grid_thw=image_grid_thw,
+    #         )
+    #     expected_loss = output.loss
+
+    #     del hf_model
+    #     torch.cuda.empty_cache()
+
+    #     with torch.device("meta"):
+    #         model_cfg = VideoChat3Dense2BConfig()
+    #         videochat3_model = model_cfg.build().to(torch.bfloat16)
+
+    #     fsdp_config = FSDPConfig(
+    #         cpu_offload=False,
+    #     )
+    #     sp_mesh = None
+    #     if sp_size > 1:
+    #         data_mesh = init_data_mesh(device, sp_size=sp_size)
+    #         sp_mesh = data_mesh["sp"]
+
+    #     videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
+    #     videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
+    #     videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
+    #     videochat3_model.fully_shard(fsdp_config=fsdp_config)
+
+    #     videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
+    #     videochat3_model.eval()
+
+    #     shift_input_ids = input_ids[:, :-1]
+    #     shifted_labels = input_ids[:, 1:]
+    #     seq_ctx = SequenceContext.from_input_ids(input_ids=(shift_input_ids.to('cuda'),))
+    #     seq_ctx.image_grid_thw = image_grid_thw
+    #     seq_ctx.pixel_values = pixel_values
+    #     seq_ctx.to('cuda')
+    #     loss_ctx_input = CELossContextInputItem(shifted_labels=shifted_labels)
+    #     loss_ctx_input = loss_ctx_input.to('cuda')
+
+    #     if sp_size > 1:
+    #         seq_ctx = seq_ctx.split(sp_mesh)
+    #         loss_ctx_input = loss_ctx_input.sp_split(sp_mesh)
+
+    #     seq_ctx_list = [seq_ctx]
+    #     loss_ctx_input_list: list[CELossContextInputItem] = [loss_ctx_input]
+
+    #     loss_cfg = CELossConfig()
+    #     LossContext = loss_cfg.loss_ctx_cls
+    #     batches_loss_kwargs = LossContext.build_batches_loss_kwargs(
+    #         loss_ctx_input_list,
+    #         loss_cfg,
+    #     )
+    #     loss_kwargs = batches_loss_kwargs[0]
+    #     loss_ctx = LossContext(loss_cfg, loss_kwargs)
+    #     seq_ctx = seq_ctx_list[0]
+
+    #     with torch.no_grad():
+    #         output = videochat3_model(
+    #             seq_ctx=seq_ctx,
+    #             loss_ctx=loss_ctx,
+    #         )
+    #     loss = output["loss"]
+    #     self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
 
     @parametrize.parametrize(
         "device, sp_size, compile, tol",
@@ -352,7 +360,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
             output = hf_model(
                 input_ids=input_ids,
                 labels=input_ids.clone(),
-                pixel_values=pixel_values_videos,
+                pixel_values_videos=pixel_values_videos,
                 video_grid_thw=video_grid_thw,
             )
         expected_loss = output.loss

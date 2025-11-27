@@ -7,7 +7,7 @@ try:
     from flash_attn_interface import flash_attn_3_cuda, maybe_contiguous
 except ImportError:
     from flash_attn.flash_attn_interface import maybe_contiguous
-    print("You need to install FA3!")
+    print("You don't have FA3, But it's ok!")
 
     
 @torch.library.custom_op("flash_attn::_flash_attn_varlen_forward_v3", mutates_args=(), device_types="cuda")

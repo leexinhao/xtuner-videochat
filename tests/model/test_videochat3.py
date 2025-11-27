@@ -3,37 +3,37 @@ from packaging import version
 import parametrize
 import torch
 from xtuner._testing import patch_hf_rms_norm, DeterministicDDPTestCase
-from transformers import AutoTokenizer, AutoModelForImageTextToText
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch.distributed as dist
 import tempfile
 from pathlib import Path
 import json
 from safetensors import safe_open
-from xtuner.v1.model import Qwen3VLMoE30BA3Config, Qwen3VLDense4BConfig
+from xtuner.v1.model import VideoChat3Dense4BConfig
 from xtuner.v1.model.compose.qwen3_vl.modeling_vision import init_world_mesh
 from xtuner.v1.loss.ce_loss import CELossConfig, CELossContextInputItem
 from xtuner.v1.model.moe.moe import SequenceContext
 from xtuner.v1.config import FSDPConfig
 from xtuner.v1.utils.compile import maybe_compile
 from xtuner.v1.utils.test_utils import init_data_mesh
-from xtuner.v1.datasets import Qwen3VLTokenizeFnConfig
+from xtuner.v1.datasets import VideoChat3TokenizeFnConfig
 from torch.distributed.fsdp import (
     MixedPrecisionPolicy,
     fully_shard,
 )
 
-# QWEN3_VL_MOE_PATH = os.environ["QWEN3_VL_MOE_PATH"]
-QWEN3_VL_DENSE_PATH = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-VL-4B-Instruct" # os.environ["QWEN3_VL_DENSE_PATH"]
-# VIDEO_ROOT = os.environ["VIDEO_ROOT"]
+# VideoChat3_MOE_PATH = os.environ["VideoChat3_MOE_PATH"]
+VIDEOCHAT3_DENSE_PATH = "./VideoChat3-4B" # os.environ["VIDEOCHAT3_DENSE_PATH"]
+VIDEO_ROOT = "tests/resource"
 
 
-class TestQwen3VL(DeterministicDDPTestCase):
+class TestVideoChat3(DeterministicDDPTestCase):
 
-    def _test_all(self, hf_model, qwen3vl_model, type, device, sp_size, tol):
+    def _test_all(self, hf_model, videochat3_model, type, device, sp_size, tol):
         rank = dist.get_rank()
         if type == 'image':
-            tokenizer = AutoTokenizer.from_pretrained(QWEN3_VL_DENSE_PATH)
-            tokenize_fn = Qwen3VLTokenizeFnConfig(processor_path=QWEN3_VL_DENSE_PATH, add_vision_id=True).build(
+            tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
+            tokenize_fn = VideoChat3TokenizeFnConfig(processor_path=VIDEOCHAT3_DENSE_PATH, add_vision_id=True).build(
                 tokenizer)
 
             raw_data = {"id": 3, "messages": [{"role": "user", "content": [{"type": "image_url", "image_url": {
@@ -48,46 +48,58 @@ class TestQwen3VL(DeterministicDDPTestCase):
             tokenized_data = tokenize_fn(raw_data)
             input_ids = torch.tensor(tokenized_data['input_ids'])[None].cuda()
             labels = torch.tensor(tokenized_data['labels'])[None].cuda()
-            pixel_values = tokenized_data['pixel_values'].cuda()
+            pixel_values = tokenized_data['pixel_values'].cuda().to(torch.bfloat16)
             image_grid_thw = tokenized_data['image_grid_thw'].cuda()
-            position_ids = tokenized_data['position_ids'].cuda()
         elif type == 'video':
-            tokenizer = AutoTokenizer.from_pretrained(QWEN3_VL_DENSE_PATH)
-            tokenize_fn = Qwen3VLTokenizeFnConfig(processor_path=QWEN3_VL_DENSE_PATH, rand_video_max_frames=14,
+            tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
+            tokenize_fn = VideoChat3TokenizeFnConfig(processor_path=VIDEOCHAT3_DENSE_PATH, rand_video_max_frames=14,
                                                   add_vision_id=True).build(tokenizer)
 
-            raw_data = {"id": 9, "messages": [{"role": "user", "content": [{"type": "video_url",
-                                                                            "video_url": {"url": "tennis_frames_4fps/",
-                                                                                          "image_wh": [1280, 720],
-                                                                                          "origin_video_length": 182,
-                                                                                          "origin_fps": 30.0,
-                                                                                          "processed_video_length": 23,
-                                                                                          "processed_fps": 4}},
-                                                                           {"type": "video_url",
-                                                                            "video_url": {"url": "tennis_frames_2fps/",
-                                                                                          "image_wh": [1280, 720],
-                                                                                          "origin_video_length": 182,
-                                                                                          "origin_fps": 30.0,
-                                                                                          "processed_video_length": 13,
-                                                                                          "processed_fps": 2}},
-                                                                           {"type": "text",
-                                                                            "text": "<VIDEO_CONTEXT><VIDEO_CONTEXT>两个视频中都在做什么？"}]},
-                                              {"role": "assistant", "content": "打网球"}]}
+            raw_data = {"id": 9, "messages": [
+                                {"role": "user", "content": [
+                                    {
+                                        "type": "video_url",
+                                        "video_url": {
+                                            "url": "tennis.mp4"
+                                        },
+                                        "video_metadata": {
+                                            "total_num_frames": 1035,
+                                            "duration": 34.53453453453453,
+                                            "fps": 29.97,
+                                            "width": 1920,
+                                            "height": 1080
+                                        }
+                                    },
+                                    {
+                                        "type": "video_url",
+                                        "video_url": {
+                                            "url": "tennis.mp4"
+                                        },
+                                        "video_metadata": {
+                                            "total_num_frames": 1035,
+                                            "duration": 34.53453453453453,
+                                            "fps": 29.97,
+                                            "width": 1920,
+                                            "height": 1080
+                                        }
+                                    },
+                                    {"type": "text",
+                                    "text": "<VIDEO_CONTEXT><VIDEO_CONTEXT>两个视频中都在做什么？"}]
+                                },
+                                {"role": "assistant", "content": "打网球"}]}
 
             tokenized_data = tokenize_fn(raw_data, media_root=VIDEO_ROOT)
             input_ids = torch.tensor(tokenized_data['input_ids'])[None].cuda()
             labels = torch.tensor(tokenized_data['labels'])[None].cuda()
-            pixel_values = tokenized_data['pixel_values'].cuda()
+            pixel_values = tokenized_data['pixel_values'].cuda().to(torch.bfloat16)
             image_grid_thw = tokenized_data['image_grid_thw'].cuda()
-            position_ids = tokenized_data['position_ids'].cuda()
         else:
-            tokenizer = AutoTokenizer.from_pretrained(QWEN3_VL_DENSE_PATH)
+            tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_DENSE_PATH, trust_remote_code=True)
             input_ids = tokenizer(f"今天天气不错，是学习的好日子。请听题： 1+{rank} 等于多少？",
                                   return_tensors="pt").input_ids.to(device)
             labels = input_ids.clone()
             pixel_values = None
             image_grid_thw = None
-            position_ids = None
 
         hf_model.to(device)
         with torch.no_grad():
@@ -97,7 +109,6 @@ class TestQwen3VL(DeterministicDDPTestCase):
                     labels=labels,
                     pixel_values_videos=pixel_values,
                     video_grid_thw=image_grid_thw,
-                    position_ids=position_ids,
                 )
             else:
                 output = hf_model(
@@ -105,7 +116,6 @@ class TestQwen3VL(DeterministicDDPTestCase):
                     labels=labels,
                     pixel_values=pixel_values,
                     image_grid_thw=image_grid_thw,
-                    position_ids=position_ids,
                 )
         expected_loss = output.loss
         dist.all_reduce(expected_loss.div_(dist.get_world_size()), op=dist.ReduceOp.SUM)
@@ -117,8 +127,6 @@ class TestQwen3VL(DeterministicDDPTestCase):
 
         shift_input_ids = input_ids[:, :-1]
         shifted_labels = labels[:, 1:]
-        if position_ids is not None:
-            position_ids = position_ids[..., :-1]
 
         sp_mesh = None
         if sp_size > 1:
@@ -128,7 +136,6 @@ class TestQwen3VL(DeterministicDDPTestCase):
         seq_ctx = SequenceContext.from_input_ids(input_ids=(shift_input_ids.to('cuda'),))
         seq_ctx.image_grid_thw = image_grid_thw
         seq_ctx.pixel_values = pixel_values
-        seq_ctx.position_ids = position_ids
         seq_ctx.to('cuda')
         loss_ctx_input = CELossContextInputItem(shifted_labels=shifted_labels)
         loss_ctx_input = loss_ctx_input.to('cuda')
@@ -149,13 +156,13 @@ class TestQwen3VL(DeterministicDDPTestCase):
         loss_ctx = LossContext(loss_cfg, loss_kwargs)
         seq_ctx = seq_ctx_list[0]
 
-        qwen3vl_model.to(device)
+        videochat3_model.to(device)
         with torch.no_grad():
-            output = qwen3vl_model(
+            output = videochat3_model(
                 seq_ctx=seq_ctx,
                 loss_ctx=loss_ctx,
             )
-        qwen3vl_model.to('cpu')
+        videochat3_model.to('cpu')
         torch.cuda.empty_cache()
         loss = output["loss"]
         self.assertTrue(torch.allclose(loss, expected_loss.to(loss.dtype), atol=tol, rtol=tol))
@@ -166,29 +173,30 @@ class TestQwen3VL(DeterministicDDPTestCase):
             ("cuda", 1, 1e-2)
         ],
     )
-    def test_qwen3vl_run(self, device, sp_size, tol):
+    def test_videochat3_run(self, device, sp_size, tol):
         self.create_pg(device)
         maybe_compile.clear_compile_targets()
 
-        hf_model = AutoModelForImageTextToText.from_pretrained(
-            QWEN3_VL_DENSE_PATH,
+        hf_model = AutoModelForCausalLM.from_pretrained(
+            VIDEOCHAT3_DENSE_PATH,
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
-            device_map="cpu"
+            device_map="cpu",
+            trust_remote_code=True
         ).eval()
         patch_hf_rms_norm(hf_model)
 
         with torch.device("meta"):
-            model_cfg = Qwen3VLDense4BConfig()
-            qwen3vl_model = model_cfg.build().to(torch.bfloat16)
+            model_cfg = VideoChat3Dense4BConfig()
+            videochat3_model = model_cfg.build().to(torch.bfloat16)
 
-        qwen3vl_model.from_hf(QWEN3_VL_DENSE_PATH)
-        qwen3vl_model.eval()
-        qwen3vl_model.to('cpu')
+        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
+        videochat3_model.eval()
+        videochat3_model.to('cpu')
 
-        self._test_all(hf_model, qwen3vl_model, 'text', device, sp_size, tol)
-        self._test_all(hf_model, qwen3vl_model, 'image', device, sp_size, tol)
-        self._test_all(hf_model, qwen3vl_model, 'video', device, sp_size, tol)
+        self._test_all(hf_model, videochat3_model, 'text', device, sp_size, tol)
+        self._test_all(hf_model, videochat3_model, 'image', device, sp_size, tol)
+        self._test_all(hf_model, videochat3_model, 'video', device, sp_size, tol)
 
     @parametrize.parametrize(
         "device,sp_size,compile, tol",
@@ -196,53 +204,59 @@ class TestQwen3VL(DeterministicDDPTestCase):
             ("cuda", 1, False, 1e-2)
         ],
     )
-    def test_fsdp_qwen3_run(self, device, sp_size, compile, tol):
+    def test_fsdp_videochat3_run(self, device, sp_size, compile, tol):
         self.create_pg(device)
         if compile is False:
             maybe_compile.clear_compile_targets()
 
-        hf_model = AutoModelForImageTextToText.from_pretrained(
-            QWEN3_VL_DENSE_PATH,
+        hf_model = AutoModelForCausalLM.from_pretrained(
+            VIDEOCHAT3_DENSE_PATH,
             dtype=torch.bfloat16,
             attn_implementation="flash_attention_2",
-            device_map="cpu"
+            device_map="cpu",
+            trust_remote_code=True
         ).eval()
         patch_hf_rms_norm(hf_model)
 
         with torch.device("meta"):
-            model_cfg = Qwen3VLDense4BConfig()
-            qwen3vl_model = model_cfg.build().to(torch.bfloat16)
+            model_cfg = VideoChat3Dense4BConfig()
+            videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         fsdp_config = FSDPConfig(
             cpu_offload=False,
             torch_compile=compile
         )
 
-        qwen3vl_model.language_model.fully_shard(fsdp_config=fsdp_config)
+        videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
 
-        # 非常神奇，一旦开了这个，image 和 video 的单测就过不了。
-        # qwen3vl_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
-        # 将整个 vit 打包为一个大的 FSDP module 就完全一致。实际跑发现对每一层进行 FSDP 切分会导致每次计算有细微差异
-        fsdp_mesh = init_world_mesh()
-        mp_policy = MixedPrecisionPolicy(param_dtype=fsdp_config.param_dtype)
-        fully_shard(
-            qwen3vl_model.vision_tower,
-            mesh=fsdp_mesh,
-            mp_policy=mp_policy,
-            reshard_after_forward=True
-        )
-        qwen3vl_model.vision_tower.fsdp_mesh=fsdp_mesh
-        qwen3vl_model.vision_tower.fsdp_config=fsdp_config
+        # # 非常神奇，一旦开了这个，image 和 video 的单测就过不了。
+        # videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
+        # # 将整个 vit 打包为一个大的 FSDP module 就完全一致。实际跑发现对每一层进行 FSDP 切分会导致每次计算有细微差异
+        # fsdp_mesh = init_world_mesh()
+        # mp_policy = MixedPrecisionPolicy(param_dtype=fsdp_config.param_dtype)
+        # fully_shard(
+        #     videochat3_model.vision_tower,
+        #     mesh=fsdp_mesh,
+        #     mp_policy=mp_policy,
+        #     reshard_after_forward=True
+        # )
+        # videochat3_model.vision_tower.fsdp_mesh=fsdp_mesh
+        # videochat3_model.vision_tower.fsdp_config=fsdp_config
 
-        qwen3vl_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
-        qwen3vl_model.fully_shard(fsdp_config=fsdp_config)
+        # videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
+        # videochat3_model.fully_shard(fsdp_config=fsdp_config)
 
-        qwen3vl_model.from_hf(QWEN3_VL_DENSE_PATH)
-        qwen3vl_model.eval()
-        qwen3vl_model.to('cpu')
-        self._test_all(hf_model, qwen3vl_model, 'text', device, sp_size, tol)
-        self._test_all(hf_model, qwen3vl_model, 'image', device, sp_size, tol)
-        self._test_all(hf_model, qwen3vl_model, 'video', device, sp_size, tol)
+        videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
+        videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
+        videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
+        videochat3_model.fully_shard(fsdp_config=fsdp_config)
+
+        videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
+        videochat3_model.eval()
+        videochat3_model.to('cpu')
+        self._test_all(hf_model, videochat3_model, 'text', device, sp_size, tol)
+        self._test_all(hf_model, videochat3_model, 'image', device, sp_size, tol)
+        self._test_all(hf_model, videochat3_model, 'video', device, sp_size, tol)
 
     @parametrize.parametrize(
         "device,tp_size",
@@ -253,8 +267,8 @@ class TestQwen3VL(DeterministicDDPTestCase):
     def test_save_hf(self, device, tp_size):
         self.create_pg(device)
         with torch.device("meta"):
-            model_cfg = Qwen3VLMoE30BA3Config()
-            qwen3vl_model = model_cfg.build().to(torch.bfloat16)
+            model_cfg = VideoChat3MoE30BA3Config()
+            videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         fsdp_config = FSDPConfig(
             tp_size=tp_size,
@@ -266,14 +280,14 @@ class TestQwen3VL(DeterministicDDPTestCase):
             syncdir = [tmpdir]
             dist.broadcast_object_list(syncdir, src=0)
             tmpdir = Path(syncdir[0])
-            qwen3vl_model.language_model.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.fully_shard(fsdp_config=fsdp_config)
-            qwen3vl_model.from_hf(QWEN3_VL_MOE_PATH)
-            qwen3vl_model.save_hf(tmpdir)
+            videochat3_model.language_model.fully_shard(fsdp_config=fsdp_config)
+            videochat3_model.vision_tower.fully_shard(fsdp_config=fsdp_config)
+            videochat3_model.multi_modal_projector.fully_shard(fsdp_config=fsdp_config)
+            videochat3_model.fully_shard(fsdp_config=fsdp_config)
+            videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
+            videochat3_model.save_hf(tmpdir)
 
-            origin_hf_path = Path(QWEN3_VL_MOE_PATH)
+            origin_hf_path = Path(VIDEOCHAT3_DENSE_PATH)
             origin_index_path = origin_hf_path / "model.safetensors.index.json"
             saved_index_path = tmpdir / "model.safetensors.index.json"
 

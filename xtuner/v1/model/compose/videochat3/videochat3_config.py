@@ -1,18 +1,15 @@
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal, Optional, Any
+from typing import Literal, Optional, Any
 
 from mmengine import is_installed
 from pydantic import BaseModel, ConfigDict
 from typing_extensions import Self
 
 from xtuner.v1.float8 import Float8Config
+from xtuner.v1.model.base import TransformerConfig
 from xtuner.v1.model.dense.qwen3 import Qwen3Dense8BConfig, Qwen3Dense4BConfig, Qwen3Dense1_7BConfig
-from xtuner.v1.model.moe.moe import TransformerConfig
 from xtuner.v1.utils import get_logger
 
-
-if TYPE_CHECKING:
-    from .modeling_videochat3 import VideoChat3ForConditionalGeneration
 
 logger = get_logger()
 
@@ -104,7 +101,7 @@ class VideoChat3BaseConfig(BaseModel):
 class VideoChat3Dense8BConfig(VideoChat3BaseConfig):
     # 简化版本，使用dense模型而不是MoE
     vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2")
-    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
+    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig(text_hidden_size=4096)
     text_config: Qwen3Dense8BConfig = Qwen3Dense8BConfig(vocab_size=151936)
 
     @property
@@ -120,7 +117,7 @@ class VideoChat3Dense8BConfig(VideoChat3BaseConfig):
 
 class VideoChat3Dense4BConfig(VideoChat3BaseConfig):
     vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2")
-    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
+    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig(text_hidden_size=2560)
     text_config: Qwen3Dense4BConfig = Qwen3Dense4BConfig(vocab_size=151936)
 
     @property
@@ -136,7 +133,7 @@ class VideoChat3Dense4BConfig(VideoChat3BaseConfig):
 
 class VideoChat3Dense2BConfig(VideoChat3BaseConfig):
     vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2")
-    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig()
+    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig(text_hidden_size=2048)
     text_config: Qwen3Dense1_7BConfig = Qwen3Dense1_7BConfig(vocab_size=151936)
 
     @property
