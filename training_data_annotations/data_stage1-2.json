@@ -10,9 +10,29 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/image/CapRL3B_Dense_1M.jsonl",
         "data_augment": false,
         "sample_ratio": 1
+    },
+    "caption_sharegemini_webvid_core100k_clean": {
+        "media_root": "p2:s3://webvid2m/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_sharegemini_webvid_core100k_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1   
+    },
+    "caption_sharegemini_k400_223k": {
+        "media_root": "p2:s3://k400/",
+        "anno_path": "/mnt/petrelfs/share_data/lixinhao/videochat-next/annotations/video/caption_sharegemini_k400_223k.json",
+        "data_augment": false,
+        "sample_ratio": 1   
+    },
+    "pevideo_train100k": {
+        "media_root": "pnorm2:s3://pe-video/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/pevideo_train100k.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1   
+    },
+    "caption_sharegpt4o_3k": {
+        "media_root": "pssd:s3://perception/videos",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_sharegpt4o_3k.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1   
     }
-    /mnt/petrelfs/zengxiangyu/Research_lixinhao/vflash_annotations/caption_sharegemini_k400_223k.json
-    "sharewebvid100k"
-    sharegpt4o3k
-    pevideo
 }
