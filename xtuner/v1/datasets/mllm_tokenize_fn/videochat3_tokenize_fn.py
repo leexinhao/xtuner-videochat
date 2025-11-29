@@ -485,8 +485,10 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             media_grid_thw.append([grid_t, grid_h, grid_w])
             num_video_tokens_list.append(self.video_processor.get_number_of_video_tokens(grid_t, grid_h, grid_w))
         media_grid_thw = torch.tensor(media_grid_thw, dtype=torch.int).reshape(-1, 3)  # type: ignore
-
-        messages = ChatMessages(messages=data_item["messages"])
+        try:
+            messages = ChatMessages(messages=data_item["messages"])
+        except Exception as e:
+            raise ValueError(f"{data_item}: {e}")
         self._replace_video_token(messages, media_grid_thw, add_vision_id=self.add_vision_id)
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)
         input_ids = tokenized["input_ids"]

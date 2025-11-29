@@ -468,7 +468,7 @@ class Trainer:
 
         if not self._can_save_hf:
             assert hf_interval is None and hf_max_keep is None, (
-                "`hf_interval` and `hf_max_keep` should be None when `load_from` is not a Huggingface model path, "
+                f"`hf_interval` and `hf_max_keep` should be None when `load_from` ({load_from}) is not a Huggingface model path, _load_from_hf: {self._load_from_hf}"
             )
 
         self._checkpoint_interval = checkpoint_interval

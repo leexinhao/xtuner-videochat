@@ -1,16 +1,4 @@
 {
-    "CapRL3B_ShareGPT4V_1M": {
-        "media_root": "",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/image/CapRL3B_Share_1M_xtuner_format.jsonl",
-        "data_augment": false,
-        "sample_ratio": 1
-    },
-    "CapRL3B_DenseFusion_1M": {
-        "media_root": "",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/image/CapRL3B_Dense_1M_xtuner_format.jsonl",
-        "data_augment": false,
-        "sample_ratio": 1
-    },
     "caption_sharegemini_webvid_core100k_clean": {
         "media_root": "p2:s3://webvid2m/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_sharegemini_webvid_core100k_clean.jsonl",

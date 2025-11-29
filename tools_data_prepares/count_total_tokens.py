@@ -32,23 +32,29 @@ tokenize_fn = VideoChat3TokenizeFnConfig(
                     # system_message=_data.get('system_message', None),
                     # hash=_data.get('hash', None),
                     ).build(self_tokenizer)
-data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_smit_481k.jsonl'
-with open(data_path, encoding='utf-8') as f:
-    for i, line in enumerate(f):
-        if i >= 10:
-            break
-        raw_data = json.loads(line)
-        tokenize_fn.state = "get_item"
-        # ret_xtuner = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
-        ret_xtuner = tokenize_fn(raw_data, media_root=CEPH_ROOT)
-        input_ids_xtuner = ret_xtuner['input_ids']
-        pixel_values_xtuner: torch.Tensor = ret_xtuner['pixel_values']
-        video_grid_thw_xtuner: torch.Tensor = ret_xtuner['image_grid_thw']
-        
-        raw_data_copy = json.loads(line)
-        tokenize_fn.state = "cache"
-        cache_result = tokenize_fn(raw_data_copy, media_root=LOCAL_MEDIA_ROOT)
 
-        assert len(input_ids_xtuner) == cache_result['num_tokens'], f"calc_num_tokens_get_item{cache_result['num_tokens']}和get_item出来的token数{len(input_ids_xtuner)}不一致！"
-        print(i, f"通过！num_tokens={cache_result['num_tokens']}", flush=True)
-    
+print(tokenize_fn._hash_str)
+data_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-2_video_only.json"
+with open(data_meta_path, "r") as fr:
+    data_metas = json.load(fr)
+
+token_dict = {"tokenize_hash_str": tokenize_fn._hash_str}
+
+for data_name in data_metas.keys():
+    print("Checking:", data_name)
+    data_path = data_metas[data_name]["anno_path"]
+    total_tokens = 0
+    with open(data_path, encoding='utf-8') as f:
+        for i, line in enumerate(f):
+            raw_data = json.loads(line)
+            tokenize_fn.state = "cache"
+            # ret_xtuner = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
+            cache_result = tokenize_fn(raw_data, media_root=CEPH_ROOT)
+            # cache_result = tokenize_fn(raw_data, media_root=LOCAL_MEDIA_ROOT)
+            total_tokens += cache_result['num_tokens']
+            
+            print(i, f"通过！num_tokens={cache_result['num_tokens']}", flush=True)
+    token_dict[data_name] = total_tokens
+
+with open(f"/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/tools_data_prepares/token_infos/{data_meta_path.split('/')[-1]}", "w") as fw:
+    json.dump(token_dict, fw)
