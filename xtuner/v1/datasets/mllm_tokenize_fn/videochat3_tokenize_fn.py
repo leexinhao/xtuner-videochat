@@ -80,8 +80,32 @@ def smart_get_video_thw(video_meta: VideoChat3VideoMetadata, video_processor):
     grid_h, grid_w = resized_height // video_processor.patch_size, resized_width // video_processor.patch_size
     return [grid_t, grid_h, grid_w]
 
+def smart_resize_long_side(w, h, max_long_side: int = 6500):
+    """
+    调整图像尺寸，保证长边不超过指定最大值，短边按比例缩放
+    :param img: PIL Image 对象
+    :param max_long_side: 长边最大限制（默认6500）
+    :return: 调整后的 PIL Image 对象
+    """
+    # 计算当前长边长度
+    current_max_side = max(w, h)
+    
+    # 若长边未超过限制，直接返回原图宽高
+    if current_max_side <= max_long_side:
+        return w, h
+    
+    # 计算缩放比例（保留浮点数精度）
+    scale = max_long_side / current_max_side
+    # 计算新的宽高（转整数，避免小数像素）
+    new_w = int(round(w * scale))
+    new_h = int(round(h * scale))
+    
+    return new_w, new_h
+    
 def smart_get_image_thw(image_size, image_processor):
     orig_width, orig_height = image_size
+
+    orig_width, orig_height = smart_resize_long_side(orig_width, orig_height, max_long_side=6500)  # NOTE: 暂时写死，为了RoPE2D不超长
 
     resized_height, resized_width = smart_resize(
         orig_height,
@@ -93,6 +117,43 @@ def smart_get_image_thw(image_size, image_processor):
     grid_t = 1  # 单图
     grid_h, grid_w = resized_height // image_processor.patch_size, resized_width // image_processor.patch_size
     return [grid_t, grid_h, grid_w]
+
+def resize_long_side(img: Image.Image, max_long_side: int = 6500) -> Image.Image:
+    """
+    调整图像尺寸，保证长边不超过指定最大值，短边按比例缩放
+    :param img: PIL Image 对象
+    :param max_long_side: 长边最大限制（默认6500）
+    :return: 调整后的 PIL Image 对象
+    """
+    # 获取原始宽高 (width, height)
+    w, h = img.size
+    # 计算当前长边长度
+    current_max_side = max(w, h)
+    
+    # 若长边未超过限制，直接返回原图
+    if current_max_side <= max_long_side:
+        return img
+    
+    # 计算缩放比例（保留浮点数精度）
+    scale = max_long_side / current_max_side
+    # 计算新的宽高（转整数，避免小数像素）
+    new_w = int(round(w * scale))
+    new_h = int(round(h * scale))
+    
+    # 兼容不同PIL版本的插值算法
+    try:
+        # PIL 9.1.0+ 推荐使用 Resampling.LANCZOS（最高质量的下采样）
+        resample_mode = Image.Resampling.LANCZOS
+    except AttributeError:
+        # 旧版PIL用 Image.ANTIALIAS（等价于LANCZOS）
+        resample_mode = Image.ANTIALIAS
+    
+    # 执行缩放（resize返回新对象，不修改原图）
+    resized_img = img.resize((new_w, new_h), resample=resample_mode)
+    return resized_img
+
+
+
 
 class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
     def __init__(
@@ -211,7 +272,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
         image = self._my_load_image(image_file)
         image = apply_exif_orientation(image)
-
+        image = resize_long_side(image, max_long_side=6500)  # NOTE: 暂时写死，为了RoPE2D不超长
         visual_processed = processor.preprocess(image, return_tensors="pt")
         image_tensor = visual_processed["pixel_values"]
         if isinstance(image_tensor, list):

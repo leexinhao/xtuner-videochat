@@ -20,7 +20,7 @@ bin="srun"
 # export XTUNER_TOKENIZE_WORKERS=16
 # export XTUNER_GC_ENABLE="1"
 
-current_time=$(date "+%m%d%H")
+current_time=$(date "+%m%d%H%M%S")
 TASK_NAME="VideoChat3_4B_train_stage1-1"
 OUTPUT_DIR="work_dir/${TASK_NAME}"
 if [ ! -d "$OUTPUT_DIR" ]; then  

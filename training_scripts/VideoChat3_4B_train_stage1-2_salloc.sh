@@ -13,14 +13,14 @@ head_node_ip=$(srun --nodes=1 --ntasks=1 -w "$master_node" hostname --ip-address
 rdzv_endpoint="${head_node_ip}:${MASTER_PORT:-40000}"
 bin="srun"
 
-# export NCCL_SOCKET_IFNAME=bond0
-# export NCCL_IB_HCA=mlx5_2,mlx5_3,mlx5_4,mlx5_5
-# export XTUNER_USE_FA3="0"
+export NCCL_SOCKET_IFNAME=bond0
+export NCCL_IB_HCA=mlx5_2,mlx5_3,mlx5_4,mlx5_5
+export XTUNER_USE_FA3="0"
 # export XTUNER_PACK_WORKERS=8
 # export XTUNER_TOKENIZE_WORKERS=16
-# export XTUNER_GC_ENABLE="1"
+export XTUNER_GC_ENABLE="1"
 
-current_time=$(date "+%m%d%H")
+current_time=$(date "+%m%d%H%M%S")
 TASK_NAME="VideoChat3_4B_train_stage1-2"
 OUTPUT_DIR="work_dir/${TASK_NAME}"
 if [ ! -d "$OUTPUT_DIR" ]; then  

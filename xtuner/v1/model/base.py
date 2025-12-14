@@ -743,7 +743,19 @@ class BaseModel(nn.Module):
 
         if isinstance(hf_dir, str):
             hf_dir = Path(hf_dir)
-        hf_dir.mkdir(parents=True, exist_ok=True)
+        
+        # 使用分布式屏障同步目录创建
+        if dist.is_initialized():
+            # 让 rank 0 先创建目录
+            if dist.get_rank() == 0:
+                hf_dir.mkdir(parents=True, exist_ok=True)
+            # 等待 rank 0 完成目录创建
+            dist.barrier()
+            # 其他 rank 再创建目录（大多数情况下目录已存在）
+            if dist.get_rank() != 0:
+                hf_dir.mkdir(parents=True, exist_ok=True)
+        else:
+            hf_dir.mkdir(parents=True, exist_ok=True)
 
         DEVICE_MODULE.empty_cache()
         assert save_dtype in [torch.float8_e4m3fn, torch.bfloat16], f"save_dtype {save_dtype} is not supported"

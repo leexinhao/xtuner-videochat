@@ -17,7 +17,7 @@ import json
 # model config
 model_cfg = VideoChat3Dense4BConfig(freeze_vision=False, freeze_language=False)
 
-model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-1/20251127192016/hf-latest"
+model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-1_old/20251127192016/hf-190"
 meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-2.json'
 work_dir = "work_dir/VideoChat3_4B_train_stage1-2"
 cache_dir = "dataset_cache/cache_videochat3_4B_stage1-2"
@@ -29,8 +29,9 @@ global_batch_size = 256
 total_epoch = 1
 # total_num_tokens = 105332882
 # total_step = int(total_num_tokens  / pack_max_length / global_batch_size)
-hf_interval = 200
-checkpoint_interval = 100
+hf_interval = 500
+hf_max_keep = 1
+checkpoint_interval = 200
 checkpoint_maxkeep = 2
 
 lr = 4e-5
@@ -83,9 +84,9 @@ dataloader_config = DataloaderConfig(
 # optimizer and lr config
 optim_cfg = AdamWConfig(lr=lr, weight_decay=weight_decay, foreach=False)
 lr_cfg = LRConfig(lr_type="cosine", warmup_ratio=warmup_ratio, lr_min=lr_min)
-fsdp_cfg = FSDPConfig(sp_size=1, recompute_ratio=recompute_ratio, torch_compile=True)
+fsdp_cfg = FSDPConfig(sp_size=1, recompute_ratio=recompute_ratio, torch_compile=False)
 
-resume_cfg = ResumeConfig(auto_resume=False)
+resume_cfg = ResumeConfig(auto_resume=True)
 
 # trainer config
 trainer = TrainerConfig(
@@ -104,5 +105,6 @@ trainer = TrainerConfig(
     hf_interval=hf_interval,
     checkpoint_interval=checkpoint_interval,
     checkpoint_maxkeep=checkpoint_maxkeep,
+    hf_max_keep=hf_max_keep,
     work_dir=work_dir,
 )

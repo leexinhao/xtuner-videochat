@@ -85,7 +85,7 @@ def read_frames_decord(
     client=None,
 ):
     byteio = None
-    decord_video_threads = int(os.getenv("XTUNER_DECORD_VIDEO_THREADS", 0))
+    decord_video_threads = int(os.getenv("XTUNER_DECORD_VIDEO_THREADS", 1))
     if video_path.endswith('.avi'):
         return read_frames_av(video_path, frame_sample_indices, client)
     assert VideoReader is not None, "Please install decord: pip install decord"

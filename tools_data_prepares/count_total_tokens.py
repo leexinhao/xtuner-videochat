@@ -34,7 +34,7 @@ tokenize_fn = VideoChat3TokenizeFnConfig(
                     ).build(self_tokenizer)
 
 print(tokenize_fn._hash_str)
-data_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-2_video_only.json"
+data_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage2_llava_video.json"
 with open(data_meta_path, "r") as fr:
     data_metas = json.load(fr)
 

@@ -132,7 +132,7 @@ class VideoChat3InterpPosEmb(nn.Module):
                 )
 
             if t == 1:
-                pos_emb_3d = pos_emb_2d
+                pos_emb_3d = pos_emb_2d + self.time_weight.sum() * 0.0
             else:
                 pos_emb_3d = pos_emb_2d.unsqueeze(0).repeat(t, 1, 1) + self.time_weight[:t]
 
@@ -525,7 +525,7 @@ class VideoChat3VisionEncoder(nn.Module):
     ) -> None:
         super().__init__()
 
-        self.rope_2d = Rope2DPosEmb(block_cfg["hidden_dim"] // block_cfg["num_heads"], 1024, 1024)
+        self.rope_2d = Rope2DPosEmb(block_cfg["hidden_dim"] // block_cfg["num_heads"], 512, 512)
         self.blocks = nn.ModuleList([VideoChat3VisionLayer(**block_cfg) for _ in range(num_layers)])
         self.final_layernorm = nn.LayerNorm(hidden_dim)
 

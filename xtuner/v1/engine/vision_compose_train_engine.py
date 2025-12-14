@@ -159,6 +159,7 @@ class VisionComposeTrainEngine(TrainEngine):
         if self.projector_float8_handler is not None and self.projector_float8_handler.enabled:
             self.projector_float8_handler.precompute_float8_dynamic_scale_for_fsdp(self.model.multi_modal_projector)
 
+
         loss_log: LossLog = {}  # type: ignore[typeddict-item]
         other_log: OtherLog = {}  # type: ignore[typeddict-item]
         intra_layer_micro_batch = self.intra_layer_micro_batch
@@ -189,9 +190,11 @@ class VisionComposeTrainEngine(TrainEngine):
 
         train_engine_extra_info = ModelForwardExtraLogInfo()
         for i in range(0, len(data_batches), intra_layer_micro_batch):
+            # logger.info(f"开始读第{i}个micro batch!")
             data_batch = data_batches[i : i + intra_layer_micro_batch]
             seq_ctx_list = []
             loss_ctx_list = []
+            # logger.info(f"开始计算{i}个micro batch的token!")
             for data in data_batch:
                 seq_ctx = data["seq_ctx"]
                 loss_ctx = data["loss_ctx"]
@@ -202,13 +205,13 @@ class VisionComposeTrainEngine(TrainEngine):
                 num_tokens = seq_ctx.cu_seq_lens_k[1:] - seq_ctx.cu_seq_lens_k[:-1]
                 efficient_forward_tokens += (num_tokens**2).sum()
                 total_forward_tokens += (num_tokens.sum()) ** 2
-
+            # logger.info(f"开始forward{i}个micro batch!")
             # todo: support intra_layer_micro_batch
             output = self.model(seq_ctx=seq_ctx_list[0], loss_ctx=loss_ctx_list[0])
             # llm loss has been global averaged
             llm_loss = output["loss"]
             step_llm_loss += llm_loss.detach().clone()
-
+            # logger.info(f"完成forward{i}个micro batch!")
             loss = llm_loss
             if "extra_info" in output:
                 train_engine_extra_info.append(output["extra_info"])
@@ -234,7 +237,7 @@ class VisionComposeTrainEngine(TrainEngine):
             del output
             loss.backward()
             step_loss += loss.detach().clone()
-
+            # logger.info(f"完成backward{i}个micro batch!")
         if moe_need_log_maxvio:
             avg_count_load = tokens_per_expert_global_for_bias.float().mean(1)
             max_load_i, _ = torch.max(tokens_per_expert_global_for_bias, dim=1)

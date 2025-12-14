@@ -1,0 +1,73 @@
+{
+  "architectures": [
+    "VideoChat3ForConditionalGeneration"
+  ],
+  "auto_map": {
+    "AutoProcessor": "processing_videochat3.VideoChat3Processor",
+    "AutoConfig": "configuration_videochat3.VideoChat3Config",
+    "AutoModel": "modeling_videochat3.VideoChat3ForConditionalGeneration",
+    "AutoModelForCausalLM": "modeling_videochat3.VideoChat3ForConditionalGeneration"
+  },
+  "image_token_id": 151655,
+  "model_type": "videochat3",
+  "text_config": {
+    "architectures": [
+      "Qwen3ForCausalLM"
+    ],
+    "attention_bias": false,
+    "attention_dropout": 0.0,
+    "bos_token_id": 151643,
+    "eos_token_id": 151645,
+    "head_dim": 128,
+    "hidden_act": "silu",
+    "hidden_size": 2560,
+    "initializer_range": 0.02,
+    "intermediate_size": 9728,
+    "max_position_embeddings": 262144,
+    "max_window_layers": 36,
+    "model_type": "qwen3",
+    "num_attention_heads": 32,
+    "num_hidden_layers": 36,
+    "num_key_value_heads": 8,
+    "rms_norm_eps": 1e-06,
+    "rope_scaling": null,
+    "rope_theta": 5000000,
+    "sliding_window": null,
+    "tie_word_embeddings": true,
+    "dtype": "bfloat16",
+    "use_cache": true,
+    "use_sliding_window": false,
+    "vocab_size": 151936
+  },
+  "tie_word_embeddings": false,
+  "transformers_version": "4.57.0.dev0",
+  "video_token_id": 151656,
+  "vision_config": {
+    "architectures": [
+      "VideoChat3VisionModel"
+    ],
+    "auto_map": {
+      "AutoConfig": "configuration_videochat3.VideoChat3VisionConfig",
+      "AutoModel": "modeling_videochat3.VideoChat3VisionModel"
+    },
+    "model_type": "videochat3_vision",
+    "_name_or_path": "VideoChat3-4B",
+    "patch_size": 14,
+    "num_attention_heads": 16,
+    "num_hidden_layers": 27,
+    "hidden_size": 1152,
+    "intermediate_size": 4304,
+    "init_pos_emb_height": 64,
+    "init_pos_emb_width": 64,
+    "merge_kernel_size": [
+      2,
+      2
+    ],
+    "temporal_patch_size": 1,
+    "temporal_merge_size": 1,
+    "dtype": "bfloat16",
+    "attn_impl": "flash_attention_2"
+  },
+  "vision_end_token_id": 151653,
+  "vision_start_token_id": 151652
+}
