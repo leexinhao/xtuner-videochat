@@ -246,24 +246,34 @@ class VideoChat3InterpPosEmb(nn.Module):
         self.max_clip_length = max_clip_length
         self.interpolation_mode = interpolation_mode
         self.weight = nn.Parameter(torch.empty(height, width, dim))
-        self.time_weight = nn.Parameter(torch.empty(max_clip_length, 1, dim))
-        self.dim = dim 
+        if max_clip_length > 1:
+            self.time_weight = nn.Parameter(torch.empty(max_clip_length, 1, dim))
+        else:
+            self.time_weight = None
+
+        self.dim = dim  # Store dim for reset_parameters
 
         self.reset_parameters()
 
     def reset_parameters(self):
         nn.init.normal_(self.weight)
-        initial_time_weight = (
-            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(self.dim, np.arange(self.max_clip_length, dtype=np.float32)))
-            .float()
-            .unsqueeze(1)
-        )
-        with torch.no_grad():
-            self.time_weight.copy_(initial_time_weight)
+        if self.time_weight is not None:
+            initial_time_weight = (
+                torch.from_numpy(get_1d_sincos_pos_embed_from_grid(self.dim, np.arange(self.max_clip_length, dtype=np.float32)))
+                .float()
+                .unsqueeze(1)
+            )
+            with torch.no_grad():
+                self.time_weight.copy_(initial_time_weight)
 
+            
     def forward(self, x: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
         pos_embs = []
+        real_num_tokens = x.shape[0]
+
+        num_tokens = 0
         for t, h, w in grid_thws.tolist():
+            num_tokens += t * h * w
             if (h, w) == self.weight.shape[:-1]:
                 pos_emb_2d = self.weight.flatten(end_dim=1)
             else:
@@ -278,13 +288,18 @@ class VideoChat3InterpPosEmb(nn.Module):
                     .flatten(end_dim=1)
                 )
 
-            if t == 1:
+            if self.time_weight is not None:
                 pos_emb_3d = pos_emb_2d
             else:
-                pos_emb_3d = pos_emb_2d.unsqueeze(0).repeat(t, 1, 1) + self.time_weight[:t]
+                if t == 1:
+                    pos_emb_3d = pos_emb_2d + self.time_weight.sum() * 0.0
+                else:
+                    pos_emb_3d = pos_emb_2d.unsqueeze(0).repeat(t, 1, 1) + self.time_weight[:t]
 
             pos_embs.append(pos_emb_3d.reshape(-1, pos_emb_3d.shape[-1]))
 
+        if real_num_tokens != num_tokens:
+            raise ValueError(f"x.shape:{x.shape}, grid_thws:{grid_thws}, real_num_tokens={real_num_tokens}, num_tokens={num_tokens}")
         out = x + torch.cat(pos_embs)
         return out
 
@@ -862,7 +877,7 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
 
     def __init__(self, config: VideoChat3Config):
         super().__init__(config)
-        self.vision_tower = AutoModel.from_config(config.vision_config, trust_remote_code=True)
+        self.vision_tower = VideoChat3VisionModel._from_config(config.vision_config)
 
         self.multi_modal_projector = VideoChat3MultiModalProjector(config)
         self.language_model = AutoModel.from_config(config.text_config, trust_remote_code=True)
@@ -1293,7 +1308,7 @@ def main():
     # 设置路径
     vit_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/MoonViT-SO-400M"
     qwen3_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-4B-Instruct-2507"
-    current_dir = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-4B"
+    current_dir = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-4B_t1"
     output_path = os.path.join(current_dir, "initialized_model")
     
     try:

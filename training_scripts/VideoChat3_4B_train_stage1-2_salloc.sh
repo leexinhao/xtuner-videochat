@@ -13,8 +13,8 @@ head_node_ip=$(srun --nodes=1 --ntasks=1 -w "$master_node" hostname --ip-address
 rdzv_endpoint="${head_node_ip}:${MASTER_PORT:-40000}"
 bin="srun"
 
-export NCCL_SOCKET_IFNAME=bond0
-export NCCL_IB_HCA=mlx5_2,mlx5_3,mlx5_4,mlx5_5
+# export NCCL_SOCKET_IFNAME=bond0
+# export NCCL_IB_HCA=mlx5_2,mlx5_3,mlx5_4,mlx5_5
 export XTUNER_USE_FA3="0"
 # export XTUNER_PACK_WORKERS=8
 # export XTUNER_TOKENIZE_WORKERS=16

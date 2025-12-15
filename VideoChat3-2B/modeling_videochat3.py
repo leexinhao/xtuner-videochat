@@ -728,7 +728,7 @@ class VideoChat3Model(VideoChat3PreTrainedModel):
 
     def __init__(self, config: VideoChat3Config):
         super().__init__(config)
-        self.vision_tower = AutoModel.from_config(config.vision_config, trust_remote_code=True)
+        self.vision_tower = VideoChat3VisionModel._from_config(config.vision_config)
 
         self.multi_modal_projector = VideoChat3MultiModalProjector(config)
         self.language_model = AutoModel.from_config(config.text_config, trust_remote_code=True)

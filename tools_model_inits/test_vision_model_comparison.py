@@ -12,9 +12,12 @@ import numpy as np
 from PIL import Image
 import json
 from pathlib import Path
+from transformers import activations
+activations.PytorchGELUTanh = activations.GELUTanh
 
-VideoChat_Path = "/home/lixinhao/xtuner-videochat/VideoChat3-2B"
-MoonViT_Path = "/home/lixinhao/models/MoonViT-SO-400M"
+
+VideoChat_Path = "./VideoChat3-4B_t1"
+MoonViT_Path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/MoonViT-SO-400M"
 # 添加VideoChat3-debug目录到Python路径
 sys.path.insert(0, VideoChat_Path)
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -103,7 +106,7 @@ def compare_model_outputs():
     print("=" * 60)
 
 
-    model_path = "/home/lixinhao/xtuner-videochat/VideoChat3-2B"
+    model_path = "./VideoChat3-4B_t1"
     processor = AutoImageProcessor.from_pretrained(model_path, trust_remote_code=True)
 
     image_path = "tools_model_inits/mouth.png"

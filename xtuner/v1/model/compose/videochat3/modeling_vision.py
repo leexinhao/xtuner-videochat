@@ -94,20 +94,25 @@ class VideoChat3InterpPosEmb(nn.Module):
         self.max_clip_length = max_clip_length
         self.interpolation_mode = interpolation_mode
         self.weight = nn.Parameter(torch.empty(height, width, dim))
-        self.time_weight = nn.Parameter(torch.empty(max_clip_length, 1, dim))
+        if max_clip_length > 1:
+            self.time_weight = nn.Parameter(torch.empty(max_clip_length, 1, dim))
+        else:
+            self.time_weight = None
+
         self.dim = dim  # Store dim for reset_parameters
 
         self.reset_parameters()
 
     def reset_parameters(self):
         nn.init.normal_(self.weight)
-        initial_time_weight = (
-            torch.from_numpy(get_1d_sincos_pos_embed_from_grid(self.dim, np.arange(self.max_clip_length, dtype=np.float32)))
-            .float()
-            .unsqueeze(1)
-        )
-        with torch.no_grad():
-            self.time_weight.copy_(initial_time_weight)
+        if self.time_weight is not None:
+            initial_time_weight = (
+                torch.from_numpy(get_1d_sincos_pos_embed_from_grid(self.dim, np.arange(self.max_clip_length, dtype=np.float32)))
+                .float()
+                .unsqueeze(1)
+            )
+            with torch.no_grad():
+                self.time_weight.copy_(initial_time_weight)
 
             
     def forward(self, x: torch.Tensor, grid_thws: torch.Tensor) -> torch.Tensor:
@@ -131,10 +136,13 @@ class VideoChat3InterpPosEmb(nn.Module):
                     .flatten(end_dim=1)
                 )
 
-            if t == 1:
-                pos_emb_3d = pos_emb_2d + self.time_weight.sum() * 0.0
+            if self.time_weight is not None:
+                pos_emb_3d = pos_emb_2d
             else:
-                pos_emb_3d = pos_emb_2d.unsqueeze(0).repeat(t, 1, 1) + self.time_weight[:t]
+                if t == 1:
+                    pos_emb_3d = pos_emb_2d + self.time_weight.sum() * 0.0
+                else:
+                    pos_emb_3d = pos_emb_2d.unsqueeze(0).repeat(t, 1, 1) + self.time_weight[:t]
 
             pos_embs.append(pos_emb_3d.reshape(-1, pos_emb_3d.shape[-1]))
 

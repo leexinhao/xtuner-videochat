@@ -21,7 +21,7 @@ export XTUNER_USE_FA3="0"
 export XTUNER_GC_ENABLE="1"
 
 current_time=$(date "+%m%d%H%M%S")
-TASK_NAME="VideoChat3_4B_train_stage1-2_new_cc3m_caprlold"
+TASK_NAME="VideoChat3_4B_train_stage1-2_image_only"
 OUTPUT_DIR="work_dir/${TASK_NAME}"
 if [ ! -d "$OUTPUT_DIR" ]; then  
   mkdir -p "$OUTPUT_DIR"
@@ -39,5 +39,5 @@ $bin torchrun --nnodes=$nnodes \
         --nproc_per_node=8 \
         --rdzv_backend=c10d \
         --rdzv_endpoint=${rdzv_endpoint} \
-        xtuner/v1/train/cli/sft.py --config training_configs/videochat3/VideoChat3_4B_train_stage1-2_new_cc3m_caprlold.py 2>&1 | tee -a "${OUTPUT_DIR}/training_log_${TASK_NAME}_${current_time}.txt"
+        xtuner/v1/train/cli/sft.py --config training_configs/videochat3/VideoChat3_4B_train_stage1-2_image_only.py 2>&1 | tee -a "${OUTPUT_DIR}/training_log_${TASK_NAME}_${current_time}.txt"
 

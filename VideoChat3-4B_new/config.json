@@ -43,15 +43,6 @@
   "transformers_version": "4.57.0.dev0",
   "video_token_id": 151656,
   "vision_config": {
-    "architectures": [
-      "VideoChat3VisionModel"
-    ],
-    "auto_map": {
-      "AutoConfig": "configuration_videochat3.VideoChat3VisionConfig",
-      "AutoModel": "modeling_videochat3.VideoChat3VisionModel"
-    },
-    "model_type": "videochat3_vision",
-    "_name_or_path": "VideoChat3-4B_new",
     "patch_size": 14,
     "num_attention_heads": 16,
     "num_hidden_layers": 27,

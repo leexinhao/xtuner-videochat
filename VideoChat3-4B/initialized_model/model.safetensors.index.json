@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "total_parameters": 4472373744,
-    "total_size": 9010826720
+    "total_parameters": 4472378352,
+    "total_size": 9010835936
   },
   "weight_map": {
     "model.language_model.embed_tokens.weight": "model-00001-of-00002.safetensors",
@@ -734,6 +734,7 @@
     "model.vision_tower.encoder.blocks.9.wqkv.weight": "model-00001-of-00002.safetensors",
     "model.vision_tower.encoder.final_layernorm.bias": "model-00001-of-00002.safetensors",
     "model.vision_tower.encoder.final_layernorm.weight": "model-00001-of-00002.safetensors",
+    "model.vision_tower.patch_embed.pos_emb.time_weight": "model-00001-of-00002.safetensors",
     "model.vision_tower.patch_embed.pos_emb.weight": "model-00001-of-00002.safetensors",
     "model.vision_tower.patch_embed.proj.bias": "model-00001-of-00002.safetensors",
     "model.vision_tower.patch_embed.proj.weight": "model-00001-of-00002.safetensors"
