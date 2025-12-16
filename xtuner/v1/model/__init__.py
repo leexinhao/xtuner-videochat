@@ -21,6 +21,7 @@ from .compose.qwen3_vl import (
 from .compose.videochat3 import (
     VideoChat3Dense2BConfig,
     VideoChat3Dense4BConfig,
+    VideoChat3Dense4BT1Config,
     VideoChat3Dense8BConfig
 )
 from .dense.dense import Dense
@@ -99,4 +100,8 @@ __all__ = [
     "Qwen3VLDense4BConfig",
     "Qwen3VLDense8BConfig",
     "Qwen3VLMoE235BA22Config",
+    "VideoChat3Dense2BConfig",
+    "VideoChat3Dense4BConfig",
+    "VideoChat3Dense4BT1Config",
+    "VideoChat3Dense8BConfig"
 ]

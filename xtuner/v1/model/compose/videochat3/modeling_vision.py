@@ -136,7 +136,7 @@ class VideoChat3InterpPosEmb(nn.Module):
                     .flatten(end_dim=1)
                 )
 
-            if self.time_weight is not None:
+            if self.time_weight is None:
                 pos_emb_3d = pos_emb_2d
             else:
                 if t == 1:

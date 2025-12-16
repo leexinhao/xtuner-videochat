@@ -131,6 +131,22 @@ class VideoChat3Dense4BConfig(VideoChat3BaseConfig):
         )
         return None
 
+class VideoChat3Dense4BT1Config(VideoChat3BaseConfig):
+    vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2", temporal_merge_size=1)
+    projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig(text_hidden_size=2560)
+    text_config: Qwen3Dense4BConfig = Qwen3Dense4BConfig(vocab_size=151936)
+
+    @property
+    def hf_config(self):
+        # TODO(pppppM) Support saving HuggingFace format config
+        logger.warning(
+            f"{type(self)} does not support conversion to HuggingFace config format. "
+            "Only the original HuggingFace config will be retained in the saved HuggingFace format checkpoint. "
+            f"If you have changed the default values in {type(self)}, it may cause the config in the saved "
+            "HuggingFace format checkpoint to not match the weights."
+        )
+        return None
+
 class VideoChat3Dense2BConfig(VideoChat3BaseConfig):
     vision_config: VideoChat3VisionConfig = VideoChat3VisionConfig(attn_impl="flash_attention_2")
     projector_config: VideoChat3ProjectorConfig = VideoChat3ProjectorConfig(text_hidden_size=2048)

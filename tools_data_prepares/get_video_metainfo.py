@@ -222,8 +222,8 @@ def get_video_meta_info(video_file, data_anno, client, video_reader_type):
     return video_meta_info
 
 client = Client(conf_path='~/petreloss.conf')
-data_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/tools_data_prepares/data_list_example_debug3.json"
-save_root = "/mnt/hwfile/zengxiangyu/Research_lixinhao/vflash_annotations/video_metainfos"
+data_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/tools_data_prepares/data_list_example_llava_video.json"
+save_root = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/vflash_annotations/video_metainfos_new"
 
 os.makedirs(save_root, exist_ok=True)
 
@@ -231,7 +231,7 @@ with open(data_path, "r") as froot:
     datasets = json.load(froot)
     for dataset_name in datasets:
         _data = datasets[dataset_name]
-        anno_path =_data['annotation']
+        anno_path =_data['anno_path']
         save_path = os.path.join(save_root, dataset_name + '_metainfos.jsonl')
         # os.makedirs(save_dir, exist_ok=True)
 
@@ -283,6 +283,8 @@ with open(data_path, "r") as froot:
         processed_paths = set()
         write_mode = "w"
         if os.path.exists(save_path):
+            print(f"跳过: {save_path}")
+            continue
             try:
                 with open(save_path, "r") as existed_f:
                     for line in existed_f:

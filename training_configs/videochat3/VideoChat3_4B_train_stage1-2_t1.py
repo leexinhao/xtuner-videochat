@@ -15,26 +15,26 @@ import json
 # export XTUNER_USE_FA3=1
 
 # model config
-model_cfg = VideoChat3Dense4BT1Config(freeze_vision=True, freeze_language=True)
+model_cfg = VideoChat3Dense4BT1Config(freeze_vision=False, freeze_language=False)
 
-model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-4B_t1"
-meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-1.json'
-work_dir = "work_dir/VideoChat3_4B_train_stage1-1_t1"
-cache_dir = "dataset_cache/cache_videochat3_4B_stage1-1_t1"
+model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-1_t1/20251215172149/hf-latest"
+meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-2.json'
+work_dir = "work_dir/VideoChat3_4B_train_stage1-2_t1"
+cache_dir = "dataset_cache/cache_videochat3_4B_stage1-2_t1"
 
 
-
-sample_max_length = 8192
-pack_max_length = 8192
-global_batch_size = 512
+sample_max_length = 16384
+pack_max_length = 16384
+global_batch_size = 256
 total_epoch = 1
 # total_num_tokens = 105332882
 # total_step = int(total_num_tokens  / pack_max_length / global_batch_size)
-hf_interval = 50
-checkpoint_interval = 50
+hf_interval = 500
+hf_max_keep = 1
+checkpoint_interval = 200
 checkpoint_maxkeep = 2
 
-lr = 1e-3
+lr = 4e-5
 weight_decay = 0.0
 warmup_ratio = 0.03
 lr_min = 1e-6
@@ -59,7 +59,7 @@ for name, _data in ds_collections.items():
                     image_max_pixels=_data.get('image_max_pixels', int(sample_max_length * 0.8 * 28 * 28)),
                     frame_min_pixels=_data.get('frame_min_pixels', 28*28),
                     frame_max_pixels=_data.get('frame_max_pixels', int(sample_max_length * 0.8 * 28 * 28)),
-                    video_max_total_pixels=_data.get('video_max_total_pixels', int(sample_max_length * 0.8 * 28 * 28)),
+                    video_max_total_pixels=_data.get('video_max_total_pixels', int(sample_max_length * 0.8 * 1 * 28 * 28)),
                     video_min_frames=_data.get('video_min_frames', 1),
                     video_max_frames=_data.get('video_max_frames', 2048), 
                     fixed_num_sampled_frames=_data.get('fixed_num_sampled_frames', None),
@@ -86,7 +86,7 @@ optim_cfg = AdamWConfig(lr=lr, weight_decay=weight_decay, foreach=False)
 lr_cfg = LRConfig(lr_type="cosine", warmup_ratio=warmup_ratio, lr_min=lr_min)
 fsdp_cfg = FSDPConfig(sp_size=1, recompute_ratio=recompute_ratio, torch_compile=False)
 
-resume_cfg = ResumeConfig(auto_resume=False)
+resume_cfg = ResumeConfig(auto_resume=True)
 
 # trainer config
 trainer = TrainerConfig(
@@ -105,5 +105,6 @@ trainer = TrainerConfig(
     hf_interval=hf_interval,
     checkpoint_interval=checkpoint_interval,
     checkpoint_maxkeep=checkpoint_maxkeep,
+    hf_max_keep=hf_max_keep,
     work_dir=work_dir,
 )
