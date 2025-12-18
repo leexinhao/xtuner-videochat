@@ -1,57 +1,183 @@
 {
-    "llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710": {
+    "llava-video_0_30_s_nextqa_oe_qa_processed_5492": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710.jsonl",
-        "estimated_length": 39698,
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_nextqa_oe_qa_processed_5492.jsonl",
+        "estimated_length": 5492,
         "data_augment": false,
         "sample_ratio": 1
     },
-    "llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967": {
+    "llava-video_0_30_s_nextqa_mc_qa_processed_5496": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967.jsonl",
-        "estimated_length": 39951,
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_nextqa_mc_qa_processed_5496.jsonl",
+        "estimated_length": 5496,
         "data_augment": false,
         "sample_ratio": 1
     },
-    "llava-video_2_3_m_youtube_v0_1_cap_processed_24685": {
+    "llava-video_0_30_s_activitynetqa_oe_qa_processed_2950": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_youtube_v0_1_cap_processed_24685.jsonl",
-        "estimated_length": 24678,
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_activitynetqa_oe_qa_processed_2950.jsonl",
+        "estimated_length": 2950,
         "data_augment": false,
         "sample_ratio": 1
     },
-    "llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927": {
+    "llava-video_0_30_s_perceptiontest_mc_qa_processed_1785": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927.jsonl",
-        "estimated_length": 39923,
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_perceptiontest_mc_qa_processed_1785.jsonl",
+        "estimated_length": 1785,
         "data_augment": false,
         "sample_ratio": 1
     },
-    "llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353": {
-        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353.jsonl",
+    "llava-video_0_30_s_youtube_v0_1_cap_processed_79346_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_0_30_s_youtube_v0_1_cap_processed_79346.jsonl",
+        "estimated_length": 79344,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353.jsonl",
         "estimated_length": 39353,
         "data_augment": false,
         "sample_ratio": 1
     },
-    "llava-video_30_60_s_youtube_v0_1_cap_processed_19995": {
+    "llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200.jsonl",
+        "estimated_length": 420200,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_30_60_s_activitynetqa_oe_qa_processed_4530": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_youtube_v0_1_cap_processed_19995.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_activitynetqa_oe_qa_processed_4530.jsonl",
+        "estimated_length": 4530,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_30_60_s_perceptiontest_mc_qa_processed_618": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_perceptiontest_mc_qa_processed_618.jsonl",
+        "estimated_length": 618,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_30_60_s_nextqa_oe_qa_processed_6843": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_nextqa_oe_qa_processed_6843.jsonl",
+        "estimated_length": 6843,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927.jsonl",
+        "estimated_length": 39923,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_30_60_s_youtube_v0_1_cap_processed_19995_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_30_60_s_youtube_v0_1_cap_processed_19995.jsonl",
         "estimated_length": 19992,
         "data_augment": false,
         "sample_ratio": 1
     },
-    "llava-video_1_2_m_youtube_v0_1_cap_processed_24234": {
+    "llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624.jsonl",
+        "estimated_length": 110624,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_30_60_s_nextqa_mc_qa_processed_6843": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_youtube_v0_1_cap_processed_24234.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_nextqa_mc_qa_processed_6843.jsonl",
+        "estimated_length": 6843,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_1_2_m_nextqa_oe_qa_processed_4694": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_nextqa_oe_qa_processed_4694.jsonl",
+        "estimated_length": 4694,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_1_2_m_nextqa_mc_qa_processed_4633": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_nextqa_mc_qa_processed_4633.jsonl",
+        "estimated_length": 4633,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_1_2_m_activitynetqa_oe_qa_processed_8590": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_activitynetqa_oe_qa_processed_8590.jsonl",
+        "estimated_length": 8590,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710.jsonl",
+        "estimated_length": 39698,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_1_2_m_youtube_v0_1_cap_processed_24234_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_1_2_m_youtube_v0_1_cap_processed_24234.jsonl",
         "estimated_length": 24233,
         "data_augment": false,
         "sample_ratio": 1
     },
-    "llava-video_0_30_s_youtube_v0_1_cap_processed_79346": {
+    "llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645.jsonl",
+        "estimated_length": 24233,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967.jsonl",
+        "estimated_length": 39967,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_2_3_m_youtube_v0_1_cap_processed_24685_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_2_3_m_youtube_v0_1_cap_processed_24685.jsonl",
+        "estimated_length": 24678,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495_frames": {
+        "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video_frames/llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495.jsonl",
+        "estimated_length": 24678,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_2_3_m_activitynetqa_oe_qa_processed_7460": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_youtube_v0_1_cap_processed_79346.jsonl",
-        "estimated_length": 79344,
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_activitynetqa_oe_qa_processed_7460.jsonl",
+        "estimated_length": 7460,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_2_3_m_nextqa_mc_qa_processed_52": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_nextqa_mc_qa_processed_52.jsonl",
+        "estimated_length": 52,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_2_3_m_nextqa_oe_qa_processed_61": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_nextqa_oe_qa_processed_61.jsonl",
+        "estimated_length": 61,
         "data_augment": false,
         "sample_ratio": 1
     }

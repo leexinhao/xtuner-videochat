@@ -7,6 +7,7 @@ from xtuner.v1.datasets import VideoChat3TokenizeFnConfig
 from xtuner.v1.model import VideoChat3Dense4BConfig
 from xtuner.v1.loss import CELossConfig
 from xtuner.v1.datasets.config import DatasetConfig, DataloaderConfig
+from xtuner.v1.datasets.mllm_tokenize_fn import OSSLoaderConfig
 from xtuner.v1.config import FSDPConfig
 import json
 
@@ -17,9 +18,9 @@ import json
 model_cfg = VideoChat3Dense4BConfig(freeze_vision=False, freeze_language=False)
 
 model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-2/20251130132308/hf-latest"
-meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage2_llava_video_youtube.json'
-work_dir = "work_dir/VideoChat3_4B_train_stage2_llava_video_youtube"
-cache_dir = "dataset_cache/cache_videochat3_4B_stage2_llava_video_youtube"
+meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage2_llava_video_academic_shortcotqa20251216.json'
+work_dir = "work_dir/VideoChat3_4B_train_stage2_llava_video_academic_shortcotqa20251216"
+cache_dir = "dataset_cache/cache_videochat3_4B_stage2_llava_video_academic_shortcotqa20251216"
 
 
 sample_max_length = 16384
@@ -37,7 +38,6 @@ lr = 5e-5
 weight_decay = 0.0
 warmup_ratio = 0.03
 lr_min = 1e-6
-vision_recompute_ratio = 1.0
 recompute_ratio = 1.0
 loss_reduction = "square"
 
@@ -84,7 +84,7 @@ dataloader_config = DataloaderConfig(
 # optimizer and lr config
 optim_cfg = AdamWConfig(lr=lr, weight_decay=weight_decay, foreach=False)
 lr_cfg = LRConfig(lr_type="cosine", warmup_ratio=warmup_ratio, lr_min=lr_min)
-fsdp_cfg = FSDPConfig(sp_size=1, vision_recompute_ratio=vision_recompute_ratio, recompute_ratio=recompute_ratio, torch_compile=False)
+fsdp_cfg = FSDPConfig(sp_size=1, recompute_ratio=recompute_ratio, torch_compile=False)
 
 resume_cfg = ResumeConfig(auto_resume=True)
 

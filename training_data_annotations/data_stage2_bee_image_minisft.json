@@ -1,0 +1,17 @@
+{
+    "llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901.jsonl",
+        "estimated_length": 6893,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+    "llava-video_2_3_m_nextqa_oe_qa_processed_61": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_nextqa_oe_qa_processed_61.jsonl",
+        "estimated_length": 61,
+        "data_augment": false,
+        "sample_ratio": 1
+    },
+
+}

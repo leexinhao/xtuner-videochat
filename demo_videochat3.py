@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoTokenizer, AutoProcessor, AutoModelForCausalLM
 
-model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage2_llava_video_academic/20251203152844/hf-latest"
+model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage2_llava_video_academic_shortcotqa20251216/20251216180246/hf-latest"
 
 # load the tokenizer and the model
 tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
@@ -35,7 +35,7 @@ messages = [
                 "type": "video",
                 "path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/MotionBench_tAJm42ly7PcD8aGl.mp4",
             },
-            {"type": "text", "text": "How many people are lying on the ground? A. 1 B. 2 C. 3. Tell me the correct option."},
+            {"type": "text", "text": "Describe this video in detail."},
         ],
     }
 ]

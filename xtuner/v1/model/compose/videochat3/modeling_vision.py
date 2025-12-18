@@ -45,9 +45,11 @@ from torch.distributed.algorithms._checkpoint.checkpoint_wrapper import Checkpoi
 from xtuner.v1.module import RMSNorm
 from xtuner.v1.ops.others import Dropout
 from xtuner.v1.ops.act_fn import get_act_fn
+from xtuner.v1.utils import get_logger
 
 DEVICE = get_device()
 DEVICE_MODULE = get_torch_device_module()
+logger = get_logger()
 
 
 def init_world_mesh():
@@ -668,6 +670,7 @@ class VideoChat3VisionModel(BaseModel):
         self.fsdp_config = fsdp_config
         assert float8_handler is None
 
+        checkpoint_preserve_rng_state = fsdp_config.checkpoint_preserve_rng_state
         mp_policy = MixedPrecisionPolicy(
             param_dtype=fsdp_config.param_dtype, reduce_dtype=fsdp_config.reduce_dtype
         )
@@ -687,13 +690,20 @@ class VideoChat3VisionModel(BaseModel):
             for param in self.parameters():
                 param.requires_grad = False
 
-        recompute_ratio = 1.0
+        recompute_ratio = fsdp_config.vision_recompute_ratio
         num_recompute_layers = int(len(self.encoder.blocks) * recompute_ratio)
-        for layer_idx in tqdm(list(range(len(self.encoder.blocks))), desc="[Vision Fully Shard]"):
+        generator = torch.Generator()
+        generator.manual_seed(dist.get_rank())
+        shuffled_layers_idxs = torch.randperm(len(self.encoder.blocks), generator=generator)
+
+
+        for layer_idx in tqdm(shuffled_layers_idxs, desc="[Vision Fully Shard]"):
             layer = self.encoder.blocks[layer_idx]
 
             if layer_idx < num_recompute_layers:
-                layer = checkpoint_wrapper(layer, checkpoint_impl=CheckpointImpl.REENTRANT)
+                layer = checkpoint_wrapper(layer, 
+                                        preserve_rng_state=checkpoint_preserve_rng_state,
+                                        checkpoint_impl=CheckpointImpl.REENTRANT)
 
             self.encoder.blocks[layer_idx] = layer
 

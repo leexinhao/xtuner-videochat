@@ -1,6 +1,7 @@
 import io
 import os
 import random
+import re
 from dataclasses import dataclass, fields
 from typing import Optional, Mapping
 
@@ -152,22 +153,28 @@ def read_frames_dir(
         # Extract filenames from each path and sort by their numeric part
         return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
 
-    if "s3://" in video_path:
-        img_list = sort_frames(client.list(video_path))
-    else:
-        img_list = sort_frames(list(os.listdir(video_path)))
-
+    try:
+        if "s3://" in video_path:
+            img_list = sort_frames(client.list(video_path))
+        else:
+            img_list = sort_frames(list(os.listdir(video_path)))
+    except Exception as e:
+        raise ValueError(f"Meet Error at sort_frames for {video_path}!!!")
     frames = []
     for idx in frame_sample_indices:
-        frame_fname = os.path.join(video_path, img_list[idx])
-        if "s3://" in video_path:
-            img_bytes = client.get(frame_fname)
-            frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
-        else:
-            with open(frame_fname, 'rb') as f:
-                img_bytes = f.read()
-                frames.append(Image.open(image_path).convert("RGB"))
-
+        frame_fname = None
+        try:
+            if "s3://" in video_path:
+                s3_prefix = video_path.split("s3://")[0]
+                s3_bucket = video_path.split("s3://")[1].split("/")[0]
+                frame_fname = os.path.join(s3_prefix+"s3://", s3_bucket, img_list[idx])
+                img_bytes = client.get(frame_fname)
+                frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
+            else:
+                frame_fname = os.path.join(video_path, img_list[idx])
+                frames.append(Image.open(frame_fname).convert("RGB"))
+        except Exception as e:
+            raise ValueError(f"Meet Error at read frames for {video_path}: {frame_fname}!!!")
     return frames
 
 
