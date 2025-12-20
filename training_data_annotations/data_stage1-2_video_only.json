@@ -1,25 +1,25 @@
 {
     "caption_sharegemini_webvid_core100k_clean": {
         "media_root": "p2:s3://webvid2m/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_sharegemini_webvid_core100k_clean.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/caption_sharegemini_webvid_core100k_clean.jsonl",
         "data_augment": false,
         "sample_ratio": 1   
     },
     "caption_sharegemini_k400_223k": {
         "media_root": "p2:s3://k400/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_sharegemini_k400_223k.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/caption_sharegemini_k400_223k.jsonl",
         "data_augment": false,
         "sample_ratio": 1   
     },
     "pevideo_train100k": {
         "media_root": "pnorm2:s3://pe-video/train/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/pevideo_train100k_clean.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/pevideo_train100k_clean.jsonl",
         "data_augment": false,
         "sample_ratio": 1   
     },
     "caption_sharegpt4o_3k": {
         "media_root": "pssd:s3://perception/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annoations/video/caption_sharegpt4o_3k.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/caption_sharegpt4o_3k.jsonl",
         "data_augment": false,
         "sample_ratio": 1   
     }
