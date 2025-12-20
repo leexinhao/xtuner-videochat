@@ -7,6 +7,7 @@ from xtuner.v1.datasets import VideoChat3TokenizeFnConfig
 from xtuner.v1.model import VideoChat3Dense4BConfig
 from xtuner.v1.loss import CELossConfig
 from xtuner.v1.datasets.config import DatasetConfig, DataloaderConfig
+from xtuner.v1.datasets.mllm_tokenize_fn import OSSLoaderConfig
 from xtuner.v1.config import FSDPConfig
 import json
 
@@ -16,28 +17,27 @@ import json
 # model config
 model_cfg = VideoChat3Dense4BConfig(freeze_vision=False, freeze_language=False)
 
-model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-2/20251130132308/hf-latest"
-meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage2_llava_video_youtube.json'
-work_dir = "work_dir/VideoChat3_4B_train_stage2_llava_video_youtube"
-cache_dir = "dataset_cache/cache_videochat3_4B_stage2_llava_video_youtube"
+model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-1_old/20251127192016/hf-190"
+meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-2_caprl2mrecap2.json'
+work_dir = "work_dir/VideoChat3_4B_train_stage1-2_caprl2mrecap2"
+cache_dir = "dataset_cache/cache_videochat3_4B_stage1-2_caprl2mrecap2"
 
 
-sample_max_length = 16384*2
-pack_max_length = 16384*2
-global_batch_size = 128
+sample_max_length = 16384
+pack_max_length = 16384
+global_batch_size = 256
 total_epoch = 1
 # total_num_tokens = 105332882
 # total_step = int(total_num_tokens  / pack_max_length / global_batch_size)
 hf_interval = 500
 hf_max_keep = 1
-checkpoint_interval = 100
+checkpoint_interval = 200
 checkpoint_maxkeep = 2
 
-lr = 5e-5
+lr = 4e-5
 weight_decay = 0.0
 warmup_ratio = 0.03
 lr_min = 1e-6
-vision_recompute_ratio = 1.0
 recompute_ratio = 1.0
 loss_reduction = "square"
 
@@ -58,12 +58,12 @@ for name, _data in ds_collections.items():
                     image_min_pixels=_data.get('image_min_pixels', 28*28),
                     image_max_pixels=_data.get('image_max_pixels', int(sample_max_length * 0.8 * 28 * 28)),
                     frame_min_pixels=_data.get('frame_min_pixels', 28*28),
-                    frame_max_pixels=_data.get('frame_max_pixels', 448*448),
-                    video_max_total_pixels=_data.get('video_max_total_pixels', int(sample_max_length * 0.6 * 4 * 28 * 28)),
+                    frame_max_pixels=_data.get('frame_max_pixels', int(sample_max_length * 0.8 * 28 * 28)),
+                    video_max_total_pixels=_data.get('video_max_total_pixels', int(sample_max_length * 0.8 * 4 * 28 * 28)),
                     video_min_frames=_data.get('video_min_frames', 1),
                     video_max_frames=_data.get('video_max_frames', 2048), 
                     fixed_num_sampled_frames=_data.get('fixed_num_sampled_frames', None),
-                    video_sample_fps=_data.get('video_sample_fps', 1), 
+                    video_sample_fps=_data.get('video_sample_fps', 4), 
                     processor_path=model_path,
                     data_augment=_data.get('data_augment', False),
                     system_message=_data.get('system_message', None),
@@ -84,7 +84,7 @@ dataloader_config = DataloaderConfig(
 # optimizer and lr config
 optim_cfg = AdamWConfig(lr=lr, weight_decay=weight_decay, foreach=False)
 lr_cfg = LRConfig(lr_type="cosine", warmup_ratio=warmup_ratio, lr_min=lr_min)
-fsdp_cfg = FSDPConfig(sp_size=1, vision_recompute_ratio=vision_recompute_ratio, recompute_ratio=recompute_ratio, torch_compile=False)
+fsdp_cfg = FSDPConfig(sp_size=1, recompute_ratio=recompute_ratio, torch_compile=False)
 
 resume_cfg = ResumeConfig(auto_resume=True)
 
