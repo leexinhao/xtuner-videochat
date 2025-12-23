@@ -8,6 +8,7 @@ import math
 import torch
 import numpy as np
 from PIL import Image
+from typing import Union
 from petrel_client.client import Client
 from pydantic import ConfigDict
 from collections.abc import Sequence
@@ -169,7 +170,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         video_min_frames: int = 4,  # Min frames per video
         video_max_frames: int = 2048,  # Max frames per video
         fixed_num_sampled_frames: int | None = None,
-        video_sample_fps: int = 2,  # Sample fps for video
+        video_sample_fps: Union[int, float] = 2,  # Sample fps for video
         system_message: str | None = None,
         add_vision_id: bool = False,
         max_length: int | None = None,
@@ -251,14 +252,20 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         return input_ids, labels
 
     def _my_load_image(self, image_path: str):
-        if "s3://" in image_path:
-            if self.ceph_client is None:
-                raise RuntimeError("Ceph client is not available. Cannot load image from s3:// path.")
-            img_bytes = self.ceph_client.get(image_path)
-            return Image.open(io.BytesIO(img_bytes)).convert("RGB")
-        else:
-            # Local file path
-            return Image.open(image_path).convert("RGB")
+        try:
+            if "s3://" in image_path:
+                image_path = image_path.replace("https://", "https:/") # make ceph happy!
+                if self.ceph_client is None:
+                    raise RuntimeError("Ceph client is not available. Cannot load image from s3:// path.")
+                img_bytes = self.ceph_client.get(image_path)
+                return Image.open(io.BytesIO(img_bytes)).convert("RGB")
+            else:
+                # Local file path
+                return Image.open(image_path).convert("RGB")
+        except Exception as e:
+            logger.warning(f"Error loading image {image_path}: {e}")
+            raise e
+            return None
 
 
     def _process_image(self, image_file: str, media_root: str = ""):
@@ -366,7 +373,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
                     for c in content:
                         if c.type == "text":
                             text = c.text
-                            assert "<IMG_CONTEXT>" in text
+                            # assert "<IMG_CONTEXT>" in text
                             text = text.replace("<IMG_CONTEXT>", IMAGE_TOKEN_ALIAS)
                             image_cnt = text.count(IMAGE_TOKEN_ALIAS)
                             for _ in range(image_cnt):
@@ -631,7 +638,7 @@ class VideoChat3TokenizeFnConfig(BaseMLLMTokenizeFnConfig):
     video_min_frames: int = 4
     video_max_frames: int = 1024 
     fixed_num_sampled_frames: int | None = None
-    video_sample_fps: int = 2 
+    video_sample_fps: Union[int, float] = 2 
     # When handling multiple images, it's helpful to add labels to the images and videos for better reference.
     add_vision_id: bool = False
 

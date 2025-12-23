@@ -11,7 +11,7 @@ import json
 from safetensors import safe_open
 from unittest import skipIf
 import transformers
-from xtuner.v1.model.compose.videochat3.videochat3_config import VideoChat3Dense2BConfig
+from xtuner.v1.model.compose.videochat3.videochat3_config import VideoChat3Dense4BConfig
 from xtuner.v1.loss.ce_loss import CELossConfig, CELossContextInputItem
 from xtuner.v1.model.moe.moe import SequenceContext
 from xtuner.v1.config import FSDPConfig
@@ -19,7 +19,7 @@ from xtuner.v1.utils.compile import maybe_compile
 from xtuner.v1.utils.test_utils import init_data_mesh
 
 # 设置环境变量路径 - 需要根据实际情况调整
-VIDEOCHAT3_DENSE_PATH = os.environ.get("VIDEOCHAT3_DENSE_PATH", "./VideoChat3-2B")
+VIDEOCHAT3_DENSE_PATH = os.environ.get("VIDEOCHAT3_DENSE_PATH", "./VideoChat3-4B")
 
 
 
@@ -62,7 +62,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
 
         # 构建 XTuner VideoChat3 模型
         with torch.device("meta"):
-            model_cfg = VideoChat3Dense2BConfig()
+            model_cfg = VideoChat3Dense4BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
@@ -135,7 +135,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         torch.cuda.empty_cache()
 
         with torch.device("meta"):
-            model_cfg = VideoChat3Dense2BConfig()
+            model_cfg = VideoChat3Dense4BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
@@ -223,7 +223,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
         torch.cuda.empty_cache()
 
         with torch.device("meta"):
-            model_cfg = VideoChat3Dense2BConfig()
+            model_cfg = VideoChat3Dense4BConfig()
             videochat3_model = model_cfg.build().to(torch.float16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
@@ -319,7 +319,7 @@ class TestVideoChat3(DeterministicDDPTestCase):
 
         # 构建 XTuner VideoChat3 模型
         with torch.device("meta"):
-            model_cfg = VideoChat3Dense2BConfig()
+            model_cfg = VideoChat3Dense4BConfig()
             videochat3_model = model_cfg.build().to(torch.bfloat16)
 
         videochat3_model.from_hf(VIDEOCHAT3_DENSE_PATH)
