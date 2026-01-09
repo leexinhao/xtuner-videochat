@@ -60,7 +60,8 @@ def smart_video_resize(
 
 def smart_get_video_thw(video_meta: VideoChat3VideoMetadata, video_processor):
     num_sampled_frames = video_processor.get_num_sampled_frames(video_meta, num_frames=video_processor.num_frames, fps=video_processor.fps)
-        
+    
+    assert num_sampled_frames != 0, f"num_sampled_frames must be greater than 0, video_meta: {video_meta}"
     resized_height, resized_width = smart_video_resize(
         num_frames=num_sampled_frames,
         height=video_meta.height,
@@ -293,7 +294,13 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         video_backend = video_meta.video_backend if video_meta and video_meta.video_backend else "decord"
         if "s3://" in video_path and self.ceph_client is None:
             raise RuntimeError("Ceph client is not available. Cannot load video from s3:// path.")
-        return VIDEO_READER_MAP[video_backend](video_path, frame_sample_indices, self.ceph_client)
+        
+        frames = VIDEO_READER_MAP[video_backend](video_path, frame_sample_indices, self.ceph_client)
+        assert len(frames) == len(frame_sample_indices), f"len(frames) {len(frames)} != len(frame_sample_indices) {len(frame_sample_indices)}"
+        real_w, real_h = frames[0].size
+        assert video_meta.width == real_w, f"video_meta.width {video_meta.width} != real_w {real_w}"
+        assert video_meta.height == real_h, f"video_meta.height {video_meta.height} != real_h {real_h}"
+        return frames
 
 
     def _process_video(self, video_file: str, media_root: str = "", video_meta: VideoChat3VideoMetadata = None): # TODO
@@ -304,7 +311,8 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             video_path = media_root + video_file
         elif media_root != '':  # for local image
             video_path = os.path.join(media_root, video_file)
-        
+        else:
+            video_path = video_file
         # if "s3://" in video_path: NOTE: 无论在不在ceph都走这个
         # 让ceph读取操作对hf processor不可见，首先我们需要明白video processor的主要处理逻辑
         """
@@ -335,8 +343,8 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         
         frame_sample_indices = processor.sample_frames(metadata=video_meta, num_frames=processor.num_frames, fps=processor.fps)
         video_meta.frames_indices = frame_sample_indices
-        video_path = self._my_load_video(video_path, video_meta, frame_sample_indices)
-        visual_processed = processor.preprocess(video_path, do_sample_frames=False, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
+        frames = self._my_load_video(video_path, video_meta, frame_sample_indices)
+        visual_processed = processor.preprocess(frames, do_sample_frames=False, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
         # else:
         # assert os.path.exists(video_path), f"video_path {video_path} does not exist!"
         # if os.path.isdir(video_path):
@@ -560,6 +568,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         self._replace_video_token(messages, media_grid_thw, add_vision_id=self.add_vision_id)
         tokenized = messages.tokenize(self.tokenizer, self.chat_template)
         input_ids = tokenized["input_ids"]
+
 
         input_ids, _ = self._truncated_data_item(input_ids)
 

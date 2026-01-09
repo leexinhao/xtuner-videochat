@@ -149,6 +149,11 @@ class VideoChat3VideoProcessor(BaseVideoProcessor):
 
         if metadata.clip_start_time is not None and metadata.clip_end_time is not None:
             total_num_frames = int((metadata.clip_end_time - metadata.clip_start_time) * metadata.fps)
+            if total_num_frames == 0:
+                if (metadata.clip_end_time - metadata.clip_start_time) > 1e-5:
+                    total_num_frames = 1
+                else:
+                    raise ValueError(f"videometa异常, clip区间为空：{metadata}")
         else:
             total_num_frames = metadata.total_num_frames
 

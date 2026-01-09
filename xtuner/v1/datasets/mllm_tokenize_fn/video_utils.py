@@ -8,6 +8,7 @@ from typing import Optional, Mapping
 import numpy as np
 from PIL import Image
 from transformers.video_utils import VideoMetadata
+from xtuner.v1.utils import get_logger
 
 try:
     from decord import VideoReader
@@ -19,7 +20,7 @@ try:
 except Exception:
     av = None 
 
-
+logger = get_logger()
 
 @dataclass
 class VideoChat3VideoMetadata(Mapping):
@@ -121,8 +122,17 @@ def read_frames_av(
     else:
         byteio = None
         reader = av.open(video_path)
-    frames = [f.to_rgb().to_image() for f in reader.decode(video=0)]
-    
+    ori_frames = [f.to_rgb().to_image() for f in reader.decode(video=0)]
+    frames = []
+    for idx in frame_sample_indices:
+        if idx < len(ori_frames):
+            frames.append(ori_frames[idx])
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (len(ori_frames) = {len(ori_frames)}), use the last frame instead."
+            )
+            frames.append(ori_frames[-1])
+
     if byteio != None:
         byteio.close()
         

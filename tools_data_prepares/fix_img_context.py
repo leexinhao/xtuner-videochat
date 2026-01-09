@@ -106,9 +106,10 @@ def process_jsonl(input_path: Union[str, Path], output_path: Optional[Union[str,
             try:
                 data = json.loads(line)
             except json.JSONDecodeError as e:
-                # 保留原始行，避免破坏数据；同时给出警告
+                # 去掉错误原始行，避免破坏数据；同时给出警告
                 print(f"[WARN] {input_path} 第 {line_num} 行JSON解析失败: {e}")
-                fout.write(line + "\n")
+                # raise ValueError(f"[WARN] {input_path} 第 {line_num} 行JSON解析失败: {e}")
+                # fout.write(line + "\n")
                 continue
 
             if isinstance(data, dict):
