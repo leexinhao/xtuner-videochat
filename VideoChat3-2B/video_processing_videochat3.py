@@ -195,7 +195,12 @@ class VideoChat3VideoProcessor(BaseVideoProcessor):
         num_sampled_frames = self.get_num_sampled_frames(metadata, num_frames, fps)
 
         if metadata.clip_start_time is not None and metadata.clip_end_time is not None:
-            indices = np.linspace(metadata.clip_start_time * metadata.fps, metadata.clip_end_time * metadata.fps, num_sampled_frames).round().astype(int)
+            start_idx = int(metadata.clip_start_time * metadata.fps)
+            end_idx = int(metadata.clip_end_time * metadata.fps)
+            assert end_idx <= metadata.total_num_frames, f"end_idx:{end_idx} must be less than or equal to total_num_frames:{metadata.total_num_frames} (实际上合法值是小于， 如果等于则勉强接受)"
+            # 确保索引不超过 total_num_frames - 1
+            end_idx = min(end_idx, metadata.total_num_frames - 1)
+            indices = np.linspace(start_idx, end_idx, num_sampled_frames).round().astype(int)
         else:
             indices = np.linspace(0, metadata.total_num_frames - 1, num_sampled_frames).round().astype(int)
 

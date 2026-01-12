@@ -17,7 +17,7 @@ import json
 # model config
 model_cfg = VideoChat3Dense4BConfig(freeze_vision=False, freeze_language=False)
 
-model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-1_old/20251127192016/hf-190"
+model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/stage1-1/VideoChat3_4B_train_stage1-1_old/20251127192016/hf-190"
 meta_data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage1-2.json'
 work_dir = "work_dir/VideoChat3_4B_train_stage1-2"
 cache_dir = "dataset_cache/cache_videochat3_4B_stage1-2"

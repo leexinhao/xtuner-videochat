@@ -98,7 +98,18 @@ def read_frames_decord(
     else:
         video_reader = VideoReader(video_path, num_threads=decord_video_threads)
     
-    frames = video_reader.get_batch(frame_sample_indices).asnumpy()  # (T, H, W, C), np.uint8
+    vlen = len(video_reader)
+    new_frame_sample_indices = []
+    for idx in frame_sample_indices:
+        if idx < vlen:
+            new_frame_sample_indices.append(idx)
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (vlen = {vlen}), use the last frame index {vlen - 1} instead."
+            )
+            new_frame_sample_indices.append(vlen - 1)
+
+    frames = video_reader.get_batch(new_frame_sample_indices).asnumpy()  # (T, H, W, C), np.uint8
     frames = [Image.fromarray(frames[i]) for i in range(frames.shape[0])]
 
     video_reader.seek(0)
@@ -172,16 +183,22 @@ def read_frames_dir(
         raise ValueError(f"Meet Error at sort_frames for {video_path}!!!")
     frames = []
     for idx in frame_sample_indices:
-        frame_fname = None
+        if idx < len(img_list):
+            frame_fname = img_list[idx]
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (len(img_list) = {len(img_list)}), use the last frame instead."
+            )
+            frame_fname = img_list[-1]
         try:
             if "s3://" in video_path:
                 s3_prefix = video_path.split("s3://")[0]
                 s3_bucket = video_path.split("s3://")[1].split("/")[0]
-                frame_fname = os.path.join(s3_prefix+"s3://", s3_bucket, img_list[idx])
+                frame_fname = os.path.join(s3_prefix+"s3://", s3_bucket, frame_fname)
                 img_bytes = client.get(frame_fname)
                 frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
             else:
-                frame_fname = os.path.join(video_path, img_list[idx])
+                frame_fname = os.path.join(video_path, frame_fname)
                 frames.append(Image.open(frame_fname).convert("RGB"))
         except Exception as e:
             raise ValueError(f"Meet Error at read frames for {video_path}: {frame_fname}!!!")

@@ -9,7 +9,8 @@ from typing_extensions import Self
 
 from transformers import AutoProcessor
 from transformers.configuration_utils import PretrainedConfig
-from xtuner.v1.config import FSDPConfig
+from xtuner.v1.config import FSDPConfig, OptimConfig
+from xtuner.v1.config.optim import VisionAdamWConfig
 from xtuner.v1.data_proto import SequenceContext
 from xtuner.v1.float8.float8_handler import Float8Handler
 from xtuner.v1.loss import BaseLossContext
@@ -137,6 +138,53 @@ class VisionComposeTrainEngine(TrainEngine):
             )
         return model
 
+    def build_optimizer(self, optim_cfg: OptimConfig) -> torch.optim.Optimizer:
+        """Build optimizer with separate learning rates for ViT, Projector, and LLM."""
+        # 收集各部分的可训练参数
+        vit_params = [p for p in self.model.vision_tower.parameters() if p.requires_grad]
+        projector_params = [p for p in self.model.multi_modal_projector.parameters() if p.requires_grad]
+        llm_params = [p for p in self.model.language_model.parameters() if p.requires_grad]
+        
+        # 检查是否有其他可学习参数
+        known_param_count = len(vit_params) + len(projector_params) + len(llm_params)
+        all_trainable_params = [(name, p) for name, p in self.model.named_parameters() if p.requires_grad]
+        
+        if len(all_trainable_params) != known_param_count:
+            other_param_names = [
+                name for name, _ in all_trainable_params
+                if not (name.startswith("vision_tower.") or 
+                        name.startswith("multi_modal_projector.") or 
+                        name.startswith("language_model."))
+            ]
+            raise RuntimeError(
+                f"Found {len(other_param_names)} trainable parameters not in ViT/Projector/LLM: {other_param_names}. "
+                "Please check the model structure or update build_optimizer to handle these parameters."
+            )
+
+        # 统计参数量
+        vit_num = sum(p.numel() for p in vit_params)
+        projector_num = sum(p.numel() for p in projector_params)
+        llm_num = sum(p.numel() for p in llm_params)
+        total_num = vit_num + projector_num + llm_num
+
+        if dist.get_rank() == 0:
+            logger.info(f"Trainable parameters - ViT: {vit_num // 1e6:.1f}M, "
+                       f"Projector: {projector_num // 1e6:.1f}M, LLM: {llm_num // 1e6:.1f}M, "
+                       f"Total: {total_num // 1e6:.1f}M")
+
+        # 如果是 VisionAdamWConfig，使用分组学习率
+        if isinstance(optim_cfg, VisionAdamWConfig):
+            if dist.get_rank() == 0:
+                vit_lr = optim_cfg.vit_lr if optim_cfg.vit_lr is not None else optim_cfg.lr
+                proj_lr = optim_cfg.projector_lr if optim_cfg.projector_lr is not None else optim_cfg.lr
+                llm_lr = optim_cfg.llm_lr if optim_cfg.llm_lr is not None else optim_cfg.lr
+                logger.info(f"Learning rates - ViT: {vit_lr}, Projector: {proj_lr}, LLM: {llm_lr}")
+            return optim_cfg.build_with_param_groups(vit_params, projector_params, llm_params)
+        else:
+            # 使用默认的单一学习率
+            all_params = vit_params + projector_params + llm_params
+            return optim_cfg.build(all_params)
+
     def from_hf(self, hf_path: str | Path, strict: bool = False):
         super().from_hf(hf_path, strict)
         self._processor = AutoProcessor.from_pretrained(hf_path, trust_remote_code=True)
@@ -189,6 +237,7 @@ class VisionComposeTrainEngine(TrainEngine):
         total_forward_tokens = torch.tensor(0, device=DEVICE, dtype=torch.long)
 
         train_engine_extra_info = ModelForwardExtraLogInfo()
+        step_consumed_img_tokens = 0.0
         for i in range(0, len(data_batches), intra_layer_micro_batch):
             # logger.info(f"开始读第{i}个micro batch!")
             data_batch = data_batches[i : i + intra_layer_micro_batch]
@@ -201,6 +250,11 @@ class VisionComposeTrainEngine(TrainEngine):
                 seq_ctx_list.append(seq_ctx)
                 loss_ctx_list.append(loss_ctx)
                 step_consumed_tokens += seq_ctx.mask.sum()
+
+                if seq_ctx.num_img_tokens is not None:
+                    step_consumed_img_tokens += sum(seq_ctx.num_img_tokens)
+                    if seq_ctx.sequence_parallel_mesh:
+                        step_consumed_img_tokens /= seq_ctx.sequence_parallel_mesh.size()
 
                 num_tokens = seq_ctx.cu_seq_lens_k[1:] - seq_ctx.cu_seq_lens_k[:-1]
                 efficient_forward_tokens += (num_tokens**2).sum()
@@ -263,4 +317,5 @@ class VisionComposeTrainEngine(TrainEngine):
         other_log["consumed_tokens"] = step_consumed_tokens.item()
         other_log["extra_info"] = train_engine_extra_info  # type: ignore[assignment]
         other_log["efficient_attn_ratio"] = (efficient_forward_tokens / total_forward_tokens).item()
+        other_log["consumed_img_tokens"] = step_consumed_img_tokens
         return loss_log, other_log
