@@ -26,7 +26,11 @@ for json_name in metadata.keys():
                              raise ValueError(f"过滤掉低于1s的视频 {data['duration']}")
                         expected_frames = data['fps'] * data['duration']
                         if abs(expected_frames - data['total_num_frames']) > 1e-6:
-                            raise ValueError(f"fps * duration must be equal to total_num_frames, but got {expected_frames} != {data['total_num_frames']}")
+                            if abs(expected_frames - data['total_num_frames']) < 1:
+                                print(f"fix duration from {data['duration']} to {data['total_num_frames'] / data['fps']}")
+                                data['duration'] = data['total_num_frames'] / data['fps']
+                            else:
+                                raise ValueError(f"fps * duration must be equal to total_num_frames, but got {expected_frames} != {data['total_num_frames']}")
                     
                     if 'video_start_time' in data.keys():
                         if data['video_start_time'] < 0 or (data['duration'] is not None and data['video_start_time'] >= data['duration']):

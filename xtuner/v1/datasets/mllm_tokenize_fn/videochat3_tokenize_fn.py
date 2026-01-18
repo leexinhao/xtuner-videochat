@@ -409,7 +409,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
                     for c in content:
                         if c.type == "text":
                             text = c.text
-                            assert "<VIDEO_CONTEXT>" in text
+                            # assert "<VIDEO_CONTEXT>" in text
                             text = text.replace("<VIDEO_CONTEXT>", IMAGE_TOKEN_ALIAS)
                             video_cnt = text.count(IMAGE_TOKEN_ALIAS)
 

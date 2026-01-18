@@ -51,7 +51,7 @@ class VideoChat3VideoMetadata(Mapping):
         if self.clip_start_time is not None and self.clip_start_time < 0:
             raise ValueError(f"clip_start_time must be greater than 0, but got {self.clip_start_time}")
         if self.clip_end_time is not None and (self.clip_end_time < 0 or self.clip_end_time > self.duration):
-            raise ValueError(f"clip_end_time must be greater than 0 and less than duration, but got {self.clip_end_time}")
+            raise ValueError(f"clip_end_time must be greater than 0 and less than duration, but got {self.clip_end_time} and duration {self.duration}")
 
     def __iter__(self):
         return (f.name for f in fields(self))
@@ -193,15 +193,20 @@ def read_frames_dir(
         try:
             if "s3://" in video_path:
                 s3_prefix = video_path.split("s3://")[0]
-                s3_bucket = video_path.split("s3://")[1].split("/")[0]
+                if frame_fname.startswith(video_path.split("s3://")[1]):
+                    s3_bucket = video_path.split("s3://")[1].split("/")[0]
+                else:
+                    s3_bucket = video_path.split("s3://")[1]
+                    
                 frame_fname = os.path.join(s3_prefix+"s3://", s3_bucket, frame_fname)
                 img_bytes = client.get(frame_fname)
                 frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
             else:
                 frame_fname = os.path.join(video_path, frame_fname)
                 frames.append(Image.open(frame_fname).convert("RGB"))
+
         except Exception as e:
-            raise ValueError(f"Meet Error at read frames for {video_path}: {frame_fname}!!!")
+            raise ValueError(f"Meet Error {e} at read frames for {video_path}: {frame_fname}!!!")
     return frames
 
 
