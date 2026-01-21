@@ -26,7 +26,7 @@ class VideoChat3MultiModalProjector(BaseModel):
     config: VideoChat3ProjectorConfig
 
     def __init__(self, config: VideoChat3ProjectorConfig):
-        super().__init__()
+        super().__init__(config)
         # 基于KimiVLMultiModalProjector的实现
         self.hidden_size = (
             config.vision_hidden_size
@@ -44,7 +44,7 @@ class VideoChat3MultiModalProjector(BaseModel):
         self._hf_prefix = "model.multi_modal_projector."
         self._init_load_spec()
 
-    @maybe_compile(fullgraph=True)
+    # @maybe_compile(fullgraph=True)
     def forward(self, image_features: torch.Tensor) -> torch.Tensor:
         # 适配KimiVLMultiModalProjector的forward方法
         # 如果输入是list，则concat；如果是tensor，则直接使用

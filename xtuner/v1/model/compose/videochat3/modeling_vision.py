@@ -589,7 +589,7 @@ class VideoChat3VisionModel(BaseModel):
     config: VideoChat3VisionConfig
 
     def __init__(self, config: VideoChat3VisionConfig) -> None:
-        super().__init__()
+        super().__init__(config)
         self.config = config
         self.patch_embed = VideoChat3VisionPatchEmbed(
             out_dim=config.hidden_size,

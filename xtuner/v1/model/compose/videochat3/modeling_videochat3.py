@@ -37,7 +37,7 @@ def to_hf_key_list_wrapper(fn: Callable[[str], list[str]], convertor: Callable[[
 
 class VideoChat3ForConditionalGeneration(BaseModel):
     def __init__(self, config: VideoChat3BaseConfig):
-        super().__init__()
+        super().__init__(config)
         self.config = config
 
         vision_config = config.vision_config

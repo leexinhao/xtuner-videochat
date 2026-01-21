@@ -2,19 +2,20 @@ from pathlib import Path
 from typing import Literal, Optional, Any
 
 from mmengine import is_installed
-from pydantic import BaseModel, ConfigDict
+from pydantic import ConfigDict
 from typing_extensions import Self
 
+from xtuner.v1.model.base import TransformerConfig, XTunerBaseModelConfig
 from xtuner.v1.float8 import Float8Config
-from xtuner.v1.model.base import TransformerConfig
 from xtuner.v1.model.dense.qwen3 import Qwen3Dense8BConfig, Qwen3Dense4BConfig, Qwen3Dense1_7BConfig
 from xtuner.v1.utils import get_logger
 
+from ..base import BaseComposeConfig
 
 logger = get_logger()
 
 
-class VideoChat3VisionConfig(BaseModel):
+class VideoChat3VisionConfig(XTunerBaseModelConfig):
     model_config = ConfigDict(
         title="VideoChat3 vision config for xtuner",
         extra="forbid",
@@ -49,7 +50,7 @@ class VideoChat3VisionConfig(BaseModel):
         return VideoChat3VisionModel(self)
 
 
-class VideoChat3ProjectorConfig(BaseModel):
+class VideoChat3ProjectorConfig(XTunerBaseModelConfig):
     # 基于KimiVLMultiModalProjector的配置
     vision_hidden_size: int = 1152
     text_hidden_size: int = 2048
@@ -62,7 +63,7 @@ class VideoChat3ProjectorConfig(BaseModel):
         return VideoChat3MultiModalProjector(self)
 
 
-class VideoChat3BaseConfig(BaseModel):
+class VideoChat3BaseConfig(BaseComposeConfig):
     model_config = ConfigDict(
         title="Base VideoChat3 model config for xtuner",
         extra="forbid",
