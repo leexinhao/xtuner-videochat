@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# 需要先srun -p videoop -N4 -n4 --job-name=newqwen --ntasks-per-node=1 --cpus-per-task=128 --gres=gpu:8
+# 需要先 srun -p videoop -N4 -n4 --job-name=newqwen --ntasks-per-node=1 --cpus-per-task=128 --gres=gpu:8
 set -ex
 nnodes=4
 master_node=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
