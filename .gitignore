@@ -1,3 +1,16 @@
+# BY LXH
+debug/
+videos/
+models/
+VideoViT_CKPT/
+work_dirs/
+work_dir/
+*.safetensors
+dataset_cache/
+training_configs/
+training_data_annotations/
+training_scripts/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -5,7 +18,10 @@ __pycache__/
 
 # C extensions
 *.so
-
+*.safetensors
+dataset_cache
+work_dirs
+work_dir
 # Distribution / packaging
 .Python
 build/

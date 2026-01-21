@@ -1,0 +1,9 @@
+{
+    "debug_data_video": {
+        "anno_path":"/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/tests/resource/mllm_sft_video_example_data.jsonl",
+        "media_root":"pnorm2:s3://videochat3/xtuner_example_data/",
+        "data_augment": false,
+        "sample_ratio": 100.0
+    }
+
+}

@@ -1,0 +1,299 @@
+import io
+import os
+import random
+import re
+from dataclasses import dataclass, fields
+from typing import Optional, Mapping
+
+import numpy as np
+from PIL import Image
+from transformers.video_utils import VideoMetadata
+from xtuner.v1.utils import get_logger
+
+try:
+    from decord import VideoReader
+except Exception:
+    VideoReader = None
+    
+try:
+    import av
+except Exception:
+    av = None 
+
+logger = get_logger()
+
+@dataclass
+class VideoChat3VideoMetadata(Mapping):
+    total_num_frames: int
+    fps: Optional[float] = None
+    width: Optional[int] = None
+    height: Optional[int] = None
+    duration: Optional[float] = None
+    video_backend: Optional[str] = None
+    frames_indices: Optional[list[int]] = None
+    video_start_time: float = 0.0 # The start time of the video, in seconds
+    clip_start_time: Optional[float] = None # The start time of the video clip to be extracted, in seconds
+    clip_end_time: Optional[float] = None # The end time of the video clip to be extracted, in seconds
+
+    def __post_init__(self):
+        if self.fps is not None and self.duration is not None:
+            expected_frames = self.fps * self.duration
+            if abs(expected_frames - self.total_num_frames) > 1e-6:
+                raise ValueError(f"fps * duration must be equal to total_num_frames, but got {expected_frames} != {self.total_num_frames}")
+            
+        if self.video_start_time < 0 or (self.duration is not None and self.video_start_time >= self.duration):
+            raise ValueError(f"video_start_time must be greater than or equal to 0 and less than duration, but got {self.video_start_time}")
+
+        if (self.clip_start_time is None) != (self.clip_end_time is None):
+            raise ValueError("clip_start_time and clip_end_time must both be None or both be not None.")
+        if self.clip_start_time is not None and self.clip_end_time is not None and self.clip_end_time <= self.clip_start_time:
+            raise ValueError(f"clip_end_time must be greater than clip_start_time, but got {self.clip_end_time} <= {self.clip_start_time}")
+        if self.clip_start_time is not None and self.clip_start_time < 0:
+            raise ValueError(f"clip_start_time must be greater than 0, but got {self.clip_start_time}")
+        if self.clip_end_time is not None and (self.clip_end_time < 0 or self.clip_end_time > self.duration):
+            raise ValueError(f"clip_end_time must be greater than 0 and less than duration, but got {self.clip_end_time} and duration {self.duration}")
+
+    def __iter__(self):
+        return (f.name for f in fields(self))
+
+    def __len__(self):
+        return len(fields(self))
+
+    def __getitem__(self, item):
+        return getattr(self, item)
+
+    def __setitem__(self, key, value):
+        return setattr(self, key, value)
+
+    @property
+    def timestamps(self) -> float:
+        "Timestamps of the sampled frames in seconds."
+        if self.fps is None:
+            raise ValueError("Cannot infer video `timestamps` when `fps` is None.")
+        elif self.frames_indices is None:
+            raise ValueError("Cannot infer video `timestamps` when `frames_indices` is None.")
+            
+        return [self.video_start_time + frame_idx / self.fps for frame_idx in self.frames_indices]
+
+    def update(self, dictionary):
+        for key, value in dictionary.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
+
+
+def read_frames_decord(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+    byteio = None
+    decord_video_threads = int(os.getenv("XTUNER_DECORD_VIDEO_THREADS", 1))
+    if video_path.endswith('.avi'):
+        return read_frames_av(video_path, frame_sample_indices, client)
+    assert VideoReader is not None, "Please install decord: pip install decord"
+    if "s3://" in video_path:
+        video_bytes = client.get(video_path)
+        byteio = io.BytesIO(video_bytes)
+        video_reader = VideoReader(byteio, num_threads=decord_video_threads)
+    else:
+        video_reader = VideoReader(video_path, num_threads=decord_video_threads)
+    
+    vlen = len(video_reader)
+    new_frame_sample_indices = []
+    for idx in frame_sample_indices:
+        if idx < vlen:
+            new_frame_sample_indices.append(idx)
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (vlen = {vlen}), use the last frame index {vlen - 1} instead."
+            )
+            new_frame_sample_indices.append(vlen - 1)
+
+    frames = video_reader.get_batch(new_frame_sample_indices).asnumpy()  # (T, H, W, C), np.uint8
+    frames = [Image.fromarray(frames[i]) for i in range(frames.shape[0])]
+
+    video_reader.seek(0)
+    if byteio != None:
+        byteio.close()
+
+    return frames
+
+
+def read_frames_av(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+    assert av is not None, "Please install av: pip install av"
+    if 's3://' in video_path:
+        video_bytes = client.get(video_path)
+        byteio = io.BytesIO(video_bytes)
+        byteio.seek(0)
+        reader = av.open(byteio)
+    else:
+        byteio = None
+        reader = av.open(video_path)
+    ori_frames = [f.to_rgb().to_image() for f in reader.decode(video=0)]
+    frames = []
+    for idx in frame_sample_indices:
+        if idx < len(ori_frames):
+            frames.append(ori_frames[idx])
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (len(ori_frames) = {len(ori_frames)}), use the last frame instead."
+            )
+            frames.append(ori_frames[-1])
+
+    if byteio != None:
+        byteio.close()
+        
+    reader.close()
+
+    return frames
+
+
+def read_frames_dir(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+    def extract_frame_number(filename):
+        # Extract the numeric part from the filename using regular expressions
+        if filename.endswith('.jpg'):
+            match = re.search(r'_(\d+).jpg$', filename)
+        elif filename.endswith('.jpeg'):
+            match = re.search(r'_(\d+).jpeg$', filename)
+        elif filename.endswith('.png'):
+            match = re.search(r'_(\d+).png$', filename)
+        else:
+            raise NotImplementedError(f"Wrong filename: {filename}")
+
+        return int(match.group(1)) if match else -1
+
+    def sort_frames(frame_paths):
+        # Extract filenames from each path and sort by their numeric part
+        return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
+
+    try:
+        if "s3://" in video_path:
+            img_list = sort_frames(client.list(video_path))
+        else:
+            img_list = sort_frames(list(os.listdir(video_path)))
+    except Exception as e:
+        raise ValueError(f"Meet Error at sort_frames for {video_path}!!!")
+    frames = []
+    for idx in frame_sample_indices:
+        if idx < len(img_list):
+            frame_fname = img_list[idx]
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (len(img_list) = {len(img_list)}), use the last frame instead."
+            )
+            frame_fname = img_list[-1]
+        try:
+            if "s3://" in video_path:
+                s3_prefix = video_path.split("s3://")[0]
+                if frame_fname.startswith(video_path.split("s3://")[1]):
+                    s3_bucket = video_path.split("s3://")[1].split("/")[0]
+                else:
+                    s3_bucket = video_path.split("s3://")[1]
+                    
+                frame_fname = os.path.join(s3_prefix+"s3://", s3_bucket, frame_fname)
+                img_bytes = client.get(frame_fname)
+                frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
+            else:
+                frame_fname = os.path.join(video_path, frame_fname)
+                frames.append(Image.open(frame_fname).convert("RGB"))
+
+        except Exception as e:
+            raise ValueError(f"Meet Error {e} at read frames for {video_path}: {frame_fname}!!!")
+    return frames
+
+
+def get_frame_indices(num_frames, vlen, sample="rand", fix_start=None, input_fps=1, max_num_frames=-1):
+    if sample in ["rand", "middle"]:  # uniform sampling
+        acc_samples = min(num_frames, vlen)
+        # split the video into `acc_samples` intervals, and sample from each interval.
+        intervals = np.linspace(start=0, stop=vlen, num=acc_samples + 1).astype(int)
+        ranges = []
+        for idx, interv in enumerate(intervals[:-1]):
+            ranges.append((interv, intervals[idx + 1] - 1))
+        if sample == "rand":
+            try:
+                frame_indices = [random.choice(range(x[0], x[1])) for x in ranges]
+            except Exception:
+                frame_indices = np.random.permutation(vlen)[:acc_samples]
+                frame_indices.sort()
+                frame_indices = list(frame_indices)
+        elif fix_start is not None:
+            frame_indices = [x[0] + fix_start for x in ranges]
+        elif sample == "middle":
+            frame_indices = [(x[0] + x[1]) // 2 for x in ranges]
+        else:
+            raise NotImplementedError
+
+        if len(frame_indices) < num_frames:  # padded with last frame
+            padded_frame_indices = [frame_indices[-1]] * num_frames
+            padded_frame_indices[: len(frame_indices)] = frame_indices
+            frame_indices = padded_frame_indices
+    elif "fps" in sample:  # fps0.5, sequentially sample frames at 0.5 fps
+        output_fps = float(sample[3:])
+        duration = float(vlen) / input_fps
+        delta = 1 / output_fps  # gap between frames, this is also the clip length each frame represents
+        frame_seconds = np.arange(0 + delta / 2, duration + delta / 2, delta)
+        frame_indices = np.around(frame_seconds * input_fps).astype(int)
+        frame_indices = [e for e in frame_indices if e < vlen]
+        if max_num_frames > 0 and len(frame_indices) > max_num_frames:
+            frame_indices = frame_indices[:max_num_frames]
+            # frame_indices = np.linspace(0 + delta / 2, duration + delta / 2, endpoint=False, num=max_num_frames)
+    else:
+        raise ValueError
+    return frame_indices
+
+
+def read_frames_decord_old(
+    video_path,
+    num_frames,
+    sample="rand",
+    fix_start=None,
+    client=None,
+    clip=None,
+    min_num_frames=4,
+    random_frame_num=None,
+):
+    assert VideoReader is not None, "Please install decord: pip install decord"
+    if "s3://" in video_path:
+        video_bytes = client.get(video_path)
+        video_reader = VideoReader(io.BytesIO(video_bytes), num_threads=1)
+    else:
+        video_reader = VideoReader(video_path, num_threads=1)
+    vlen = len(video_reader)
+    fps = video_reader.get_avg_fps()
+    duration = vlen / float(fps)
+    if clip:
+        start, end = clip
+        duration = end - start
+        vlen = int(duration * fps)
+        start_index = int(start * fps)
+
+    # t_num_frames = min(max(int(duration * sample_fps), min_num_frames), num_frames)
+    if random_frame_num is None:
+        t_num_frames = np.random.randint(min_num_frames, num_frames + 1)
+    else:
+        t_num_frames = random_frame_num
+
+    frame_indices = get_frame_indices(t_num_frames, vlen, sample=sample, fix_start=fix_start, input_fps=fps)
+    if clip:
+        frame_indices = [f + start_index for f in frame_indices]
+    frames = video_reader.get_batch(frame_indices).asnumpy()  # (T, H, W, C), np.uint8
+    frames = [Image.fromarray(frames[i]) for i in range(frames.shape[0])]
+    return frames
+
+
+
+VIDEO_READER_MAP = {
+    "decord": read_frames_decord,
+    "img": read_frames_dir,
+    "frame": read_frames_dir,
+    "av": read_frames_av,
+}

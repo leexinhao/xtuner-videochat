@@ -2,28 +2,191 @@ import os
 from typing import Optional, Tuple
 
 import torch
-
+from flash_attn.flash_attn_interface import flash_attn_gpu, round_multiple
 
 try:
-    from flash_attn_interface import flash_attn_3_cuda
-    from flash_attn_interface import maybe_contiguous as maybe_contiguous_v3
+    from flash_attn_interface import flash_attn_3_cuda, maybe_contiguous
+except ImportError:
+    from flash_attn.flash_attn_interface import maybe_contiguous
+    print("You don't have FA3, But it's ok!")
 
-    @torch.library.custom_op("flash_attn::_flash_attn_varlen_forward_v3", mutates_args=(), device_types="cuda")
-    def _flash_attn_varlen_forward_v3(
-        q: torch.Tensor,
-        k: torch.Tensor,
-        v: torch.Tensor,
-        cu_seqlens_q: torch.Tensor,
-        cu_seqlens_k: torch.Tensor,
-        max_seqlen_q: torch.Tensor,
-        max_seqlen_k: torch.Tensor,
-        softmax_scale: float,
-        causal: bool,
-        window_size_left: int = -1,  # -1 means infinite context window
-        window_size_right: int = -1,
-        softcap: float = 0.0,  # 0.0 means deactivated
-    ) -> tuple[torch.Tensor, torch.Tensor]:
-        out, softmax_lse, *rest = flash_attn_3_cuda.fwd(
+    
+@torch.library.custom_op("flash_attn::_flash_attn_varlen_forward_v3", mutates_args=(), device_types="cuda")
+def _flash_attn_varlen_forward_v3(
+    q: torch.Tensor,
+    k: torch.Tensor,
+    v: torch.Tensor,
+    cu_seqlens_q: torch.Tensor,
+    cu_seqlens_k: torch.Tensor,
+    max_seqlen_q: torch.Tensor,
+    max_seqlen_k: torch.Tensor,
+    softmax_scale: float,
+    causal: bool,
+    window_size_left: int = -1,  # -1 means infinite context window
+    window_size_right: int = -1,
+    softcap: float = 0.0,  # 0.0 means deactivated
+) -> tuple[torch.Tensor, torch.Tensor]:
+    out, softmax_lse, *rest = flash_attn_3_cuda.fwd(
+        q,
+        k,
+        v,
+        None,
+        None,  # k_new, v_new
+        None,  # qv
+        None,  # out
+        cu_seqlens_q,
+        cu_seqlens_k,
+        None,  # cu_seqlens_k_new
+        None,
+        None,  # seqused_q / seqused_k
+        max_seqlen_q.item(),
+        max_seqlen_k.item(),
+        None,
+        None,
+        None,  # page_table, kv_batch_idx, leftpad_k,
+        None,
+        None,  # rotary_cos/sin
+        None,  # seqlens_rotary
+        None,
+        None,
+        None,  # q_descale, k_descale, v_descale
+        softmax_scale,
+        causal,
+        window_size_left,
+        window_size_right,
+        0,  # attention_chunk
+        softcap,
+        True,  # rotary_interleaved
+        None,  # scheduler_metadata
+        1,  # num_splits
+        None,  # pack_gqa
+        0,  # sm_margin
+    )
+    return out, softmax_lse
+
+
+@torch.library.register_fake("flash_attn::_flash_attn_varlen_forward_v3")
+def _flash_attn_varlen_forward_v3_fake(
+    q: torch.Tensor,
+    k: torch.Tensor,
+    v: torch.Tensor,
+    cu_seqlens_q: torch.Tensor,
+    cu_seqlens_k: torch.Tensor,
+    max_seqlen_q: torch.Tensor,
+    max_seqlen_k: torch.Tensor,
+    softmax_scale: float,
+    causal: bool,
+    window_size_left: int = -1,  # -1 means infinite context window
+    window_size_right: int = -1,
+    softcap: float = 0.0,  # 0.0 means deactivated
+) -> tuple[torch.Tensor, torch.Tensor]:
+    total_q, num_heads, _ = q.shape
+    q = q.contiguous()
+    out = torch.empty_like(q)
+    softmax_lse = torch.empty((num_heads, total_q), dtype=torch.float32, device=q.device, layout=q.layout)
+    return out, softmax_lse
+
+
+@torch.library.custom_op(
+    "flash_attn::_flash_attn_varlen_backward_v3", mutates_args=("dq", "dk", "dv"), device_types="cuda"
+)
+def _flash_attn_varlen_backward_v3(
+    dout: torch.Tensor,
+    q: torch.Tensor,
+    k: torch.Tensor,
+    v: torch.Tensor,
+    out: torch.Tensor,
+    softmax_lse: torch.Tensor,
+    cu_seqlens_q: torch.Tensor,
+    cu_seqlens_k: torch.Tensor,
+    max_seqlen_q: torch.Tensor,
+    max_seqlen_k: torch.Tensor,
+    dq: torch.Tensor,
+    dk: torch.Tensor,
+    dv: torch.Tensor,
+    softmax_scale: float,
+    causal: bool,
+    window_size_left: int = -1,  # -1 means infinite context window
+    window_size_right: int = -1,
+    softcap: float = 0.0,
+    deterministic: bool = False,
+) -> None:
+    flash_attn_3_cuda.bwd(
+        dout,
+        q,
+        k,
+        v,
+        out,
+        softmax_lse,
+        dq,
+        dk,
+        dv,
+        cu_seqlens_q,
+        cu_seqlens_k,
+        None,
+        None,  # sequed_q, sequed_k
+        max_seqlen_q.item(),
+        max_seqlen_k.item(),
+        softmax_scale,
+        causal,
+        window_size_left,
+        window_size_right,
+        softcap,
+        deterministic,
+        0,  # sm_margin
+    )
+
+
+@torch.library.register_fake("flash_attn::_flash_attn_varlen_backward_v3")
+def _flash_attn_varlen_backward_v3_fake(
+    dout: torch.Tensor,
+    q: torch.Tensor,
+    k: torch.Tensor,
+    v: torch.Tensor,
+    out: torch.Tensor,
+    softmax_lse: torch.Tensor,
+    cu_seqlens_q: torch.Tensor,
+    cu_seqlens_k: torch.Tensor,
+    max_seqlen_q: torch.Tensor,
+    max_seqlen_k: torch.Tensor,
+    dq: torch.Tensor,
+    dk: torch.Tensor,
+    dv: torch.Tensor,
+    softmax_scale: float,
+    causal: bool,
+    window_size_left: int = -1,  # -1 means infinite context window
+    window_size_right: int = -1,
+    softcap: float = 0.0,
+    deterministic: bool = False,
+) -> None:
+    return
+
+
+class FlashAttnVarlenFuncV3(torch.autograd.Function):
+    @staticmethod
+    def forward(
+        ctx,
+        q,
+        k,
+        v,
+        cu_seqlens_q,
+        cu_seqlens_k,
+        max_seqlen_q,
+        max_seqlen_k,
+        softmax_scale,
+        causal,
+        window_size=(-1, -1),
+        softcap=0.0,
+        deterministic=False,
+        return_softmax=False,
+    ):
+        # modified from https://github.com/Dao-AILab/flash-attention/blob/afc97c60f799e470886c154e3473df938f8fa93d/hopper/flash_attn_interface.py#L369
+        if softmax_scale is None:
+            softmax_scale = q.shape[-1] ** (-0.5)
+        q, k = (maybe_contiguous(x) for x in (q, k))
+        v = v.contiguous() if v.stride(-1) != 1 and v.stride(-3) != 1 else v
+        cu_seqlens_q, cu_seqlens_k = (maybe_contiguous(x) for x in (cu_seqlens_q, cu_seqlens_k))
+        out, softmax_lse = _flash_attn_varlen_forward_v3(
             q,
             k,
             v,

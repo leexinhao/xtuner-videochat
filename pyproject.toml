@@ -24,7 +24,7 @@ classifiers = [
 ]
 dependencies = [
   "astor",
-  "bitsandbytes==0.45.0",
+  "bitsandbytes",
   "datasets<4.0.0",
   "einops",
   "loguru",

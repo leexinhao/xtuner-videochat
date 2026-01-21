@@ -1,5 +1,5 @@
 from .build import build_dataloader, build_datasets
-from .collator import fake_collator, intern_s1_vl_sft_collator, qwen3_vl_sft_collator, sft_llm_collator
+from .collator import fake_collator, intern_s1_vl_sft_collator, qwen3_vl_sft_collator, videochat3_sft_collator, sft_llm_collator
 from .config import (
     BaseTokenizeFnConfig,
     DataloaderConfig,
@@ -15,6 +15,8 @@ from .mllm_tokenize_fn import (
     InternS1VLTokenizeFunction,
     Qwen3VLTokenizeFnConfig,
     Qwen3VLTokenizeFunction,
+    VideoChat3TokenizeFnConfig,
+    VideoChat3TokenizeFunction,
 )
 from .packing import ExpandSoftPackDataset, HardPackDataset, MLLMPretrainHybridPackDataset, _LegacySoftPackDataset
 from .pt_tokenize_fn import PretrainTokenizeFunction, PretrainTokenizeFunctionConfig
@@ -49,10 +51,13 @@ __all__ = [
     "sft_llm_collator",
     "intern_s1_vl_sft_collator",
     "qwen3_vl_sft_collator",
+    # "videochat3_sft_collator",
     "FtdpTokenizeFunction",
     "InternS1VLTokenizeFunction",
     "Qwen3VLTokenizeFnConfig",
     "Qwen3VLTokenizeFunction",
+    # "VideoChat3TokenizeFnConfig",
+    # "VideoChat3TokenizeFunction",
     "VLMJsonlDataset",
     "FTDPTokenizeFnConfig",
     "InternS1VLTokenizeFnConfig",
