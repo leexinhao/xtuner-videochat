@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-# 需要先srun -p videop1 -N1 -n1 --job-name=debug_shm --ntasks-per-node=1 --cpus-per-task=128 --gres=gpu:8
+# 需要先 srun -p videop1 -N1 -n1 --job-name=debug_shm --ntasks-per-node=1 --cpus-per-task=128 --gres=gpu:8
 set -ex
 
 # export NCCL_SOCKET_IFNAME=bond0
@@ -26,5 +26,5 @@ export PYTHONPATH=${PYTHONPATH}:.
 echo "PYTHONPATH: ${PYTHONPATH}"
 
 #run command
-srun -p videop1 -N1 -n1 --job-name=debugv6 --ntasks-per-node=1 --cpus-per-task=128 --gres=gpu:8 torchrun --nproc-per-node=8 xtuner/v1/train/cli/sft.py --config training_configs/videochat3_debug/${TASK_NAME}.py 2>&1 | tee -a "${OUTPUT_DIR}/training_log_${TASK_NAME}_${current_time}.txt"
+torchrun --nproc-per-node=8 xtuner/v1/train/cli/sft.py --config training_configs/videochat3_debug/${TASK_NAME}.py 2>&1 | tee -a "${OUTPUT_DIR}/training_log_${TASK_NAME}_${current_time}.txt"
 

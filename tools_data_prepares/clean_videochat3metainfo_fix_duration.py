@@ -1,7 +1,7 @@
 import json
 import os
 
-json_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/debug/data_stage2_image_video_minisft_v4_debug.json"
+json_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/debug/data_stage2_image_video_minisft_v12.json"
 with open(json_meta_path, 'r') as f:
     metadata = json.load(f)
 

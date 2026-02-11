@@ -1,10 +1,18 @@
 import json
 import os
 
-json_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/debug/data_stage2_image_video_minisft_v4_debug.json"
-with open(json_meta_path, 'r') as f:
-    metadata = json.load(f)
+# json_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/debug/data_stage2_image_video_minisft_v4_debug.json"
+# with open(json_meta_path, 'r') as f:
+#     metadata = json.load(f)
 
+metadata = {
+    "star-train_46k_correct_samples_qwen3vl235b_rewrtten": {
+        "media_root": "p2:s3://star/Charades_v1_480/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/star-train_46k_correct_samples_qwen3vl235b_rewrtten.jsonl",
+        "estimated_length": 17386,
+        "sample_ratio": 1.0
+    }
+}
 
 
 for json_name in metadata.keys():
@@ -49,7 +57,11 @@ for json_name in metadata.keys():
                                 raise ValueError(f"clip_end_time must be greater than or equal to 0, but got {data['clip_end_time']}")
                             
                             if data['duration'] is not None and data['clip_end_time'] > data['duration']:
-                                raise ValueError(f"clip_end_time must be less than or equal to duration ({data['duration']}), but got {data['clip_end_time']}")
+                                if data['clip_end_time'] - data['duration'] < 2:
+                                    print(_data)
+                                    data['clip_end_time'] = data['duration']
+                                else:
+                                    raise ValueError(f"clip_end_time must be less than or equal to duration ({data['duration']}), but got {data['clip_end_time']}")
                             
                             # 最终验证：确保修复后的clip_end_time仍然满足所有条件
                             if data['clip_end_time'] <= (data['clip_start_time'] + 1):
