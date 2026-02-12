@@ -1,5 +1,5 @@
 import torch
-from typing_extensions import TypedDict
+from typing_extensions import NotRequired, TypedDict
 
 from xtuner.v1.data_proto import SequenceContext
 from xtuner.v1.utils import IGNORE_INDEX, get_logger
@@ -14,6 +14,7 @@ logger = get_logger()
 class ColateItem(TypedDict):
     seq_ctx: SequenceContext
     shifted_labels: torch.Tensor
+    dataset_ids: NotRequired[torch.Tensor]
 
 
 def fake_collator(instances: list[DataItem], **kwargs):
@@ -21,7 +22,11 @@ def fake_collator(instances: list[DataItem], **kwargs):
 
 
 def sft_llm_collator(
-    instances: list[list[DataItem]], pack_max_length: int, padding_token_idx: int, pack_to_max_length: bool = True
+    instances: list[list[DataItem]],
+    pack_max_length: int,
+    padding_token_idx: int,
+    pack_to_max_length: bool = True,
+    enable_dataset_loss: bool = False,
 ) -> list[ColateItem]:
     ret: list[ColateItem] = []
     for instance in instances:
@@ -59,6 +64,18 @@ def sft_llm_collator(
         else:
             num_tokens[-1] -= 1  # remove the last token if it is not a single token
 
+        # Only create dataset_ids when enable_dataset_loss is True
+        dataset_ids: torch.Tensor | None = None
+        if enable_dataset_loss:
+            dataset_ids = torch.cat(
+                [
+                    torch.full((1, len(i["input_ids"])), i.get("dataset_id", 0), dtype=torch.long)
+                    for i in instance
+                ],
+                dim=-1,
+            )
+            dataset_ids = dataset_ids[:, 1:]
+
         assert input_ids.shape == shifted_labels.shape, (
             f"input_ids shape {input_ids.shape} != shifted_labels shape {shifted_labels.shape}"
         )
@@ -70,6 +87,8 @@ def sft_llm_collator(
         if pad_len > 0:
             input_ids = pad_to_max_length(input_ids, padding_token_idx, max_length=pack_max_length, dim=-1)
             shifted_labels = pad_to_max_length(shifted_labels, IGNORE_INDEX, max_length=pack_max_length, dim=-1)
+            if dataset_ids is not None:
+                dataset_ids = pad_to_max_length(dataset_ids, 0, max_length=pack_max_length, dim=-1)
             num_tokens = [0] + num_tokens + [pad_len]
 
         elif pad_len < 0:
@@ -90,12 +109,13 @@ def sft_llm_collator(
             max_length_k=max(num_tokens),
             num_padding=pad_len,
         )
-        ret.append(
-            {
-                "seq_ctx": seq_ctx,
-                "shifted_labels": shifted_labels,
-            }
-        )
+        result: ColateItem = {
+            "seq_ctx": seq_ctx,
+            "shifted_labels": shifted_labels,
+        }
+        if dataset_ids is not None:
+            result["dataset_ids"] = dataset_ids
+        ret.append(result)
 
     return ret
 
@@ -105,6 +125,7 @@ def intern_s1_vl_sft_collator(
     pack_max_length: int,
     padding_token_idx: int,
     pack_to_max_length: bool = True,
+    enable_dataset_loss: bool = False,
 ) -> list[ColateItem]:
     ret: list[ColateItem] = []
     for instance in instances:
@@ -133,6 +154,18 @@ def intern_s1_vl_sft_collator(
         else:
             num_tokens[-1] -= 1  # remove the last token if it is not a single token
 
+        # Only create dataset_ids when enable_dataset_loss is True
+        dataset_ids: torch.Tensor | None = None
+        if enable_dataset_loss:
+            dataset_ids = torch.cat(
+                [
+                    torch.full((1, len(i["input_ids"])), i.get("dataset_id", 0), dtype=torch.long)
+                    for i in instance
+                ],
+                dim=-1,
+            )
+            dataset_ids = dataset_ids[:, 1:]
+
         assert input_ids.shape == shifted_labels.shape, (
             f"input_ids shape {input_ids.shape} != shifted_labels shape {shifted_labels.shape}"
         )
@@ -145,6 +178,8 @@ def intern_s1_vl_sft_collator(
         if pad_len > 0:
             input_ids = pad_to_max_length(input_ids, padding_token_idx, max_length=pack_max_length, dim=-1)
             shifted_labels = pad_to_max_length(shifted_labels, IGNORE_INDEX, max_length=pack_max_length, dim=-1)
+            if dataset_ids is not None:
+                dataset_ids = pad_to_max_length(dataset_ids, 0, max_length=pack_max_length, dim=-1)
             num_tokens = [0] + num_tokens + [pad_len]
 
         elif pad_len < 0:
@@ -178,12 +213,13 @@ def intern_s1_vl_sft_collator(
             pixel_values=pixel_values,  # type: ignore
             num_img_tokens=num_img_tokens,
         )
-        ret.append(
-            {
-                "seq_ctx": seq_ctx,
-                "shifted_labels": shifted_labels,
-            }
-        )
+        result: ColateItem = {
+            "seq_ctx": seq_ctx,
+            "shifted_labels": shifted_labels,
+        }
+        if dataset_ids is not None:
+            result["dataset_ids"] = dataset_ids
+        ret.append(result)
 
     return ret
 
@@ -193,6 +229,7 @@ def qwen3_vl_sft_collator(
     pack_max_length: int,
     padding_token_idx: int,
     pack_to_max_length: bool = True,
+    enable_dataset_loss: bool = False,
 ) -> list[ColateItem]:
     ret: list[ColateItem] = []
     for instance in instances:
@@ -222,6 +259,18 @@ def qwen3_vl_sft_collator(
         else:
             num_tokens[-1] -= 1  # remove the last token if it is not a single token
 
+        # Only create dataset_ids when enable_dataset_loss is True
+        dataset_ids: torch.Tensor | None = None
+        if enable_dataset_loss:
+            dataset_ids = torch.cat(
+                [
+                    torch.full((1, len(i["input_ids"])), i.get("dataset_id", 0), dtype=torch.long)
+                    for i in instance
+                ],
+                dim=-1,
+            )
+            dataset_ids = dataset_ids[:, 1:]
+
         assert input_ids.shape == shifted_labels.shape, (
             f"input_ids shape {input_ids.shape} != shifted_labels shape {shifted_labels.shape}"
         )
@@ -234,6 +283,8 @@ def qwen3_vl_sft_collator(
         if pad_len > 0:
             input_ids = pad_to_max_length(input_ids, padding_token_idx, max_length=pack_max_length, dim=-1)
             shifted_labels = pad_to_max_length(shifted_labels, IGNORE_INDEX, max_length=pack_max_length, dim=-1)
+            if dataset_ids is not None:
+                dataset_ids = pad_to_max_length(dataset_ids, 0, max_length=pack_max_length, dim=-1)
             position_ids = pad_to_max_length(position_ids, 0, max_length=pack_max_length, dim=-1)
             num_tokens = [0] + num_tokens + [pad_len]
 
@@ -277,12 +328,13 @@ def qwen3_vl_sft_collator(
             image_grid_thw=image_grid_thw,
             num_img_tokens=num_img_tokens,
         )
-        ret.append(
-            {
-                "seq_ctx": seq_ctx,
-                "shifted_labels": shifted_labels,
-            }
-        )
+        result: ColateItem = {
+            "seq_ctx": seq_ctx,
+            "shifted_labels": shifted_labels,
+        }
+        if dataset_ids is not None:
+            result["dataset_ids"] = dataset_ids
+        ret.append(result)
 
     return ret
 
@@ -291,6 +343,7 @@ def videochat3_sft_collator(
     pack_max_length: int,
     padding_token_idx: int,
     pack_to_max_length: bool = True,
+    enable_dataset_loss: bool = False,
 ) -> list[ColateItem]:
     ret: list[ColateItem] = []
     for instance in instances:
@@ -318,6 +371,18 @@ def videochat3_sft_collator(
         else:
             num_tokens[-1] -= 1  # remove the last token if it is not a single token
 
+        # Only create dataset_ids when enable_dataset_loss is True
+        dataset_ids: torch.Tensor | None = None
+        if enable_dataset_loss:
+            dataset_ids = torch.cat(
+                [
+                    torch.full((1, len(i["input_ids"])), i.get("dataset_id", 0), dtype=torch.long)
+                    for i in instance
+                ],
+                dim=-1,
+            )
+            dataset_ids = dataset_ids[:, 1:]
+
         assert input_ids.shape == shifted_labels.shape, (
             f"input_ids shape {input_ids.shape} != shifted_labels shape {shifted_labels.shape}"
         )
@@ -330,6 +395,8 @@ def videochat3_sft_collator(
         if pad_len > 0:
             input_ids = pad_to_max_length(input_ids, padding_token_idx, max_length=pack_max_length, dim=-1)
             shifted_labels = pad_to_max_length(shifted_labels, IGNORE_INDEX, max_length=pack_max_length, dim=-1)
+            if dataset_ids is not None:
+                dataset_ids = pad_to_max_length(dataset_ids, 0, max_length=pack_max_length, dim=-1)
             num_tokens = [0] + num_tokens + [pad_len]
 
         elif pad_len < 0:
@@ -363,11 +430,12 @@ def videochat3_sft_collator(
             image_grid_thw=image_grid_thw,
             num_img_tokens=num_img_tokens,
         )
-        ret.append(
-            {
-                "seq_ctx": seq_ctx,
-                "shifted_labels": shifted_labels,
-            }
-        )
+        result: ColateItem = {
+            "seq_ctx": seq_ctx,
+            "shifted_labels": shifted_labels,
+        }
+        if dataset_ids is not None:
+            result["dataset_ids"] = dataset_ids
+        ret.append(result)
 
     return ret

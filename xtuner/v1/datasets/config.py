@@ -51,6 +51,7 @@ class DatasetConfig(BaseModel):
     def build(
         self,
         tokenize_fn: Optional["CachableTokenizeFunction"] = None,
+        dataset_id: int = 0,
     ) -> "JsonlDataset":
         if self.class_name == "JsonlDataset":
             return JsonlDataset(
@@ -61,6 +62,7 @@ class DatasetConfig(BaseModel):
                 name=self.name,
                 cache_dir=self.cache_dir,
                 cache_tag=self.cache_tag,
+                dataset_id=dataset_id,
             )
         elif self.class_name == "VLMJsonlDataset":
             return VLMJsonlDataset(
@@ -72,6 +74,7 @@ class DatasetConfig(BaseModel):
                 media_root=self.media_root,
                 cache_dir=self.cache_dir,
                 cache_tag=self.cache_tag,
+                dataset_id=dataset_id,
             )
         else:
             raise ValueError(f"Unsupported class_name: {self.class_name}")
@@ -101,10 +104,19 @@ def build_datasets(dataset_config: DatasetConfigList, tokenizer) -> list[JsonlDa
     datasets: list[JsonlDataset] = []
     assert len(dataset_config) > 0
 
+    dataset_name_to_id = {}
+    next_id = 0
+
     tokenizer_hash = tokenizer_xxhash(tokenizer)[:16]
     for config in dataset_config:
         _dataset_config = config["dataset"]
         assert isinstance(_dataset_config, DatasetConfig)
+
+        if _dataset_config.name not in dataset_name_to_id:
+            dataset_name_to_id[_dataset_config.name] = next_id
+            next_id += 1
+        d_id = dataset_name_to_id[_dataset_config.name]
+
         _tokenize_fn_name = config["tokenize_fn"]
         anno_path = _dataset_config.anno_path
         if os.path.isfile(anno_path):
@@ -120,12 +132,15 @@ def build_datasets(dataset_config: DatasetConfigList, tokenizer) -> list[JsonlDa
             _dataset_config.anno_path = anno_path
             anno_name = os.path.basename(anno_path)  # for debug
             _tokenize_fn = _tokenize_fn_name.build(tokenizer, tokenizer_hash=tokenizer_hash, anno_name=anno_name)
-            _dataset = _dataset_config.build(_tokenize_fn)
+            _dataset = _dataset_config.build(_tokenize_fn, dataset_id=d_id)
             if get_rank() == 0:
                 logger.info(
                     f"[Dataset] (Original) {_dataset_config.name}/{os.path.basename(anno_path)}: {len(_dataset)} samples."
                 )
             datasets.append(_dataset)
+
+    if get_rank() == 0:
+        logger.info(f"[Dataset] ID mapping: {dataset_name_to_id}")
 
     return datasets
 
@@ -234,6 +249,7 @@ def build_dataloader(
         dataloader_config.build_collator(),
         pack_max_length=dataloader_config.pack_max_length,
         padding_token_idx=dataloader_config.pad_token_id if dataloader_config.pad_token_id is not None else 0,
+        enable_dataset_loss=dataloader_config.enable_dataset_loss,
     )
     dataloader = TorchDataLoader(
         dataset,
@@ -285,6 +301,7 @@ class DataloaderConfig(BaseDataloaderConfig):
     ] = 100
     num_workers: Annotated[int, Parameter(help="dataloader num workers")] = 0
     pad_token_id: Annotated[int | None, Parameter(help="padding token id")] = None
+    enable_dataset_loss: Annotated[bool, Parameter(help="enable dataset loss tracking")] = False
 
     def build_collator(self):
         if self.collator == "sft_llm_collator":
@@ -424,6 +441,7 @@ class DataloaderConfig(BaseDataloaderConfig):
             pack_max_length=self.pack_max_length,
             pack_to_max_length=self.pack_to_max_length,
             padding_token_idx=self.pad_token_id if self.pad_token_id is not None else 0,
+            enable_dataset_loss=self.enable_dataset_loss,
         )
         dataloader = Dataloader(
             dataset,

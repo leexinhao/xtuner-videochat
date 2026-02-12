@@ -193,12 +193,14 @@ class JsonlDataset(torch.utils.data.Dataset[T | CacheItem]):
         max_length: int | None = None,  # TODO: Remove max_length in dataset
         cache_tag: str | None = None,
         enable_sequential_sampler: bool = False,
+        dataset_id: int = 0,
     ):
         super().__init__()
 
         self.tokenize_fn = tokenize_fn
         self.path = str(anno_path)
         self.name = name
+        self.dataset_id = dataset_id
         self._shared_memory = None
         self.tokenizer_workers = int(os.environ.get("XTUNER_TOKENIZE_WORKERS", 8))
         self.meta_path = os.path.join(cache_dir, CACHE_META) if cache_dir else None
@@ -533,8 +535,10 @@ class JsonlDataset(torch.utils.data.Dataset[T | CacheItem]):
 
         if self.tokenize_fn is not None:
             tokenized_data = self.tokenize_fn(raw_data)
+            tokenized_data["dataset_id"] = self.dataset_id
             return tokenized_data
         else:
+            raw_data["dataset_id"] = self.dataset_id
             return raw_data
 
     @property
