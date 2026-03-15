@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoTokenizer, AutoProcessor, AutoModelForCausalLM
 
-model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage2_llava_video_academic_shortcotqa20251216/20251216180246/hf-latest"
+model_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/VideoChat3_4B_train_stage1-2_lr2e-4_16k/20260218232247/hf-1461"
 
 # load the tokenizer and the model
 tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
@@ -14,31 +14,31 @@ model = AutoModelForCausalLM.from_pretrained(
 
 processor = AutoProcessor.from_pretrained(model_path, trust_remote_code=True)
 
-# messages = [
-#     {
-#         "role": "user",
-#         "content": [
-#             {
-#                 "type": "image",
-#                 "image": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/saved_frame0.png",
-#             },
-#             {"type": "text", "text": "Describe this image in detail."},
-#         ],
-#     }
-# ]
-
 messages = [
     {
         "role": "user",
         "content": [
             {
-                "type": "video",
-                "path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/MotionBench_tAJm42ly7PcD8aGl.mp4",
+                "type": "image",
+                "image": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/image_ocr.png",
             },
-            {"type": "text", "text": "Describe this video in detail."},
+            {"type": "text", "text": "Describe this image in detail."},
         ],
     }
 ]
+
+# messages = [
+#     {
+#         "role": "user",
+#         "content": [
+#             {
+#                 "type": "video",
+#                 "path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/MotionBench_tAJm42ly7PcD8aGl.mp4",
+#             },
+#             {"type": "text", "text": "Describe this video in detail."},
+#         ],
+#     }
+# ]
 
 # Preparation for inference
 inputs = processor.apply_chat_template(

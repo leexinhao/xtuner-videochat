@@ -1,7 +1,7 @@
 import json
 import os
 
-json_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/debug/data_stage2_image_video_minisft_v12.json"
+json_meta_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/example.json"
 with open(json_meta_path, 'r') as f:
     metadata = json.load(f)
 
@@ -26,7 +26,7 @@ for json_name in metadata.keys():
                              raise ValueError(f"过滤掉低于1s的视频 {data['duration']}")
                         expected_frames = data['fps'] * data['duration']
                         if abs(expected_frames - data['total_num_frames']) > 1e-6:
-                            if abs(expected_frames - data['total_num_frames']) < 1:
+                            if abs(data['duration'] - data['total_num_frames'] / data['fps']) < 1.0:
                                 print(f"fix duration from {data['duration']} to {data['total_num_frames'] / data['fps']}")
                                 data['duration'] = data['total_num_frames'] / data['fps']
                             else:

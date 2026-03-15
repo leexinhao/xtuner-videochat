@@ -2,10 +2,14 @@ import io
 import os
 import random
 import re
+import imageio
+import av
+import cv2
+import numpy as np
+import math
+
 from dataclasses import dataclass, fields
 from typing import Optional, Mapping
-
-import numpy as np
 from PIL import Image
 from transformers.video_utils import VideoMetadata
 from xtuner.v1.utils import get_logger
@@ -21,6 +25,14 @@ except Exception:
     av = None 
 
 logger = get_logger()
+
+# 支持的图像格式（小写，用于大小写不敏感匹配）
+SUPPORTED_IMAGE_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.bmp', '.gif', '.webp', '.tiff', '.tif']
+
+def is_image_file(filename):
+    """检查文件是否为支持的图像格式（大小写不敏感）"""
+    filename_lower = filename.lower()
+    return any(filename_lower.endswith(ext) for ext in SUPPORTED_IMAGE_EXTENSIONS)
 
 @dataclass
 class VideoChat3VideoMetadata(Mapping):
@@ -51,7 +63,7 @@ class VideoChat3VideoMetadata(Mapping):
         if self.clip_start_time is not None and self.clip_start_time < 0:
             raise ValueError(f"clip_start_time must be greater than 0, but got {self.clip_start_time}")
         if self.clip_end_time is not None and (self.clip_end_time < 0 or self.clip_end_time > self.duration):
-            raise ValueError(f"clip_end_time must be greater than 0 and less than duration, but got {self.clip_end_time} and duration {self.duration}")
+            raise ValueError(f"clip_end_time must be greater than 0 and less than duration, but got {self.clip_end_time}")
 
     def __iter__(self):
         return (f.name for f in fields(self))
@@ -79,6 +91,62 @@ class VideoChat3VideoMetadata(Mapping):
         for key, value in dictionary.items():
             if hasattr(self, key):
                 setattr(self, key, value)
+
+
+
+def read_frames_gif(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+    byteio = None
+
+    assert VideoReader is not None, "Please install decord: pip install decord"
+    if 's3://' in video_path:
+        video_bytes = client.get(video_path)
+        byteio = io.BytesIO(video_bytes)
+        video_reader = imageio.get_reader(byteio)
+    else:
+        video_reader = imageio.get_reader(video_path)
+    
+    vlen = len(video_reader)
+    new_frame_sample_indices = []
+    for idx in frame_sample_indices:
+        if idx < vlen:
+            new_frame_sample_indices.append(idx)
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (vlen = {vlen}), use the last frame index {vlen - 1} instead."
+            )
+            new_frame_sample_indices.append(vlen - 1)
+
+
+    frames = []
+    min_h = min_w = 100000
+    hw_set = set()
+    for index, frame in enumerate(video_reader):
+        # for index in frame_idxs:
+        if index in new_frame_sample_indices:
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2RGB)
+            frame = frame.astype(np.uint8)
+            # # (H x W x C) to (C x H x W)
+            # frame = frame.permute(2, 0, 1)
+            frames.append(frame) # (H x W x C)
+            hw_set.add(frame.shape)
+            if frame.shape[0] < min_h:
+                min_h = frame.shape[0]
+            if frame.shape[1] < min_w:
+                min_w = frame.shape[1]
+    # print(hw_set, min_h, min_w)
+    if len(hw_set) > 1:
+        frames = [i[:min_h, :min_w] for i in frames]
+
+    frames = [Image.fromarray(frames[i]) for i in range(len(frames))]
+
+    if byteio != None:
+        byteio.close()
+
+    return frames
 
 
 def read_frames_decord(
@@ -133,6 +201,8 @@ def read_frames_av(
     else:
         byteio = None
         reader = av.open(video_path)
+
+        reader = reader.streams.video[0]
     ori_frames = [f.to_rgb().to_image() for f in reader.decode(video=0)]
     frames = []
     for idx in frame_sample_indices:
@@ -159,19 +229,27 @@ def read_frames_dir(
 ):
     def extract_frame_number(filename):
         # Extract the numeric part from the filename using regular expressions
-        if filename.endswith('.jpg'):
-            match = re.search(r'_(\d+).jpg$', filename)
-        elif filename.endswith('.jpeg'):
-            match = re.search(r'_(\d+).jpeg$', filename)
-        elif filename.endswith('.png'):
-            match = re.search(r'_(\d+).png$', filename)
+        filename_lower = filename.lower()
+        if filename_lower.endswith('.jpg') or filename_lower.endswith('.jpeg'):
+            match = re.search(r'_(\d+)\.(jpg|jpeg)$', filename_lower)
+        elif filename_lower.endswith('.png'):
+            match = re.search(r'_(\d+)\.png$', filename_lower)
+        elif filename_lower.endswith('.bmp'):
+            match = re.search(r'_(\d+)\.bmp$', filename_lower)
+        elif filename_lower.endswith('.gif'):
+            match = re.search(r'_(\d+)\.gif$', filename_lower)
+        elif filename_lower.endswith('.webp'):
+            match = re.search(r'_(\d+)\.webp$', filename_lower)
+        elif filename_lower.endswith('.tiff') or filename_lower.endswith('.tif'):
+            match = re.search(r'_(\d+)\.(tiff|tif)$', filename_lower)
         else:
-            raise NotImplementedError(f"Wrong filename: {filename}")
+            raise NotImplementedError(f"Unsupported image format: {filename}")
 
         return int(match.group(1)) if match else -1
 
     def sort_frames(frame_paths):
         # Extract filenames from each path and sort by their numeric part
+        frame_paths = [x for x in frame_paths if is_image_file(x)]
         return sorted(frame_paths, key=lambda x: extract_frame_number(os.path.basename(x)))
 
     try:
@@ -179,6 +257,53 @@ def read_frames_dir(
             img_list = sort_frames(client.list(video_path))
         else:
             img_list = sort_frames(list(os.listdir(video_path)))
+    except Exception as e:
+        raise ValueError(f"Meet Error at sort_frames for {video_path} {e}!!!")
+    frames = []
+    for idx in frame_sample_indices:
+        if idx < len(img_list):
+            frame_fname = img_list[idx]
+        else:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} (len(img_list) = {len(img_list)}), use the last frame instead."
+            )
+            frame_fname = img_list[-1]
+        try:
+            if "s3://" in video_path:
+                s3_prefix = video_path.split("s3://")[0]
+                if '/' in frame_fname or frame_fname.startswith(video_path.split("s3://")[1]):
+                    s3_bucket = video_path.split("s3://")[1].split("/")[0]
+                else:
+                    s3_bucket = video_path.split("s3://")[1]
+                    
+                frame_fname = os.path.join(s3_prefix+"s3://", s3_bucket, frame_fname)
+                img_bytes = client.get(frame_fname)
+                frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
+            else:
+                frame_fname = os.path.join(video_path, frame_fname)
+                frames.append(Image.open(frame_fname).convert("RGB"))
+                
+        except Exception as e:
+            raise ValueError(f"Meet Error at read frames for {video_path}: {frame_fname}!!!")
+    return frames
+
+
+def read_frames_dir2(
+    video_path,
+    frame_sample_indices,
+    client=None,
+):
+
+    def sort_frames2(frame_paths):
+        # Sort by filename alphabetically (works for fixed-format names like "00865_50.jpg")
+        frame_paths = [x for x in frame_paths if is_image_file(x)]
+        return sorted(frame_paths, key=lambda x: os.path.basename(x))
+
+    try:
+        if "s3://" in video_path:
+            img_list = sort_frames2(client.list(video_path))
+        else:
+            img_list = sort_frames2(list(os.listdir(video_path)))
     except Exception as e:
         raise ValueError(f"Meet Error at sort_frames for {video_path}!!!")
     frames = []
@@ -193,7 +318,7 @@ def read_frames_dir(
         try:
             if "s3://" in video_path:
                 s3_prefix = video_path.split("s3://")[0]
-                if frame_fname.startswith(video_path.split("s3://")[1]):
+                if '/' in frame_fname or frame_fname.startswith(video_path.split("s3://")[1]):
                     s3_bucket = video_path.split("s3://")[1].split("/")[0]
                 else:
                     s3_bucket = video_path.split("s3://")[1]
@@ -204,9 +329,9 @@ def read_frames_dir(
             else:
                 frame_fname = os.path.join(video_path, frame_fname)
                 frames.append(Image.open(frame_fname).convert("RGB"))
-
+                
         except Exception as e:
-            raise ValueError(f"Meet Error {e} at read frames for {video_path}: {frame_fname}!!!")
+            raise ValueError(f"Meet Error at read frames for {video_path}: {frame_fname}!!!")
     return frames
 
 
@@ -293,7 +418,10 @@ def read_frames_decord_old(
 
 VIDEO_READER_MAP = {
     "decord": read_frames_decord,
+    "gif": read_frames_gif,
     "img": read_frames_dir,
+    "img2": read_frames_dir2,
     "frame": read_frames_dir,
+    "frame2": read_frames_dir2,
     "av": read_frames_av,
 }

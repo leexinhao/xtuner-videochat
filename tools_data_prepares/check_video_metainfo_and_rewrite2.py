@@ -17,25 +17,25 @@ dd_vision_id = False
 self_tokenizer = AutoTokenizer.from_pretrained(VIDEOCHAT3_PATH, trust_remote_code=True)
 # self.tokenize_fn = VideoChat3TokenizeFnConfig(processor_path=VIDEOCHAT3_PATH).build(self.tokenizer)
 # self.processor = AutoProcessor.from_pretrained(VIDEOCHAT3_PATH, trust_remote_code=True)
-sample_max_length = 8192 * 4
-tokenize_fn = VideoChat3TokenizeFnConfig(
+sample_max_length = 8192 * 2
+tokenize_fn = tokenize_fn = VideoChat3TokenizeFnConfig(
                     max_length=sample_max_length,
                     image_min_pixels=28*28,
-                    image_max_pixels=int(sample_max_length * 0.8 * 28 * 28),
+                    image_max_pixels=int(sample_max_length * 0.7 * 28 * 28),
                     frame_min_pixels=28*28,
-                    frame_max_pixels=int(sample_max_length * 0.8 * 28 * 28),
-                    video_max_total_pixels= int(sample_max_length * 0.8 * 4 * 28 * 28),
+                    frame_max_pixels=int(640*480),
+                    video_max_total_pixels=int(sample_max_length * 0.6 * 4 * 28 * 28),
                     video_min_frames=1,
-                    video_max_frames=2048, 
+                    video_max_frames=256, 
                     fixed_num_sampled_frames=None,
-                    video_sample_fps=4, 
+                    video_sample_fps=2, 
                     processor_path=VIDEOCHAT3_PATH,
-                    # data_augment=_data.get('data_augment', False),
-                    # system_message=_data.get('system_message', None),
-                    # hash=_data.get('hash', None),
+                    data_augment=False,
+                    system_message=None,
+                    hash=None,
                     ).build(self_tokenizer)
 data_path = '/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_COYO-Recaption_train_1091735.jsonl'
-output_path = data_path.replace('.jsonl', '_cleaned.jsonl')
+output_path = data_path.replace('.jsonl', '_cleaned2.jsonl')
 
 success_count = 0
 fail_count = 0
