@@ -254,6 +254,8 @@ def read_frames_dir(
 
     try:
         if "s3://" in video_path:
+            if video_path[-1] != '/':
+                video_path = video_path + '/'
             img_list = sort_frames(client.list(video_path))
         else:
             img_list = sort_frames(list(os.listdir(video_path)))
@@ -301,6 +303,8 @@ def read_frames_dir2(
 
     try:
         if "s3://" in video_path:
+            if video_path[-1] != '/':
+                video_path = video_path + '/'
             img_list = sort_frames2(client.list(video_path))
         else:
             img_list = sort_frames2(list(os.listdir(video_path)))
@@ -419,9 +423,9 @@ def read_frames_decord_old(
 VIDEO_READER_MAP = {
     "decord": read_frames_decord,
     "gif": read_frames_gif,
-    "img": read_frames_dir,
+    "img": read_frames_dir2,
     "img2": read_frames_dir2,
-    "frame": read_frames_dir,
+    "frame": read_frames_dir2,
     "frame2": read_frames_dir2,
     "av": read_frames_av,
 }

@@ -4,7 +4,7 @@ import os
 # print(len(os.listdir("/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_fix")))
 
 
-with open("/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_fix/Caption_COYO-Recaption_train_0-109_merged_1091735.jsonl", "r") as fr:
+with open("/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_long_vc3format.jsonl", "r") as fr:
     for line in fr:
         try:
             print(json.loads(line))

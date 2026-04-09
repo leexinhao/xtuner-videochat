@@ -1,22 +1,35 @@
-# coding=utf-8
-# Copyright 2025 The VideoChat3 Team and HuggingFace Inc. team. All rights reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
-VideoChat3-Oryx: VideoChat3 with Oryx SigLIP-based vision encoder (no RoPE).
+VideoChat3模型权重初始化脚本
+
+使用方法：
+python init_model_weights.py
+
+该脚本会：
+1. 从ViT-SO-400M加载vision权重
+2. 从Qwen3加载language权重  
+3. 创建完整的VideoChat3模型并保存
 """
 
+import os
+import sys
+import json
+import torch
+import subprocess
+from pathlib import Path
+from transformers import AutoModel, AutoConfig
+from safetensors import safe_open
+import os
+import sys
+import json
+import torch
+from pathlib import Path
+from transformers import AutoModel, AutoConfig
+from safetensors import safe_open
+from typing import Any, Optional
+from transformers.configuration_utils import PretrainedConfig
+from transformers import CONFIG_MAPPING, AutoConfig
 import math
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -37,7 +50,7 @@ from transformers.processing_utils import Unpack
 from transformers.utils import TransformersKwargs, auto_docstring, can_return_tuple
 from transformers.utils.import_utils import is_flash_attn_2_available
 from transformers import AutoModel
-from .configuration_videochat3_oryx import VideoChat3OryxConfig, VideoChat3OryxVisionConfig
+
 
 
 if is_flash_attn_2_available():
@@ -46,9 +59,98 @@ else:
     flash_attn_varlen_func = None
 
 
-# ---------------------------------------------------------------------------
-# Positional embedding (reused from VideoChat3: spatial bicubic + temporal sincos)
-# ---------------------------------------------------------------------------
+
+from typing import Any, Optional
+
+from transformers.configuration_utils import PretrainedConfig
+from transformers import CONFIG_MAPPING, AutoConfig
+
+
+class VideoChat3OryxVisionConfig(PretrainedConfig):
+    """Configuration for VideoChat3-Oryx vision encoder (SigLIP-based ViT)."""
+
+    model_type = "videochat3_oryx_vision"
+    base_config_key = "vision_config"
+
+    def __init__(
+        self,
+        hidden_size: int = 1152,
+        num_hidden_layers: int = 27,
+        num_attention_heads: int = 16,
+        patch_size: int = 16,
+        mlp_ratio: float = 3.7362,
+        merge_kernel_size: tuple[int, int] = (2, 2),
+        temporal_patch_size: int = 1,
+        temporal_merge_size: int = 4,
+        init_pos_emb_height: int = 128,
+        init_pos_emb_width: int = 128,
+        dtype: str = "bfloat16",
+        attn_impl: str = "flash_attention_2",
+        **kwargs,
+    ):
+        kwargs.pop("torch_dtype", None)
+        super().__init__(**kwargs)
+
+        if merge_kernel_size is None:
+            merge_kernel_size = [2, 2]
+
+        self.hidden_size = hidden_size
+        self.intermediate_size = int(hidden_size * mlp_ratio)
+        self.num_hidden_layers = num_hidden_layers
+        self.num_attention_heads = num_attention_heads
+        self.patch_size = patch_size
+        self.mlp_ratio = mlp_ratio
+        self.merge_kernel_size = merge_kernel_size
+        self.temporal_patch_size = temporal_patch_size
+        self.temporal_merge_size = temporal_merge_size
+        self.init_pos_emb_height = init_pos_emb_height
+        self.init_pos_emb_width = init_pos_emb_width
+        self.dtype = dtype
+        self.attn_impl = attn_impl
+
+
+class VideoChat3OryxConfig(PretrainedConfig):
+    """Configuration for the full VideoChat3-Oryx multimodal model."""
+
+    model_type = "videochat3_oryx"
+    sub_configs = {"text_config": AutoConfig, "vision_config": VideoChat3OryxVisionConfig}
+
+    def __init__(
+        self,
+        vision_config: Optional[dict[str, Any]] = None,
+        text_config: Optional[dict[str, Any]] = None,
+        image_token_id: int = 151655,
+        video_token_id: int = 151656,
+        vision_start_token_id: int = 151652,
+        vision_end_token_id: int = 151653,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+
+        self.image_token_id = image_token_id
+        self.video_token_id = video_token_id
+        self.vision_start_token_id = vision_start_token_id
+        self.vision_end_token_id = vision_end_token_id
+
+        if isinstance(vision_config, dict):
+            self.vision_config = VideoChat3OryxVisionConfig(**vision_config)
+        elif isinstance(vision_config, VideoChat3OryxVisionConfig):
+            self.vision_config = vision_config
+        elif vision_config is None:
+            self.vision_config = VideoChat3OryxVisionConfig()
+
+        if isinstance(text_config, dict):
+            text_config["model_type"] = text_config.get("model_type", "qwen2")
+            text_config = CONFIG_MAPPING[text_config["model_type"]](**text_config)
+        elif text_config is None:
+            text_config = CONFIG_MAPPING["qwen2"]()
+
+        self.text_config = text_config
+
+        super().__init__(**kwargs)
+
+
+
 
 def get_1d_sincos_pos_embed_from_grid(embed_dim, pos):
     assert embed_dim % 2 == 0
@@ -224,6 +326,7 @@ VL_VISION_ATTENTION_FUNCTIONS = {
 # Vision transformer layer (no RoPE)
 # ---------------------------------------------------------------------------
 
+
 class VideoChat3OryxVisionMLP(nn.Module):
     def __init__(self, dims: list[int], activation, bias=True):
         super().__init__()
@@ -335,9 +438,7 @@ def patch_merger(x, grid_thws, merge_kernel_size=(2, 2)):
     return outputs
 
 
-# ---------------------------------------------------------------------------
-# Vision model
-# ---------------------------------------------------------------------------
+
 
 class VideoChat3OryxVisionPreTrainedModel(PreTrainedModel):
     config_class = VideoChat3OryxVisionConfig
@@ -401,18 +502,21 @@ class VideoChat3OryxVisionModel(VideoChat3OryxVisionPreTrainedModel):
         return hidden_states
 
 
-# ---------------------------------------------------------------------------
-# Multi-modal projector (identical to VideoChat3)
-# ---------------------------------------------------------------------------
+
 
 class VideoChat3OryxMultiModalProjector(nn.Module):
+    """Multi-modal projector for VideoChat3."""
+
     def __init__(self, config: VideoChat3OryxConfig):
         super().__init__()
         self.config = config
+
+        # Calculate hidden size based on merge kernel size
         vision_hidden_size = config.vision_config.hidden_size
         merge_kernel_size = config.vision_config.merge_kernel_size
         self.hidden_size = vision_hidden_size * merge_kernel_size[0] * merge_kernel_size[1]
 
+        # Get text hidden size from text config
         text_hidden_size = getattr(config.text_config, "hidden_size", 2048)
 
         self.pre_norm = nn.LayerNorm(vision_hidden_size, eps=1e-05)
@@ -421,12 +525,15 @@ class VideoChat3OryxMultiModalProjector(nn.Module):
         self.linear_2 = nn.Linear(self.hidden_size, text_hidden_size, bias=True)
 
     def forward(self, image_features: torch.Tensor) -> torch.Tensor:
+        # Handle both list and tensor inputs
         if isinstance(image_features, list):
             image_features = torch.cat(image_features, dim=0)
+
         hidden_states = self.pre_norm(image_features).view(-1, self.hidden_size)
         hidden_states = self.linear_1(hidden_states)
         hidden_states = self.act(hidden_states)
         hidden_states = self.linear_2(hidden_states)
+
         return hidden_states
 
 
@@ -582,6 +689,7 @@ class VideoChat3OryxModel(VideoChat3OryxPreTrainedModel):
         )
 
 
+
 class VideoChat3OryxForConditionalGeneration(VideoChat3OryxPreTrainedModel, GenerationMixin):
     _checkpoint_conversion_mapping = {}
     _tied_weights_keys = ["lm_head.weight"]
@@ -613,6 +721,7 @@ class VideoChat3OryxForConditionalGeneration(VideoChat3OryxPreTrainedModel, Gene
     def get_video_features(self, pixel_values_videos, video_grid_thw, **kwargs):
         return self.model.get_video_features(pixel_values_videos=pixel_values_videos, video_grid_thw=video_grid_thw, **kwargs)
 
+    # Make modules available through conditional class for BC
     @property
     def language_model(self):
         return self.model.language_model
@@ -642,6 +751,7 @@ class VideoChat3OryxForConditionalGeneration(VideoChat3OryxPreTrainedModel, Gene
         logits_to_keep: Union[int, torch.Tensor] = 0,
         **kwargs: Unpack[TransformersKwargs],
     ) -> Union[tuple, VideoChat3OryxCausalLMOutputWithPast]:
+
         outputs = self.model(
             input_ids=input_ids,
             pixel_values=pixel_values,
@@ -657,6 +767,7 @@ class VideoChat3OryxForConditionalGeneration(VideoChat3OryxPreTrainedModel, Gene
         )
 
         hidden_states = outputs[0]
+        # Only compute necessary logits, and do not upcast them to float if we are not computing the loss
         slice_indices = slice(-logits_to_keep, None) if isinstance(logits_to_keep, int) else logits_to_keep
         logits = self.lm_head(hidden_states[:, slice_indices, :])
 
@@ -690,6 +801,8 @@ class VideoChat3OryxForConditionalGeneration(VideoChat3OryxPreTrainedModel, Gene
         logits_to_keep=None,
         **kwargs,
     ):
+        # Overwritten -- in specific circumstances we don't want to forward image inputs to the model
+
         model_inputs = super().prepare_inputs_for_generation(
             input_ids,
             past_key_values=past_key_values,
@@ -709,16 +822,210 @@ class VideoChat3OryxForConditionalGeneration(VideoChat3OryxPreTrainedModel, Gene
             or (model_inputs["input_ids"] is not None and model_inputs["input_ids"].shape[1] == 1)
         )
         if cache_position[0] != 0 and is_decoding_step:
+            # If we're in cached decoding stage, pixel values should be None because input ids do not contain special image token anymore
+            # Otherwise we need pixel values to be passed to model
             model_inputs["pixel_values"] = None
             model_inputs["pixel_values_videos"] = None
 
         return model_inputs
 
 
-__all__ = [
-    "VideoChat3OryxVisionPreTrainedModel",
-    "VideoChat3OryxVisionModel",
-    "VideoChat3OryxPreTrainedModel",
-    "VideoChat3OryxModel",
-    "VideoChat3OryxForConditionalGeneration",
-]
+
+
+
+
+def load_weights_from_safetensors(model_path: str):
+    """从safetensors文件加载权重"""
+    weights = {}
+    
+    # 检查单个safetensors文件
+    single_file = os.path.join(model_path, "model.safetensors")
+    if os.path.exists(single_file):
+        print(f"加载单个权重文件: {single_file}")
+        with safe_open(single_file, framework="pt", device="cpu") as f:
+            for key in f.keys():
+                weights[key] = f.get_tensor(key)
+        return weights
+    
+    # 检查多个safetensors文件
+    index_file = os.path.join(model_path, "model.safetensors.index.json")
+    if os.path.exists(index_file):
+        print(f"加载多个权重文件，索引: {index_file}")
+        with open(index_file, 'r') as f:
+            index_data = json.load(f)
+        
+        for weight_file in index_data["weight_map"].values():
+            file_path = os.path.join(model_path, weight_file)
+            if os.path.exists(file_path):
+                with safe_open(file_path, framework="pt", device="cpu") as f:
+                    for key in f.keys():
+                        weights[key] = f.get_tensor(key)
+        return weights
+    
+    raise FileNotFoundError(f"未找到权重文件在: {model_path}")
+
+ORYX_PTH_PREFIX = "base_model.model.model.vision_tower.vision_tower."
+HF_VISION_PREFIX = "model.vision_tower."
+INIT_POS_EMB_HEIGHT = 128
+INIT_POS_EMB_WIDTH = 128
+TEMPORAL_MERGE_SIZE = 4
+HIDDEN_DIM = 1152
+
+
+def _get_1d_sincos_pos_embed(embed_dim, pos):
+    assert embed_dim % 2 == 0
+    omega = np.arange(embed_dim // 2, dtype=np.float32)
+    omega /= embed_dim / 2.0
+    omega = 1.0 / 10000**omega
+    pos = pos.reshape(-1)
+    out = np.einsum("m,d->md", pos, omega)
+    return np.concatenate([np.sin(out), np.cos(out)], axis=1)
+
+
+def build_oryx_vision_state_dict(oryx_pth_path: str) -> dict:
+    """
+    从 siglip2_so400m_oryx.pth 加载并转换为 VideoChat3-Oryx 的 vision 状态字典。
+    Key 格式为 model.vision_tower.*，与 xtuner VideoChat3OryxVisionModel 的 HF key 格式匹配。
+    """
+    raw_sd = torch.load(oryx_pth_path, map_location="cpu")
+
+    stripped = {}
+    for k, v in raw_sd.items():
+        if k.startswith(ORYX_PTH_PREFIX):
+            stripped[k[len(ORYX_PTH_PREFIX):]] = v
+    if not stripped:
+        stripped = raw_sd
+
+    vision_sd = {}
+    for k, v in stripped.items():
+        if k == "pos_embed":
+            v = v.squeeze(0).reshape(INIT_POS_EMB_HEIGHT, INIT_POS_EMB_WIDTH, HIDDEN_DIM)
+            vision_sd[HF_VISION_PREFIX + "patch_embed.pos_emb.weight"] = v
+        elif k.startswith("patch_embed."):
+            vision_sd[HF_VISION_PREFIX + k] = v
+        elif k.startswith("blocks."):
+            vision_sd[HF_VISION_PREFIX + "encoder." + k] = v
+        else:
+            print(f"  [_build_oryx_vision_sd] skipping key: {k}")
+
+    time_weight = torch.from_numpy(
+        _get_1d_sincos_pos_embed(HIDDEN_DIM, np.arange(TEMPORAL_MERGE_SIZE, dtype=np.float32))
+    ).float().unsqueeze(1)
+    vision_sd[HF_VISION_PREFIX + "patch_embed.pos_emb.time_weight"] = time_weight
+
+    return vision_sd
+
+
+def main():
+    """主函数"""
+    print("VideoChat3模型权重初始化")
+    print("=" * 40)
+    
+    # 设置路径
+    vit_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/oryx-siglip2400M/siglip2_so400m_oryx.pth"
+    qwen3_path = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/models/Qwen3-4B-Instruct-2507"
+    current_dir = "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VideoChat3-Oryx-4B"
+    output_path = os.path.join(current_dir, "initialized_model")
+    
+    try:
+        # 1. 检查输入路径
+        print("检查输入路径...")
+        if not os.path.exists(vit_path):
+            raise FileNotFoundError(f"OryxViT路径不存在: {vit_path}")
+        if not os.path.exists(qwen3_path):
+            raise FileNotFoundError(f"Qwen3路径不存在: {qwen3_path}")
+        print("✅ 输入路径检查通过")
+        
+        # 2. 加载配置
+        print("\\n加载VideoChat3配置...")
+        config_path = os.path.join(current_dir, "config.json")
+        with open(config_path, 'r') as f:
+            config_dict = json.load(f)
+        config = VideoChat3OryxConfig.from_dict(config_dict)
+        print("✅ 配置加载完成")
+        
+        # 3. 创建模型
+        print("\\n创建VideoChat3模型...")
+        model = VideoChat3OryxForConditionalGeneration(config)
+        print("✅ 模型创建完成")
+        
+        # 4. 加载预训练权重
+        print("\\n加载预训练权重...")
+        
+        print("\n加载 Oryx ViT...")
+        vit_weights = build_oryx_vision_state_dict(vit_path)
+        print(f"  ✅ 加载了 {len(vit_weights)} 个OryxViT权重")
+
+
+        # 加载Qwen3权重
+        print("  加载Qwen3权重...")
+        qwen3_weights = load_weights_from_safetensors(qwen3_path)
+        print(f"  ✅ 加载了 {len(qwen3_weights)} 个Qwen3权重")
+        
+        # 5. 构建完整的状态字典
+        print("\\n构建模型状态字典...")
+        state_dict = {}
+
+        # 添加Vision权重
+        for key, tensor in vit_weights.items():
+            state_dict[key] = tensor
+
+        # 添加Language权重
+        for key, tensor in qwen3_weights.items():
+            state_dict[key.replace("model.", "model.language_model.")] = tensor
+        
+        print(f"✅ 状态字典构建完成，共 {len(state_dict)} 个权重")
+        
+        # 6. 加载权重到模型
+        print("\\n加载权重到模型...")
+        missing_keys, unexpected_keys = model.load_state_dict(state_dict, strict=False)
+        
+        if missing_keys:
+            print(f"⚠️  缺失 {len(missing_keys)} 个权重: {missing_keys},（这是也许是正常的，因为有些权重需要默认初始化）")
+        
+        if unexpected_keys:
+            raise ValueError(f"⚠️  未使用 {len(unexpected_keys)} 个权重: {unexpected_keys}")
+        
+        print("✅ 权重加载完成")
+        
+        # 7. 测试模型
+        print("\\n测试模型...")
+        model.eval()
+        
+        # 创建测试输入
+        batch_size = 1
+        seq_len = 5
+        vocab_size = model.config.text_config.vocab_size
+        
+        input_ids = torch.randint(0, min(vocab_size, 1000), (batch_size, seq_len))
+        
+        with torch.no_grad():
+            outputs = model(input_ids=input_ids)
+            print(f"✅ 模型测试成功! 输出形状: {outputs.logits.shape}")
+        
+        # 8. 保存模型
+        print(f"\\n保存模型到: {output_path}")
+        os.makedirs(output_path, exist_ok=True)
+        model.save_pretrained(output_path)
+        print("✅ 模型保存完成")
+        
+        # 9. 显示模型信息
+        print("\\n" + "=" * 40)
+        print("🎉 VideoChat3模型初始化完成!")
+        print(f"📁 模型保存位置: {output_path}")
+        print(f"📊 模型配置:")
+        print(f"   - Vision模型: {config.vision_config.model_type}")
+        print(f"   - Text模型: {config.text_config.model_type}")
+        print(f"   - 总参数量: {sum(p.numel() for p in model.parameters()):,}")
+        
+        return True
+        
+    except Exception as e:
+        print(f"\\n❌ 初始化失败: {e}")
+        import traceback
+        traceback.print_exc()
+        return False
+
+
+if __name__ == "__main__":
+    main()

@@ -1,6 +1,6 @@
 import json
 import os
-with open("/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage2_llava_video.json", "r") as fr:
+with open("/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/data_stage2_image_video_minisft_final.json", "r") as fr:
     infos = json.load(fr)
 
 for k in infos:
