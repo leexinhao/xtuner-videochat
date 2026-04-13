@@ -46,6 +46,7 @@ class VideoChat3VideoMetadata(Mapping):
     video_start_time: float = 0.0 # The start time of the video, in seconds
     clip_start_time: Optional[float] = None # The start time of the video clip to be extracted, in seconds
     clip_end_time: Optional[float] = None # The end time of the video clip to be extracted, in seconds
+    specified_wh: Optional[tuple[int, int]] = None # The specified width and height of the video
 
     def __post_init__(self):
         if self.fps is not None and self.duration is not None:
@@ -53,8 +54,8 @@ class VideoChat3VideoMetadata(Mapping):
             if abs(expected_frames - self.total_num_frames) > 1e-6:
                 raise ValueError(f"fps * duration must be equal to total_num_frames, but got {expected_frames} != {self.total_num_frames}")
             
-        if self.video_start_time < 0 or (self.duration is not None and self.video_start_time >= self.duration):
-            raise ValueError(f"video_start_time must be greater than or equal to 0 and less than duration, but got {self.video_start_time}")
+        # if self.video_start_time < 0 or (self.duration is not None and self.video_start_time >= self.duration):
+        #     raise ValueError(f"video_start_time must be greater than or equal to 0 and less than duration, but got {self.video_start_time}")
 
         if (self.clip_start_time is None) != (self.clip_end_time is None):
             raise ValueError("clip_start_time and clip_end_time must both be None or both be not None.")

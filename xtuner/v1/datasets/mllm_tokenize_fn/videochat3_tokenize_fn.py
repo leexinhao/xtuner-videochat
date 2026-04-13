@@ -62,16 +62,20 @@ def smart_get_video_thw(video_meta: VideoChat3VideoMetadata, video_processor):
     num_sampled_frames = video_processor.get_num_sampled_frames(video_meta, num_frames=video_processor.num_frames, fps=video_processor.fps)
     
     assert num_sampled_frames != 0, f"num_sampled_frames must be greater than 0, video_meta: {video_meta}"
-    resized_height, resized_width = smart_video_resize(
-        num_frames=num_sampled_frames,
-        height=video_meta.height,
-        width=video_meta.width,
-        temporal_factor=video_processor.temporal_patch_size,
-        factor=video_processor.patch_size * video_processor.merge_size,
-        frame_min_pixels=video_processor.size["shortest_edge"],
-        frame_max_pixels=video_processor.size["longest_edge"],
-        video_max_total_pixels=video_processor.video_max_total_pixels,
-    )
+    
+    if video_meta.specified_wh is not None:
+        resized_width, resized_height = video_meta.specified_wh
+    else:
+        resized_height, resized_width = smart_video_resize(
+            num_frames=num_sampled_frames,
+            height=video_meta.height,
+            width=video_meta.width,
+            temporal_factor=video_processor.temporal_patch_size,
+            factor=video_processor.patch_size * video_processor.merge_size,
+            frame_min_pixels=video_processor.size["shortest_edge"],
+            frame_max_pixels=video_processor.size["longest_edge"],
+            video_max_total_pixels=video_processor.video_max_total_pixels,
+        )
 
     if video_meta.clip_start_time is not None and video_meta.clip_end_time is not None:
         video_meta.frames_indices = np.linspace(video_meta.clip_start_time * video_meta.fps, video_meta.clip_end_time * video_meta.fps, num_sampled_frames).round().astype(int)
@@ -213,7 +217,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             f"spatial_merge_length: {self.spatial_merge_length}, temporal_merge_length: {self.temporal_merge_length}"
         )
 
-        self.chat_template = CHAT_TEMPLATE_MAP["videochat3"]
+        self.chat_template = copy.deepcopy(CHAT_TEMPLATE_MAP["videochat3"])
         if system_message is not None:
             self.chat_template.default_system = system_message
 
@@ -344,7 +348,14 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         frame_sample_indices = processor.sample_frames(metadata=video_meta, num_frames=processor.num_frames, fps=processor.fps)
         video_meta.frames_indices = frame_sample_indices
         frames = self._my_load_video(video_path, video_meta, frame_sample_indices)
-        visual_processed = processor.preprocess(frames, do_sample_frames=False, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
+        
+        do_resize = True
+        if video_meta.specified_wh is not None:
+            s_w, s_h = video_meta.specified_wh
+            frames = [frame.resize((s_w, s_h), resample=Image.BICUBIC) for frame in frames]
+            do_resize = False
+            
+        visual_processed = processor.preprocess(frames, do_sample_frames=False, do_resize=do_resize, return_tensors="pt", video_metadata=video_meta, return_metadata=True)
         # else:
         # assert os.path.exists(video_path), f"video_path {video_path} does not exist!"
         # if os.path.isdir(video_path):

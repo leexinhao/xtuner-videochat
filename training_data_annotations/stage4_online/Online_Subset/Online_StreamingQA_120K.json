@@ -1,0 +1,9 @@
+{
+    "Online_StreamingQA_mcq_full":{
+        "media_root": "videogpu:s3://video-online/StreamingQA-120K/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamingQA_120K/StreamingQA_mcq_fixed.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    }
+}

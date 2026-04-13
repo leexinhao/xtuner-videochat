@@ -8,9 +8,11 @@ work_dirs/
 work_dir/
 *.safetensors
 dataset_cache/
-training_configs/
-training_data_annotations/
-training_scripts/
+training_configs/*
+training_data_annotations/*
+training_scripts/*
+zxy_debug_fix_tools/*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -144,3 +146,8 @@ docs/en/_build/
 docs/en/api/generated/
 docs/zh_cn/_build/
 docs/zh_cn/api/generated/
+
+
+!training_configs/stage4_online/
+!training_scripts/stage4_online/
+!training_data_annotations/stage4_online/

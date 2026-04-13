@@ -44,7 +44,14 @@ class VLMJsonlDataset(JsonlDataset):
             else:
                 data = raw_data
         except Exception as e:
-            logger.warning(f"[{os.path.basename(self.path)}]: {e}.  Dumping a fake data!")
+            import traceback
+            logger.warning(
+                f"[{os.path.basename(self.path)}] Error at item {item}:\n"
+                f"Exception: {e}\n"
+                f"Line content (first 200 chars): {repr(line[:200]) if 'line' in locals() else 'N/A'}\n"
+                f"Traceback:\n{traceback.format_exc()}\n"
+                "Dumping a fake data!"
+            )
             data = self.tokenize_fn(self.fake_data)
             assert isinstance(data, dict), f"Expected dict, got {type(data)}"
             if "labels" in data:
