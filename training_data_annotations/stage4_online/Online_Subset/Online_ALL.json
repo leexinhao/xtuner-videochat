@@ -1,19 +1,19 @@
 {   
-    "COIN_stream": {
+    "Online_Streamo_action_caption_COIN_stream": {
         "media_root": "videogpu:s3://video-online/COIN_320p/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/action_caption/COIN_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "Youcookv2_stream": {
+    "Online_Streamo_action_caption_Youcookv2_stream": {
         "media_root": "videogpu:s3://video-online/YouCookv2/raw_videos/training/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/action_caption/Youcookv2_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "how_to_step_stream": {
+    "Online_Streamo_action_caption_how_to_step_stream": {
         "media_root": "videogpu:s3://video-online/how_to_step/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/action_caption/how_to_step_stream.jsonl",
         "data_augment": false,
@@ -22,21 +22,21 @@
     },
 
 
-    "ActivityNet_stream": {
+    "Online_Streamo_event_caption_ActivityNet_stream": {
         "media_root": "videogpu:s3://video-online/ActivityNet/video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_caption/ActivityNet_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "QVHighlight_stream_converted": {
+    "Online_Streamo_event_caption_QVHighlight_stream_converted": {
         "media_root": "videogpu:s3://video-online/qvhighlight/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_caption/QVHighlight_stream_converted.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "LLaVA_Video_stream": {
+    "Online_Streamo_event_caption_LLaVA_Video_stream": {
         "media_root": "videogpu:s3://video-online/LLaVA_Video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_caption/LLaVA_Video_stream.jsonl",
         "data_augment": false,
@@ -45,42 +45,42 @@
     },
 
 
-    "ActivityNet_grounding_stream": {
+    "Online_Streamo_event_grounding_ActivityNet_grounding_stream": {
         "media_root": "videogpu:s3://video-online/ActivityNet/video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/ActivityNet_grounding_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "LLaVA_Video_grounding_stream": {
+    "Online_Streamo_event_grounding_LLaVA_Video_grounding_stream": {
         "media_root": "videogpu:s3://video-online/LLaVA_Video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/LLaVA_Video_grounding_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "QVHighlight_grounding_stream": {
+    "Online_Streamo_event_grounding_QVHighlight_grounding_stream": {
         "media_root": "videogpu:s3://video-online/qvhighlight/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/QVHighlight_grounding_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "didemo_stream": {
+    "Online_Streamo_event_grounding_didemo_stream": {
         "media_root": "videogpu:s3://video-online/didemo/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/didemo_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "Queryd_stream": {
+    "Online_Streamo_event_grounding_Queryd_stream": {
         "media_root": "videogpu:s3://video-online/queryd/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/Queryd_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "tacos_stream": {
+    "Online_Streamo_event_grounding_tacos_stream": {
         "media_root": "videogpu:s3://video-online/tacos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/tacos_stream.jsonl",
         "data_augment": false,
@@ -89,14 +89,14 @@
     },
 
 
-    "QVHighlight_narration_stream_converted": {
+    "Online_Streamo_narration_QVHighlight_narration_stream_converted": {
         "media_root": "videogpu:s3://video-online/qvhighlight/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/narration/QVHighlight_narration_stream_converted.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "ActivityNet_narration_stream": {
+    "Online_Streamo_narration_ActivityNet_narration_stream": {
         "media_root": "videogpu:s3://video-online/ActivityNet/video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/narration/ActivityNet_narration_stream.jsonl",
         "data_augment": false,
@@ -105,35 +105,35 @@
     },
 
 
-    "ActivityNet_qa_stream": {
+    "Online_Streamo_qa_ActivityNet_qa_stream": {
         "media_root": "videogpu:s3://video-online/ActivityNet/video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/ActivityNet_qa_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "QVHighlight_qa_stream": {
+    "Online_Streamo_qa_QVHighlight_qa_stream": {
         "media_root": "videogpu:s3://video-online/qvhighlight/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/QVHighlight_qa_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "Ego_timeqa_stream": {
+    "Online_Streamo_qa_Ego_timeqa_stream": {
         "media_root": "videogpu:s3://video-online/ego_timeqa/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/Ego_timeqa_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "LLaVA_Video_qa_youtube_1": {
+    "Online_Streamo_qa_LLaVA_Video_qa_youtube_1": {
         "media_root": "videogpu:s3://video-online/LLaVA_Video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/LLaVA_Video_qa_youtube_1_stream.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
-    "LLaVA_Video_qa_youtube_2": {
+    "Online_Streamo_qa_LLaVA_Video_qa_youtube_2": {
         "media_root": "videogpu:s3://video-online/LLaVA_Video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/LLaVA_Video_qa_youtube_2_stream.jsonl",
         "data_augment": false,
@@ -142,17 +142,6 @@
     },
 
     
-
-
-    "Online_StreamingQA_mcq_full":{
-        "media_root": "videogpu:s3://video-online/StreamingQA-120K/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamingQA_120K/StreamingQA_mcq_fixed.jsonl",
-        "data_augment": false,
-        "sample_ratio": 1,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-
-
 
 
     "Online_StreamForest_Event_anet_caption_10009_10009": {
@@ -351,5 +340,16 @@
         "data_augment": false,
         "sample_ratio": 1,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
+    },
+
+
+
+
+    "Online_StreamingQA_mcq_full":{
+        "media_root": "videogpu:s3://video-online/StreamingQA-120K/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamingQA_120K/StreamingQA_mcq_fixed.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     }
 }

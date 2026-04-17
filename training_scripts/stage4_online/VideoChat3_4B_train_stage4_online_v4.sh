@@ -24,7 +24,7 @@ export XTUNER_USE_FA3="0"
 export XTUNER_GC_ENABLE="1"
 export PYTORCH_CUDA_ALLOC_CONF='expandable_segments:True'
 current_time=$(date "+%m%d%H%M%S")
-TASK_NAME="VideoChat3_4B_train_stage4_online_v1"
+TASK_NAME="VideoChat3_4B_train_stage4_online_v4"
 OUTPUT_DIR="work_dir/stage4_online/${TASK_NAME}"
 if [ ! -d "$OUTPUT_DIR" ]; then  
   mkdir -p "$OUTPUT_DIR"
