@@ -12,7 +12,7 @@ training_configs/*
 training_data_annotations/*
 training_scripts/*
 zxy_debug_fix_tools/*
-
+VC3_Online_data_annotations/*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

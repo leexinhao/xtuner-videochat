@@ -1,12 +1,5 @@
 {   
 
-    "EgoIT_video_82937": {
-        "media_root": "pnorm2:s3://videochat3/video/EgoIT-99K_frames_fps4/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/EgoIT_video_82937_xtuner_format_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.2
-    },
-
     "Online_Supplement_Egoqa_openend_clean_3558":{
         "media_root": "p2:s3://egoqa/split_videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Supplement/vqa_ego_qa_openend_clean_3558.jsonl",
@@ -14,7 +7,6 @@
         "sample_ratio": 1,
         "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    
     },
 
     "Online_Supplement_Egoqa_mcq_hld_4091":{

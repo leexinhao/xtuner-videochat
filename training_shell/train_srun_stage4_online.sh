@@ -2,8 +2,9 @@ JOB_NAME=VC3_S4OL
 NNODES=8
 
 
-VERTION=v4
+VERTION=v7
 
+# VERTION=debug
 
 srun -p videop1 \
     -N${NNODES} -n${NNODES} \

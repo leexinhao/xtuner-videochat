@@ -1,0 +1,2407 @@
+{
+  "data_json": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/stage2/data_stage2_image_video_minisft_final.json",
+  "summary": {
+    "dataset_entries_with_anno_path": 296,
+    "unique_jsonl_paths": 293,
+    "existing_files": 291,
+    "missing_files": 2,
+    "total_unique_lines": 18803205,
+    "total_used_line_count": 10228647,
+    "used_line_count_note": "各数据集 line_count * sample_ratio 向下取整后求和；若多个数据集共用同一 jsonl，该和可能大于按文件去重后的加权行数。",
+    "duplicate_anno_path_count": 3
+  },
+  "per_dataset": [
+    {
+      "dataset_key": "Caption_COYO-Recaption_train_1091735",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_COYO-Recaption_train_1091735.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 1091735,
+      "used_line_count": 436694,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_PixMo-Cap_train_706911",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_PixMo-Cap_train_706911.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 706911,
+      "used_line_count": 282764,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_ST-VQA_train_13581",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_ST-VQA_train_13581.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 13581,
+      "used_line_count": 5432,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_Sherlock_train_16936",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_Sherlock_train_16936.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 16936,
+      "used_line_count": 6774,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part00_train_21000_20806",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part00_train_21000_20806.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20806,
+      "used_line_count": 8322,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part01_train_21000_20802",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part01_train_21000_20802.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20802,
+      "used_line_count": 8320,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part02_train_21000_20829",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part02_train_21000_20829.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20829,
+      "used_line_count": 8331,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part03_train_21000_20847",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part03_train_21000_20847.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20847,
+      "used_line_count": 8338,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part04_train_21000_20856",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part04_train_21000_20856.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20856,
+      "used_line_count": 8342,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part05_train_21000_20864",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part05_train_21000_20864.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20864,
+      "used_line_count": 8345,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part06_train_21000_20841",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part06_train_21000_20841.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20841,
+      "used_line_count": 8336,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part07_train_21000_20805",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part07_train_21000_20805.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20805,
+      "used_line_count": 8322,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part08_train_21000_20837",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part08_train_21000_20837.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20837,
+      "used_line_count": 8334,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part09_train_21000_20853",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part09_train_21000_20853.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20853,
+      "used_line_count": 8341,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part10_train_21000_20846",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part10_train_21000_20846.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20846,
+      "used_line_count": 8338,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part11_train_21000_20846",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part11_train_21000_20846.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20846,
+      "used_line_count": 8338,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part12_train_21000_20835",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part12_train_21000_20835.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20835,
+      "used_line_count": 8334,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part13_train_21000_20827",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part13_train_21000_20827.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20827,
+      "used_line_count": 8330,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part14_train_21000_20825",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part14_train_21000_20825.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20825,
+      "used_line_count": 8330,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part15_train_21000_20843",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part15_train_21000_20843.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20843,
+      "used_line_count": 8337,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part16_train_21000_20840",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part16_train_21000_20840.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20840,
+      "used_line_count": 8336,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part17_train_21000_20852",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part17_train_21000_20852.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20852,
+      "used_line_count": 8340,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part18_train_21000_20817",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part18_train_21000_20817.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20817,
+      "used_line_count": 8326,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part19_train_20898_20742",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part19_train_20898_20742.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 20742,
+      "used_line_count": 8296,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_other_Caption_train_1068_1064",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_other_Caption_train_1068_1064.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 1064,
+      "used_line_count": 425,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_ArxivQA_train_287009",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_ArxivQA_train_287009.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 287009,
+      "used_line_count": 114803,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_Chart2Text_train_34525",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_Chart2Text_train_34525.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 34525,
+      "used_line_count": 13810,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_ChartQA_train_34680",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_ChartQA_train_34680.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 34680,
+      "used_line_count": 13872,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Chart_train_308225",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Chart_train_308225.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 308225,
+      "used_line_count": 123290,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Diagram_train_77143",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Diagram_train_77143.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 77143,
+      "used_line_count": 30857,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Graphic_train_19378",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Graphic_train_19378.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 19378,
+      "used_line_count": 7751,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Table_train_86475",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Table_train_86475.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 86475,
+      "used_line_count": 34590,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_DVQA_train_474688",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_DVQA_train_474688.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 474688,
+      "used_line_count": 189875,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_FigureQA_train_206844",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_FigureQA_train_206844.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 206844,
+      "used_line_count": 82737,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_HiTab_train_3609",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_HiTab_train_3609.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 3609,
+      "used_line_count": 1443,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_Infographic_train_2763",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_Infographic_train_2763.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 2763,
+      "used_line_count": 1105,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_LRV_Chart_train_3568",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_LRV_Chart_train_3568.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 3568,
+      "used_line_count": 1427,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MAVIS_Function_train_25321",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MAVIS_Function_train_25321.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 25321,
+      "used_line_count": 10128,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MMC_Instruction_train_27094",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MMC_Instruction_train_27094.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 27094,
+      "used_line_count": 10837,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MMTab_train_165603",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MMTab_train_165603.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 165603,
+      "used_line_count": 66241,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MultiHiertt_train_4588",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MultiHiertt_train_4588.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 4588,
+      "used_line_count": 1835,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_PlotQA_train_138932",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_PlotQA_train_138932.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 138932,
+      "used_line_count": 55572,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_RobuT_SQA_train_22281",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_SQA_train_22281.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 22281,
+      "used_line_count": 8912,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_RobuT_WTQ_train_44181",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_WTQ_train_44181.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 44181,
+      "used_line_count": 17672,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_RobuT_WikiSQL_train_110868",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_WikiSQL_train_110868.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 110868,
+      "used_line_count": 44347,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_SciTSR_train_8981",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_SciTSR_train_8981.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 8981,
+      "used_line_count": 3592,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_SimChart9K_train_4453",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_SimChart9K_train_4453.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 4453,
+      "used_line_count": 1781,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_TabMWP_train_46321",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_TabMWP_train_46321.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 46321,
+      "used_line_count": 18528,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_TinyChart_train_1014067",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_TinyChart_train_1014067.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 1014067,
+      "used_line_count": 405626,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_UReader_KG_train_39038",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UReader_KG_train_39038.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 39038,
+      "used_line_count": 15615,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_UReader_QA_train_121365",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UReader_QA_train_121365.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 121365,
+      "used_line_count": 48546,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_UniChart_train_330018",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UniChart_train_330018.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 330018,
+      "used_line_count": 132007,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_VisText_train_15616",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_VisText_train_15616.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 15616,
+      "used_line_count": 6246,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_other_Chart_train_1982",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_other_Chart_train_1982.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 1982,
+      "used_line_count": 792,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_CoSyn_document_train_101510",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_CoSyn_document_train_101510.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 101510,
+      "used_line_count": 40604,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_CoSyn_nutrition_train_12954",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_CoSyn_nutrition_train_12954.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 12954,
+      "used_line_count": 5181,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_DocReason_train_3983",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_DocReason_train_3983.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 3983,
+      "used_line_count": 1593,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_DocVQA_train_25911",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_DocVQA_train_25911.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 25911,
+      "used_line_count": 10364,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_Docmatix_train_19077",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_Docmatix_train_19077.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 19077,
+      "used_line_count": 7630,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_EATEN_train_30000",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_EATEN_train_30000.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 30000,
+      "used_line_count": 12000,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_FinTabNet_train_50105",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_FinTabNet_train_50105.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 50105,
+      "used_line_count": 20042,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_InfoVQA_train_10125",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_InfoVQA_train_10125.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 10125,
+      "used_line_count": 4050,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_InfographicVQA_train_5521",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_InfographicVQA_train_5521.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 5521,
+      "used_line_count": 2208,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_LLaVAR_GPT4_train_23267",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_LLaVAR_GPT4_train_23267.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 23267,
+      "used_line_count": 9306,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_OCR-VQA_train_108933",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_OCR-VQA_train_108933.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 108933,
+      "used_line_count": 43573,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_POIE_train_2250",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_POIE_train_2250.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 2250,
+      "used_line_count": 900,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_ScreenQA_train_64870",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_ScreenQA_train_64870.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 64870,
+      "used_line_count": 25948,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_TextVQA_train_39795",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_TextVQA_train_39795.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 39795,
+      "used_line_count": 15918,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_UreaderOCR_train_5524",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_UreaderOCR_train_5524.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 5524,
+      "used_line_count": 2209,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_Ureader_Chart_train_349915",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_Ureader_Chart_train_349915.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 349915,
+      "used_line_count": 139966,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_VisualMRC_train_3292",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_VisualMRC_train_3292.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 3292,
+      "used_line_count": 1316,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_other_Document_train_195",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_other_Document_train_195.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 195,
+      "used_line_count": 78,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "EgoIT_video_82937",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/EgoIT_video_82937_xtuner_format_clean.jsonl",
+      "sample_ratio": 0.5,
+      "line_count": 59551,
+      "used_line_count": 29775,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_A-OKVQA_train_27504",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_A-OKVQA_train_27504.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 27504,
+      "used_line_count": 11001,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ALFWorld_train_31893",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ALFWorld_train_31893.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 31893,
+      "used_line_count": 12757,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ALLaVA_train_720794",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ALLaVA_train_720794.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 720794,
+      "used_line_count": 288317,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ART500K_train_11045",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ART500K_train_11045.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 11045,
+      "used_line_count": 4418,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Birds-to-Words_train_11169",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Birds-to-Words_train_11169.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 11169,
+      "used_line_count": 4467,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_COCO_train_16332",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_COCO_train_16332.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 16332,
+      "used_line_count": 6532,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Cambrian_Filter_train_93493",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cambrian_Filter_train_93493.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 93493,
+      "used_line_count": 37397,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Cambrian_train_5950",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cambrian_train_5950.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 5950,
+      "used_line_count": 2380,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Cauldron_mulberry_train_28068",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cauldron_mulberry_train_28068.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 28068,
+      "used_line_count": 11227,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Co-Instruct_train_30507",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Co-Instruct_train_30507.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 30507,
+      "used_line_count": 12202,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ContrastiveCaption_train_17211",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ContrastiveCaption_train_17211.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 17211,
+      "used_line_count": 6884,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_DreamSim_train_11035",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_DreamSim_train_11035.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 11035,
+      "used_line_count": 4414,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_EST-VQA_train_13543",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_EST-VQA_train_13543.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 13543,
+      "used_line_count": 5417,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_FlintstonesSV_train_17035",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_FlintstonesSV_train_17035.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 17035,
+      "used_line_count": 6814,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_GQA_train_46172",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_GQA_train_46172.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 46172,
+      "used_line_count": 18468,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_HQ-Edit_train_36427",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_HQ-Edit_train_36427.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 36427,
+      "used_line_count": 14570,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Hateful_Memes_train_7321",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Hateful_Memes_train_7321.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 7321,
+      "used_line_count": 2928,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_IDK_train_16580",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_IDK_train_16580.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 16580,
+      "used_line_count": 6632,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_IconQA_train_35911",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_IconQA_train_35911.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 35911,
+      "used_line_count": 14364,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_InternVL-SA-1B-Caption_train_16922",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_InternVL-SA-1B-Caption_train_16922.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 16922,
+      "used_line_count": 6768,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_KVQA_train_17634",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_KVQA_train_17634.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 17634,
+      "used_line_count": 7053,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_KonIQ-10k_train_9361",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_KonIQ-10k_train_9361.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 9361,
+      "used_line_count": 3744,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LLaVA-Instruct-300k_train_470800",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LLaVA-Instruct-300k_train_470800.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 470800,
+      "used_line_count": 188320,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LLaVA-NeXT-Data_train_711541",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LLaVA-NeXT-Data_train_711541.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 711541,
+      "used_line_count": 284616,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LRV_Normal_train_39491",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LRV_Normal_train_39491.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 39491,
+      "used_line_count": 15796,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LVIS-InstructV4_train_145372",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LVIS-InstructV4_train_145372.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 145372,
+      "used_line_count": 58148,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_MMChat-Twitter-Post_train_4317",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_MMChat-Twitter-Post_train_4317.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 4317,
+      "used_line_count": 1726,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_MagicBrush_train_9793",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_MagicBrush_train_9793.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 9793,
+      "used_line_count": 3917,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_NLVR2_train_54097",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NLVR2_train_54097.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 54097,
+      "used_line_count": 21638,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_NewYorker_Caption_train_2554",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NewYorker_Caption_train_2554.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 2554,
+      "used_line_count": 1021,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_NextQA_train_3092",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NextQA_train_3092.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 3092,
+      "used_line_count": 1236,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Objects365_train_5192",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Objects365_train_5192.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 5192,
+      "used_line_count": 2076,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_PixMo-AskModelAnything_train_96280",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-AskModelAnything_train_96280.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 96280,
+      "used_line_count": 38512,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_PixMo-CapQA_train_237263",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-CapQA_train_237263.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 237263,
+      "used_line_count": 94905,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_PixMo-Points-Explanations_train_44908",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-Points-Explanations_train_44908.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 44908,
+      "used_line_count": 17963,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_SVIT-core-150K_train_269361",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_SVIT-core-150K_train_269361.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 269361,
+      "used_line_count": 107744,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ScanQA_train_10188",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ScanQA_train_10188.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 10188,
+      "used_line_count": 4075,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ShareGPT4V_Knowledge_train_1983",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4V_Knowledge_train_1983.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 1983,
+      "used_line_count": 793,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ShareGPT4V_SAM_train_122461",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4V_SAM_train_122461.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 122461,
+      "used_line_count": 48984,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ShareGPT4o_train_73884",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4o_train_73884.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 73884,
+      "used_line_count": 29553,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_TQA_train_26821",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_TQA_train_26821.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 26821,
+      "used_line_count": 10728,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_VIST_train_21144",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_VIST_train_21144.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 21144,
+      "used_line_count": 8457,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_VSR_train_2752",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_VSR_train_2752.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 2752,
+      "used_line_count": 1100,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ViQuAE_train_2304",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ViQuAE_train_2304.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 2304,
+      "used_line_count": 921,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Vision_FLAN_train_458760",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Vision_FLAN_train_458760.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 458760,
+      "used_line_count": 183504,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Visual7W_train_29965",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Visual7W_train_29965.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 29965,
+      "used_line_count": 11986,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_WebQA_train_6588",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_WebQA_train_6588.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 6588,
+      "used_line_count": 2635,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_idefics375k_train_404454",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_idefics375k_train_404454.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 404454,
+      "used_line_count": 161781,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_nuScenes_train_6510",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_nuScenes_train_6510.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 6510,
+      "used_line_count": 2604,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_other_General_train_3061",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_other_General_train_3061.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 3061,
+      "used_line_count": 1224,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_CLEVR-Change_train_2988",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR-Change_train_2988.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 2988,
+      "used_line_count": 1195,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_CLEVR_Math_train_7179",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR_Math_train_7179.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 7179,
+      "used_line_count": 2871,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_CLEVR_train_498929",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR_train_498929.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 498929,
+      "used_line_count": 199571,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_MathV360K_VQA-AS_train_4054",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_MathV360K_VQA-AS_train_4054.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 4054,
+      "used_line_count": 1621,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_MovieNet_train_7379",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_MovieNet_train_7379.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 7379,
+      "used_line_count": 2951,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_Super-CLEVR_train_6811",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_Super-CLEVR_train_6811.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 6811,
+      "used_line_count": 2724,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_TallyQA_train_91587",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_TallyQA_train_91587.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 91587,
+      "used_line_count": 36634,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_VisualGenome_train_77404",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_VisualGenome_train_77404.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 77404,
+      "used_line_count": 30961,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_other_Grounding-and-Counting_train_1146",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_other_Grounding-and-Counting_train_1146.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 1146,
+      "used_line_count": 458,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-AskModelAnything_20260115",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-AskModelAnything_20260115.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 39833,
+      "used_line_count": 39833,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-Cap_20260115",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-Cap_20260115.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 74078,
+      "used_line_count": 74078,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-VideoCapQA_20260115_merged",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-VideoCapQA_20260115_merged.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 163683,
+      "used_line_count": 163683,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-VideoSubtitleQA_with_subtitles_20260207_merged",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-VideoSubtitleQA_with_subtitles_20260207_merged.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 90801,
+      "used_line_count": 90801,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ArXiv_OCR_train_159300",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ArXiv_OCR_train_159300.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 159300,
+      "used_line_count": 63720,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_CTW_train_13577",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_CTW_train_13577.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 13577,
+      "used_line_count": 5430,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Chrome-Writing_train_9247",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Chrome-Writing_train_9247.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 9247,
+      "used_line_count": 3698,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_HME_train_93641",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_HME_train_93641.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 93641,
+      "used_line_count": 37456,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_IAM_train_5659",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_IAM_train_5659.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 5659,
+      "used_line_count": 2263,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ICDAR-LSVT-zh_train_28213",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR-LSVT-zh_train_28213.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 28213,
+      "used_line_count": 11285,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ICDAR2017_train_9900",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR2017_train_9900.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 9900,
+      "used_line_count": 3960,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ICDAR2019_train_3392",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR2019_train_3392.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 3392,
+      "used_line_count": 1356,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_IIIT_5K_train_1976",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_IIIT_5K_train_1976.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 1976,
+      "used_line_count": 790,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_K12_Printing_train_211104",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_K12_Printing_train_211104.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 211104,
+      "used_line_count": 84441,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_MTWI_zh_train_8330",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_MTWI_zh_train_8330.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 8330,
+      "used_line_count": 3332,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Orand-Car-A_train_2000",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Orand-Car-A_train_2000.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 2000,
+      "used_line_count": 800,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ReCTs_train_17000",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ReCTs_train_17000.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 17000,
+      "used_line_count": 6800,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Rendered_Text_train_9996",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Rendered_Text_train_9996.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 9996,
+      "used_line_count": 3998,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Sroie_train_31832",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Sroie_train_31832.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 31832,
+      "used_line_count": 12732,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_TextOCR_train_47656",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_TextOCR_train_47656.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 47656,
+      "used_line_count": 19062,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_VCR-Wiki_train_77935",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_VCR-Wiki_train_77935.jsonl",
+      "sample_ratio": 0.4,
+      "line_count": 77935,
+      "used_line_count": 31174,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_AI2D_GPT4V_train_0-0_merged_5507",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_GPT4V_train_0-0_merged_5507.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4015,
+      "used_line_count": 4015,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_AI2D_InternVL_train_0-1_merged_10633",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_InternVL_train_0-1_merged_10633.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 753,
+      "used_line_count": 753,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_AI2D_train_0-2_merged_28597",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_train_0-2_merged_28597.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 23067,
+      "used_line_count": 23067,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CMM-Math_train_0-0_merged_1485",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CMM-Math_train_0-0_merged_1485.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1483,
+      "used_line_count": 1483,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Chemical_train_0-1_merged_18222",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Chemical_train_0-1_merged_18222.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 2873,
+      "used_line_count": 2873,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Circuit_train_0-1_merged_16962",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Circuit_train_0-1_merged_16962.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 5610,
+      "used_line_count": 5610,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Math_train_0-3_merged_37427",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Math_train_0-3_merged_37427.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 33539,
+      "used_line_count": 33539,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Music_train_0-2_merged_21158",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Music_train_0-2_merged_21158.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 5399,
+      "used_line_count": 5399,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_Geo170K_train_0-10_merged_106594",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_Geo170K_train_0-10_merged_106594.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 929,
+      "used_line_count": 929,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_GeoQA+_train_0-6_merged_60261",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_GeoQA+_train_0-6_merged_60261.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 55811,
+      "used_line_count": 55811,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_GeomVerse_train_0-0_merged_6531",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_GeomVerse_train_0-0_merged_6531.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4596,
+      "used_line_count": 4596,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_Geometry3K_train_0-1_merged_11355",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_Geometry3K_train_0-1_merged_11355.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4433,
+      "used_line_count": 4433,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_InterGPS_train_0-0_merged_1326",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_InterGPS_train_0-0_merged_1326.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 636,
+      "used_line_count": 636,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MAVIS-Geo_train_0-4_merged_43933",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MAVIS-Geo_train_0-4_merged_43933.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 41434,
+      "used_line_count": 41434,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MAVIS-Metagen_train_0-6_merged_62497",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MAVIS-Metagen_train_0-6_merged_62497.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 43005,
+      "used_line_count": 43005,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MapQA_train_0-14_merged_142630",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MapQA_train_0-14_merged_142630.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 5661,
+      "used_line_count": 5661,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MathV360K_TQA_train_0-0_merged_8437",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MathV360K_TQA_train_0-0_merged_8437.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 7623,
+      "used_line_count": 7623,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MetaMathQA_train_0-10_merged_110000",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MetaMathQA_train_0-10_merged_110000.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 94176,
+      "used_line_count": 94176,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_PMC-VQA_train_0-2_merged_25959",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_PMC-VQA_train_0-2_merged_25959.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 21486,
+      "used_line_count": 21486,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_PathVQA_train_0-2_merged_21776",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_PathVQA_train_0-2_merged_21776.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 9791,
+      "used_line_count": 9791,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_RAVEN_train_0-2_merged_23123",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_RAVEN_train_0-2_merged_23123.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 10566,
+      "used_line_count": 10566,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_ScienceQA_train_0-1_merged_12633",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_ScienceQA_train_0-1_merged_12633.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 11261,
+      "used_line_count": 11261,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_UniGeo_train_0-0_merged_8431",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_UniGeo_train_0-0_merged_8431.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 6187,
+      "used_line_count": 6187,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VQA-RAD_train_0-0_merged_1561",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VQA-RAD_train_0-0_merged_1561.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1385,
+      "used_line_count": 1385,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VisualWebInstruct_filtered_train_0-19_merged_190450",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VisualWebInstruct_filtered_train_0-19_merged_190450.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 148089,
+      "used_line_count": 148089,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VisualWebInstruct_train_0-14_merged_143407",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VisualWebInstruct_train_0-14_merged_143407.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 24455,
+      "used_line_count": 24455,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VizWiz_train_0-0_merged_6054",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VizWiz_train_0-0_merged_6054.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 2535,
+      "used_line_count": 2535,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_WebSight_train_0-0_merged_7634",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_WebSight_train_0-0_merged_7634.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 7574,
+      "used_line_count": 7574,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_other_train_0-0_merged_3864",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_other_train_0-0_merged_3864.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 2416,
+      "used_line_count": 2416,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "anet_caption_event_10009_10009",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/anet_caption_event_10009_10009_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 10009,
+      "used_line_count": 2001,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "anet_rtl_temporal_10068_10068",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/anet_rtl_temporal_10068_10068_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 10068,
+      "used_line_count": 2013,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "caption_smit_qwen3vl_rewrtten_448k",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/caption_smit_qwen3vl_rewrtten_448k.jsonl",
+      "sample_ratio": 0.25,
+      "line_count": 447961,
+      "used_line_count": 111990,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "caption_vidln_kinetics-vidln-kinetics_train_28k_27215",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_kinetics-vidln-kinetics_train_28k_27215_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 27211,
+      "used_line_count": 5442,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "caption_vidln_oops-vidln-oops_train_11k_10697",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_oops-vidln-oops_train_11k_10697_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 10697,
+      "used_line_count": 2139,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "caption_vidln_uvo_dense-vidln-uvo_dense_train_1k_563",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_uvo_dense-vidln-uvo_dense_train_1k_563_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 563,
+      "used_line_count": 112,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "caption_vidln_uvo_sparse-vidln-uvo_sparse_train_6k_5702",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_uvo_sparse-vidln-uvo_sparse_train_6k_5702_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 5702,
+      "used_line_count": 1140,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "charades_temporal_11237_11237",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/charades_temporal_11237_11237_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 10885,
+      "used_line_count": 2177,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "cinepile/cinepile_train_sample_qa_2.5Pro_thinking_processed_xtuner.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/cinepile/cinepile_train_sample_qa_2.5Pro_thinking_processed_xtuner_clean.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 6841,
+      "used_line_count": 6841,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "cinepile/cinepile_train_sample_qa_3Pro-Preview_thinking_20251124_v1_processed_xtuner_short.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/cinepile/cinepile_train_sample_qa_3Pro-Preview_thinking_20251124_v1_processed_xtuner_short_clean.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1232,
+      "used_line_count": 1232,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "cinepile_v2_mc_subtitles_merged_9k",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/cinepile_v2_mc_subtitles_merged_9k_clean.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 8964,
+      "used_line_count": 8964,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "classification_k710-k710-train_40k_40000",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/classification_k710-k710-train_40k_40000_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 39987,
+      "used_line_count": 7997,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "classification_ssv2-ssv2-train_40k_40000_clean",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/classification_ssv2-ssv2-train_40k_40000_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 39991,
+      "used_line_count": 7998,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "coin_event_9026_9026",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/coin_event_9026_9026_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 9026,
+      "used_line_count": 1805,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Chat_0-8k_307729",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Chat_0-8k_307729.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 307729,
+      "used_line_count": 307729,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Chat_8k-32k_1787",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Chat_8k-32k_1787.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1787,
+      "used_line_count": 1787,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Coding_0-8k_328614",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Coding_0-8k_328614.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 328614,
+      "used_line_count": 328614,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Math_0-8k_269893",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Math_0-8k_269893.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 269893,
+      "used_line_count": 269893,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Math_8k-32k_42",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Math_8k-32k_42.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 42,
+      "used_line_count": 42,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Multilingual_0-8k_99739",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Multilingual_0-8k_99739.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 99739,
+      "used_line_count": 99739,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Multilingual_8k-32k_218",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Multilingual_8k-32k_218.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 218,
+      "used_line_count": 218,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Other_0-8k_254833",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Other_0-8k_254833.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 254833,
+      "used_line_count": 254833,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Other_8k-32k_28",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Other_8k-32k_28.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 28,
+      "used_line_count": 28,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_0-8k_136752",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_0-8k_136752.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 136752,
+      "used_line_count": 136752,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_32k-128k_9",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_32k-128k_9.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 9,
+      "used_line_count": 9,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_8k-32k_72",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_8k-32k_72.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 72,
+      "used_line_count": 72,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Reasoning_0-8k_310545",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Reasoning_0-8k_310545.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 310545,
+      "used_line_count": 310545,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Reasoning_8k-32k_27",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Reasoning_8k-32k_27.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 27,
+      "used_line_count": 27,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Science_0-8k_103818",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Science_0-8k_103818.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 103818,
+      "used_line_count": 103818,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Science_8k-32k_7",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Science_8k-32k_7.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 7,
+      "used_line_count": 7,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "finevideo_train_86922",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/finevideo_train_86922.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": -1,
+      "used_line_count": null,
+      "status": "missing"
+    },
+    {
+      "dataset_key": "got10k_spatiotemporal_obj_58218_58218",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/got10k_spatiotemporal_obj_58218_58218_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 58218,
+      "used_line_count": 11643,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "guiworld_en_20241029_fix_94980_clean",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/guiworld_en_20241029_fix_94980_clean.jsonl",
+      "sample_ratio": 0.25,
+      "line_count": 93837,
+      "used_line_count": 23459,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "hirest_event_918_842",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/hirest_event_918_842_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 842,
+      "used_line_count": 168,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "hirest_temporal_398_398",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/hirest_temporal_398_398_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 398,
+      "used_line_count": 79,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "internvid_temporal_25001_25001",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/internvid_temporal_25001_25001_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 25000,
+      "used_line_count": 5000,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "lasot_spatial_relative_18911_18911",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/lasot_spatial_relative_18911_18911_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 18514,
+      "used_line_count": 3702,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "lasot_spatiotemporal_det_14173_14173",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/lasot_spatiotemporal_det_14173_14173_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 14173,
+      "used_line_count": 2834,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "lasot_spatiotemporal_tracking_50782_50782",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/lasot_spatiotemporal_tracking_50782_50782_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 50782,
+      "used_line_count": 10156,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 5718,
+      "used_line_count": 5718,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 48464,
+      "used_line_count": 48464,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_v0_1_cap_processed_11985",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_academic_v0_1_cap_processed_11985.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 11985,
+      "used_line_count": 11985,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_v0_1_cap_processed_11985_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_0_30_s_academic_v0_1_cap_processed_11985_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 11982,
+      "used_line_count": 11982,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 2031,
+      "used_line_count": 2031,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_nextqa_mc_qa_processed_5496_correct_samples_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_nextqa_mc_qa_processed_5496_correct_samples_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4828,
+      "used_line_count": 4828,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_nextqa_oe_qa_processed_5492_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_nextqa_oe_qa_processed_5492_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 3534,
+      "used_line_count": 3534,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 39120,
+      "used_line_count": 39120,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 419969,
+      "used_line_count": 419969,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_youtube_v0_1_cap_processed_79346_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_0_30_s_youtube_v0_1_cap_processed_79346_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 79315,
+      "used_line_count": 79315,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4215,
+      "used_line_count": 4215,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 26284,
+      "used_line_count": 26284,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_v0_1_cap_processed_4627",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_academic_v0_1_cap_processed_4627.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4627,
+      "used_line_count": 4627,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_v0_1_cap_processed_4627_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_1_2_m_academic_v0_1_cap_processed_4627_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4621,
+      "used_line_count": 4621,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 3308,
+      "used_line_count": 3308,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_nextqa_mc_qa_processed_4633_correct_samples_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_nextqa_mc_qa_processed_4633_correct_samples_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4086,
+      "used_line_count": 4086,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_nextqa_oe_qa_processed_4694_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_nextqa_oe_qa_processed_4694_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 3051,
+      "used_line_count": 3051,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 39533,
+      "used_line_count": 39533,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 136804,
+      "used_line_count": 136804,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_youtube_v0_1_cap_processed_24234_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_1_2_m_youtube_v0_1_cap_processed_24234_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 23996,
+      "used_line_count": 23996,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 6853,
+      "used_line_count": 6853,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 18093,
+      "used_line_count": 18093,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_v0_1_cap_processed_3124",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_academic_v0_1_cap_processed_3124.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 3122,
+      "used_line_count": 3122,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_v0_1_cap_processed_3124_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_2_3_m_academic_v0_1_cap_processed_3124_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 3121,
+      "used_line_count": 3121,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4907,
+      "used_line_count": 4907,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_nextqa_mc_qa_processed_52_correct_samples_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_nextqa_mc_qa_processed_52_correct_samples_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 44,
+      "used_line_count": 44,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_nextqa_oe_qa_processed_61_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_nextqa_oe_qa_processed_61_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 29,
+      "used_line_count": 29,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 39759,
+      "used_line_count": 39759,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 140866,
+      "used_line_count": 140866,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_youtube_v0_1_cap_processed_24685_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_2_3_m_youtube_v0_1_cap_processed_24685_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 24647,
+      "used_line_count": 24647,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 20229,
+      "used_line_count": 20229,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_shortcot20251216",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 57909,
+      "used_line_count": 57909,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_v0_1_cap_processed_10514",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_academic_v0_1_cap_processed_10514.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 10514,
+      "used_line_count": 10514,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_v0_1_cap_processed_10514_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_30_60_s_academic_v0_1_cap_processed_10514_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 10511,
+      "used_line_count": 10511,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 3063,
+      "used_line_count": 3063,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_nextqa_mc_qa_processed_6843_correct_samples_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_nextqa_mc_qa_processed_6843_correct_samples_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 5942,
+      "used_line_count": 5942,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_nextqa_oe_qa_processed_6843_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_nextqa_oe_qa_processed_6843_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4400,
+      "used_line_count": 4400,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_qwen3vl235b_rewrtten_cleaned",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_qwen3vl235b_rewrtten_cleaned.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 39589,
+      "used_line_count": 39589,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624_qwen3vl235b_rewrtten_cleaned",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624_qwen3vl235b_rewrtten_cleaned.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 110402,
+      "used_line_count": 110402,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_youtube_v0_1_cap_processed_19995_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_30_60_s_youtube_v0_1_cap_processed_19995_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 19935,
+      "used_line_count": 19935,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvid_level1_densecap_45495_45495",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/longvid_level1_densecap_45495_45495_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 45495,
+      "used_line_count": 9099,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_long_updated.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 2567,
+      "used_line_count": 2567,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 7901,
+      "used_line_count": 7901,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_long.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_long_updated.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1056,
+      "used_line_count": 1056,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_short.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_short.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 3415,
+      "used_line_count": 3415,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_2.5Pro_thinking_processed_xtuner_long.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_2.5Pro_thinking_processed_xtuner_long_updated.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1145,
+      "used_line_count": 1145,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_3Pro-Preview_thinking_20251124_v1_processed_xtuner_long.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_3Pro-Preview_thinking_20251124_v1_processed_xtuner_long_updated.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 233,
+      "used_line_count": 233,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "motionbench_train_4998",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/motionbench_train_4998.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4998,
+      "used_line_count": 4998,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "motionbench_train_4998_fps4",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/motionbench_train_4998.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 4998,
+      "used_line_count": 4998,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "perception_test_correct_samples_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/perception_test_correct_samples_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1857,
+      "used_line_count": 1857,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "pevideo_train100k",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/pevideo_train100k_clean.jsonl",
+      "sample_ratio": 0.25,
+      "line_count": 103714,
+      "used_line_count": 25928,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "queryd_temporal_13079_13079",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/queryd_temporal_13079_13079_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 12724,
+      "used_line_count": 2544,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "reasoning_clevrer_mc-clevrer_mc-train_43k_debug_43k_42620",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/reasoning_clevrer_mc-clevrer_mc-train_43k_debug_43k_42620.jsonl",
+      "sample_ratio": 0.1,
+      "line_count": 42620,
+      "used_line_count": 4262,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "reasoning_clevrer_qa-clevrer_qa-train_mc_40k_40000",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/reasoning_clevrer_qa-clevrer_qa-train_mc_40k_40000.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 40000,
+      "used_line_count": 40000,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "reasoning_star-star-train_46k_45731_clean",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/reasoning_star-star-train_46k_45731_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 40205,
+      "used_line_count": 8041,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 6295,
+      "used_line_count": 6295,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 6062,
+      "used_line_count": 6062,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo20251020_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 7109,
+      "used_line_count": 7109,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo20251020_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 2794,
+      "used_line_count": 2794,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 2775,
+      "used_line_count": 2775,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "ssv2_paxion_antonyms_train_classification_40k_38494",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/ssv2_paxion_antonyms_train_classification_40k_38494_clean.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 38485,
+      "used_line_count": 38485,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "star-train_46k_correct_samples_qwen3vl235b_rewrtten",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/star-train_46k_correct_samples_qwen3vl235b_rewrtten_clean.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 17386,
+      "used_line_count": 17386,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_0-to-60_5300",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_0-to-60_5300.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 5300,
+      "used_line_count": 5300,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_0-to-60_5300_fps4",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_0-to-60_5300.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 5300,
+      "used_line_count": 5300,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_120-to-180_6840",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_120-to-180_6840.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 6820,
+      "used_line_count": 6820,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_60-to-120_6157",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_60-to-120_6157.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 6157,
+      "used_line_count": 6157,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_over180_1137",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_over180_1137.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1137,
+      "used_line_count": 1137,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_over180_1137_fps1",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_over180_1137.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 1137,
+      "used_line_count": 1137,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "vcg-plus_112K_clean_97k_96444_16k",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vcg-plus_112K_clean_97k_96444_merged.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": -1,
+      "used_line_count": null,
+      "status": "missing"
+    },
+    {
+      "dataset_key": "vitt_event_5086_2685",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vitt_event_5086_2685_clean.jsonl",
+      "sample_ratio": 0.2,
+      "line_count": 2685,
+      "used_line_count": 537,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "vqa_rgbd-nturgbd_clean_110k_109416",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_rgbd-nturgbd_clean_110k_109416_clean.jsonl",
+      "sample_ratio": 0.25,
+      "line_count": 106484,
+      "used_line_count": 26621,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "vqa_tgif_count-openend_qa_train_openend_26839_26839",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_count-openend_qa_train_openend_26839_26839.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 26839,
+      "used_line_count": 26839,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 52696,
+      "used_line_count": 52696,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435_clean.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 17435,
+      "used_line_count": 17435,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "vript_under60s_400k_merged",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vript_under60s_400k_merged.jsonl",
+      "sample_ratio": 1.0,
+      "line_count": 394901,
+      "used_line_count": 394901,
+      "status": "ok"
+    }
+  ],
+  "duplicate_anno_paths": {
+    "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_0-to-60_5300.jsonl": [
+      "timelens-100k_0-to-60_5300_fps4",
+      "timelens-100k_0-to-60_5300"
+    ],
+    "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_over180_1137.jsonl": [
+      "timelens-100k_over180_1137",
+      "timelens-100k_over180_1137_fps1"
+    ],
+    "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/motionbench_train_4998.jsonl": [
+      "motionbench_train_4998_fps4",
+      "motionbench_train_4998"
+    ]
+  },
+  "missing_paths": [
+    {
+      "dataset_key": "finevideo_train_86922",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/finevideo_train_86922.jsonl"
+    },
+    {
+      "dataset_key": "vcg-plus_112K_clean_97k_96444_16k",
+      "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vcg-plus_112K_clean_97k_96444_merged.jsonl"
+    }
+  ]
+}
