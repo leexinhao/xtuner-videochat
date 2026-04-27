@@ -1,170 +1,21 @@
-{
-    "Online_StreamForest_Event_anet_caption_10009_10009": {
-        "media_root": "p2:s3://anet",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/event/anet_caption_event_10009_10009_clean.jsonl",
+{   
+
+    "Online_Supplement_Egoqa_openend_clean_3558":{
+        "media_root": "p2:s3://egoqa/split_videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Supplement/vqa_ego_qa_openend_clean_3558.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Event_coin_9026_9026": {
-        "media_root": "pnorm:s3://COIN_320p",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/event/coin_event_9026_9026_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatial_all_seeing_spatial_45000": {
-        "media_root": "p2hddimg:s3://SA-1B/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_45000.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatial_all_seeing_spatial_vqa_42842": {
-        "media_root": "p2hddimg:s3://SA-1B/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_vqa_42842.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatial_RefCOCO_spatial_43140": {
-        "media_root": "pnorm2:s3://coco-caption/train2014/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/RefCOCO_spatial_43140_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatial_vg_spatial_43208": {
-        "media_root": "pnorm2:s3://vg-dataset/images/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/vg_spatial_43208_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatial_lasot_relative_18911_18911": {
-        "media_root": "pnorm2:s3://lasot/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/lasot_spatial_relative_18911_18911_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Temporal_anet_rtl_10068_10068": {
-        "media_root": "p2:s3://anet/ANet_320p_fps30/train",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/anet_rtl_temporal_10068_10068_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Temporal_charades_11237_11237": {
-        "media_root": "p2:s3://star/Charades_v1_480/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/charades_temporal_11237_11237_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Temporal_hirest_398_398": {
-        "media_root": "pnorm2zxy:s3://hirest/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/hirest_temporal_398_398_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Temporal_internvid_25001_25001": {
-        "media_root": "pnorm:s3://youtubeBucket/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/internvid_temporal_25001_25001_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Temporal_queryd_13079_13079": {
-        "media_root": "pnorm2zxy:s3://queryd/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/queryd_temporal_13079_13079_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatiotemporal_ava_action_6220": {
-        "media_root": "videogpu:s3://video-online/AVA_frame_4fps/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/ava_spatiotemporal_action_6220_6192_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatiotemporal_got10k_58218_58218": {
-        "media_root": "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/got10k_spatiotemporal_obj_58218_58218_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatiotemporal_lasot_det_14173_14173": {
-        "media_root": "pnorm2:s3://lasot/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_det_14173_14173_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
-    },
-    "Online_StreamForest_Spatiotemporal_lasot_tracking_50782_50782": {
-        "media_root": "pnorm2:s3://lasot/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_tracking_50782_50782_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1,
         "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
 
-
-    "Online_StreamForest_Drive_ActionPrediction_2967": {
-        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/ActionPrediction_2967.jsonl",
+    "Online_Supplement_Egoqa_mcq_hld_unable_1023":{
+        "media_root": "p2:s3://egoqa/split_videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Supplement/vqa_egoqa_mc_hld_unable_1023.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
-    },
-    "Online_StreamForest_Drive_LocPrediction_1423": {
-        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/LocPrediction_1423.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
-    },
-    "Online_StreamForest_Drive_MoveDistancePrediction_7287": {
-        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/MoveDistancePrediction_7287.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
-    },
-    "Online_StreamForest_Drive_Accident_Reason_Answering_5611": {
-        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Accident_Reason_Answering_5611.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
-    },
-    "Online_StreamForest_Drive_Detailed_Risk_prediction_7470": {
-        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Detailed_Risk_prediction_7470.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
-    },
-    "Online_StreamForest_Drive_Memory_of_past_traffic_information_9391": {
-        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Memory_of_past_traffic_information_9391.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
-    },
-    "Online_StreamForest_Drive_Real_time_perception_of_traffic_information_12996": {
-        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Real_time_perception_of_traffic_information_12996.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
+        "sample_ratio": 1,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
 
 
@@ -329,6 +180,194 @@
         "sample_ratio": 0.5,
         "video_sample_fps": 4,
         "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
+    },
+
+    
+
+
+    "Online_StreamForest_Event_anet_caption_10009_10009": {
+        "media_root": "p2:s3://anet",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/event/anet_caption_event_10009_10009_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Event_coin_9026_9026": {
+        "media_root": "pnorm:s3://COIN_320p",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/event/coin_event_9026_9026_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatial_lasot_relative_18911_18911": {
+        "media_root": "pnorm2:s3://lasot/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/lasot_spatial_relative_18911_18911_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatial_all_seeing_spatial_45000": {
+        "media_root": "p2hddimg:s3://SA-1B/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_45000.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatial_all_seeing_spatial_vqa_42842": {
+        "media_root": "p2hddimg:s3://SA-1B/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_vqa_42842.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatial_RefCOCO_spatial_43140": {
+        "media_root": "pnorm2:s3://coco-caption/train2014/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/RefCOCO_spatial_43140_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatial_vg_spatial_43208": {
+        "media_root": "pnorm2:s3://vg-dataset/images/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/vg_spatial_43208_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatiotemporal_ava_action_6220": {
+        "media_root": "videogpu:s3://video-online/AVA_frame_4fps/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/ava_spatiotemporal_action_6220_6192_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatiotemporal_got10k_58218_58218": {
+        "media_root": "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/got10k_spatiotemporal_obj_58218_58218_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatiotemporal_lasot_det_14173_14173": {
+        "media_root": "pnorm2:s3://lasot/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_det_14173_14173_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Spatiotemporal_lasot_tracking_50782_50782": {
+        "media_root": "pnorm2:s3://lasot/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_tracking_50782_50782_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Temporal_anet_rtl_10068_10068": {
+        "media_root": "p2:s3://anet/ANet_320p_fps30/train",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/anet_rtl_temporal_10068_10068_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Temporal_charades_11237_11237": {
+        "media_root": "p2:s3://star/Charades_v1_480/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/charades_temporal_11237_11237_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Temporal_hirest_398_398": {
+        "media_root": "pnorm2zxy:s3://hirest/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/hirest_temporal_398_398_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Temporal_internvid_25001_25001": {
+        "media_root": "pnorm:s3://youtubeBucket/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/internvid_temporal_25001_25001_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_StreamForest_Temporal_queryd_13079_13079": {
+        "media_root": "pnorm2zxy:s3://queryd/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/queryd_temporal_13079_13079_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+
+
+
+
+    "Online_StreamForest_Drive_ActionPrediction_2967": {
+        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/ActionPrediction_2967.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
+    },
+    "Online_StreamForest_Drive_LocPrediction_1423": {
+        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/LocPrediction_1423.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
+    },
+    "Online_StreamForest_Drive_MoveDistancePrediction_7287": {
+        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/MoveDistancePrediction_7287.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
+    },
+    "Online_StreamForest_Drive_Accident_Reason_Answering_5611": {
+        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Accident_Reason_Answering_5611.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
+    },
+    "Online_StreamForest_Drive_Detailed_Risk_prediction_7470": {
+        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Detailed_Risk_prediction_7470.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
+    },
+    "Online_StreamForest_Drive_Memory_of_past_traffic_information_9391": {
+        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Memory_of_past_traffic_information_9391.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
+    },
+    "Online_StreamForest_Drive_Real_time_perception_of_traffic_information_12996": {
+        "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Real_time_perception_of_traffic_information_12996.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
     },
 
 
@@ -2061,5 +2100,131 @@
         "data_augment": false,
         "sample_ratio": 0.05,
         "video_sample_fps": 30
+    },
+    "atomic_Atomic_OpenQA_sft_4fps": {
+        "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/sft.jsonl",
+        "estimated_length": 3500,
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4
+    },
+    "atomic_Atomic_OpenQA_sft_8fps": {
+        "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/sft.jsonl",
+        "estimated_length": 3500,
+        "data_augment": false,
+        "sample_ratio": 0.25,
+        "video_sample_fps": 8
+    },
+    "atomic_Atomic_OpenQA_sft_30fps": {
+        "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/sft.jsonl",
+        "estimated_length": 3500,
+        "data_augment": false,
+        "sample_ratio": 0.05,
+        "video_sample_fps": 30
+    },
+    "atomic_Atomic2_OpenQA_sft_4fps": {
+        "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/sft.jsonl",
+        "estimated_length": 1000,
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4
+    },
+    "atomic_Atomic2_OpenQA_sft_8fps": {
+        "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/sft.jsonl",
+        "estimated_length": 1000,
+        "data_augment": false,
+        "sample_ratio": 0.25,
+        "video_sample_fps": 8
+    },
+    "atomic_Atomic2_OpenQA_sft_30fps": {
+        "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/sft.jsonl",
+        "estimated_length": 1000,
+        "data_augment": false,
+        "sample_ratio": 0.05,
+        "video_sample_fps": 30
+    },
+    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new": {
+        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.11,
+        "estimated_length": 16000
+    },
+    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new_2fps": {
+        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.01,
+        "video_sample_fps": 2,
+        "estimated_length": 16000
+    },
+    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new_4fps": {
+        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.01,
+        "video_sample_fps": 4,
+        "estimated_length": 16000
+    },
+    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new_8fps": {
+        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.005,
+        "video_sample_fps": 8,
+        "estimated_length": 16000
+    },
+    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_long_vc3format_new": {
+        "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_long20260411_vc3format.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.24,
+        "video_read_type": "img2",
+        "video_sample_fps": 1,
+        "video_max_total_pixels": 123312537,
+        "estimated_length": 10000
+    },
+    "motionbench_train_4998_fps4": {
+        "media_root": "pnorm2:s3://videochat3_frames/motionbench_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/motionbench_train_4998.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.5,
+        "video_sample_fps": 4,
+        "video_read_type": "img2"
+    },
+    "vqa_tgif_count-openend_qa_train_openend_26839_26839": {
+        "media_root": "p2:s3://tgif/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_count-openend_qa_train_openend_26839_26839.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.05,
+        "video_sample_fps": 4,
+        "video_read_type": "gif"
+    },
+    "vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696": {
+        "media_root": "p2:s3://tgif/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.05,
+        "video_sample_fps": 4,
+        "video_read_type": "gif"
+    },
+    "vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435": {
+        "media_root": "p2:s3://tvqa/frames_fps3_hq/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.025,
+        "video_read_type": "img2"
+    },
+    "cinepile_v2_mc_subtitles_merged_6k": {
+        "media_root": "pnorm2:s3://cinepile/ori_video/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/cinepile_v2_mc_subtitles_merged_6k.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.025
     }
 }
