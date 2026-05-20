@@ -1,271 +1,107 @@
 {   
-
-    "Online_Supplement_Egoqa_openend_clean_3558":{
+    
+    "Online_Supplement_ava_spatiotemporal_action_14923": {
+        "media_root": "p2:s3://egoqa/split_videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Supplement/vqa_ava_spatiotemporal_14923.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1,
+        "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
+    },
+    "Online_Supplement_Egoqa_openend_clean_3558": {
         "media_root": "p2:s3://egoqa/split_videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Supplement/vqa_ego_qa_openend_clean_3558.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
-        "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
-
-    "Online_Supplement_Egoqa_mcq_hld_unable_1023":{
+    "Online_Supplement_Egoqa_mcq_hld_unable_1023": {
         "media_root": "p2:s3://egoqa/split_videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Supplement/vqa_egoqa_mc_hld_unable_1023.jsonl",
         "data_augment": false,
         "sample_ratio": 1,
-        "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
 
-
-
-
-    "Online_Streamo_action_caption_COIN_stream": {
-        "media_root": "videogpu:s3://video-online/COIN_320p/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/action_caption/COIN_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_action_caption_Youcookv2_stream": {
-        "media_root": "videogpu:s3://video-online/YouCookv2/raw_videos/training/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/action_caption/Youcookv2_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_action_caption_how_to_step_stream": {
-        "media_root": "videogpu:s3://video-online/how_to_step/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/action_caption/how_to_step_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-
-
-    "Online_Streamo_event_caption_ActivityNet_stream": {
-        "media_root": "videogpu:s3://video-online/ActivityNet/video/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_caption/ActivityNet_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_event_caption_QVHighlight_stream_converted": {
-        "media_root": "videogpu:s3://video-online/qvhighlight/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_caption/QVHighlight_stream_converted.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_event_caption_LLaVA_Video_stream": {
-        "media_root": "videogpu:s3://video-online/LLaVA_Video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_caption/LLaVA_Video_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-
-
-    "Online_Streamo_event_grounding_ActivityNet_grounding_stream": {
-        "media_root": "videogpu:s3://video-online/ActivityNet/video/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_grounding/ActivityNet_grounding_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_event_grounding_LLaVA_Video_grounding_stream": {
-        "media_root": "videogpu:s3://video-online/LLaVA_Video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_grounding/LLaVA_Video_grounding_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_event_grounding_QVHighlight_grounding_stream": {
-        "media_root": "videogpu:s3://video-online/qvhighlight/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_grounding/QVHighlight_grounding_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_event_grounding_didemo_stream": {
-        "media_root": "videogpu:s3://video-online/didemo/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_grounding/didemo_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_event_grounding_Queryd_stream": {
-        "media_root": "videogpu:s3://video-online/queryd/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_grounding/Queryd_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_event_grounding_tacos_stream": {
-        "media_root": "videogpu:s3://video-online/tacos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/event_grounding/tacos_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-
-
-    "Online_Streamo_narration_QVHighlight_narration_stream_converted": {
-        "media_root": "videogpu:s3://video-online/qvhighlight/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/narration/QVHighlight_narration_stream_converted.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_narration_ActivityNet_narration_stream": {
-        "media_root": "videogpu:s3://video-online/ActivityNet/video/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/narration/ActivityNet_narration_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-
-
-    "Online_Streamo_qa_ActivityNet_qa_stream": {
-        "media_root": "videogpu:s3://video-online/ActivityNet/video/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/qa/ActivityNet_qa_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_qa_QVHighlight_qa_stream": {
-        "media_root": "videogpu:s3://video-online/qvhighlight/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/qa/QVHighlight_qa_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_qa_Ego_timeqa_stream": {
-        "media_root": "videogpu:s3://video-online/ego_timeqa/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/qa/Ego_timeqa_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_qa_LLaVA_Video_qa_youtube_1": {
-        "media_root": "videogpu:s3://video-online/LLaVA_Video/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/qa/LLaVA_Video_qa_youtube_1_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_Streamo_qa_LLaVA_Video_qa_youtube_2": {
-        "media_root": "videogpu:s3://video-online/LLaVA_Video/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Streamo_Silence224_Standby448/qa/LLaVA_Video_qa_youtube_2_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-
-    
 
 
     "Online_StreamForest_Event_anet_caption_10009_10009": {
         "media_root": "p2:s3://anet",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/event/anet_caption_event_10009_10009_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Event_coin_9026_9026": {
         "media_root": "pnorm:s3://COIN_320p",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/event/coin_event_9026_9026_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatial_lasot_relative_18911_18911": {
         "media_root": "pnorm2:s3://lasot/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/lasot_spatial_relative_18911_18911_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatial_all_seeing_spatial_45000": {
         "media_root": "p2hddimg:s3://SA-1B/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_45000.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_45000_bbox1000_45000.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatial_all_seeing_spatial_vqa_42842": {
         "media_root": "p2hddimg:s3://SA-1B/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_vqa_42842.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_vqa_42842_bbox1000_42842.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatial_RefCOCO_spatial_43140": {
         "media_root": "pnorm2:s3://coco-caption/train2014/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/RefCOCO_spatial_43140_clean.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/RefCOCO_spatial_43140_clean_bbox1000_43140.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatial_vg_spatial_43208": {
         "media_root": "pnorm2:s3://vg-dataset/images/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/vg_spatial_43208_clean.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatial/vg_spatial_43208_clean_bbox1000_43208.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "system_message": "You are a image analysis assistant. Please observe the image and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatiotemporal_ava_action_6220": {
         "media_root": "videogpu:s3://video-online/AVA_frame_4fps_new/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/ava_spatiotemporal_action_6220_6192_clean_sliding128.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/ava_spatiotemporal_action_6220_6192_clean_sliding128_bbox1000_6192.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatiotemporal_got10k_58218_58218": {
         "media_root": "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/got10k_spatiotemporal_obj_58218_58218_clean.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/got10k_spatiotemporal_obj_58218_58218_clean_bbox1000_58162.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatiotemporal_lasot_det_14173_14173": {
         "media_root": "pnorm2:s3://lasot/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_det_14173_14173_clean.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_det_14173_14173_clean_bbox1000_14171.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Spatiotemporal_lasot_tracking_50782_50782": {
         "media_root": "pnorm2:s3://lasot/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_tracking_50782_50782_clean.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_tracking_50782_50782_clean_bbox1000_50771.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
@@ -273,137 +109,85 @@
         "media_root": "p2:s3://anet/ANet_320p_fps30/train",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/anet_rtl_temporal_10068_10068_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Temporal_charades_11237_11237": {
         "media_root": "p2:s3://star/Charades_v1_480/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/charades_temporal_11237_11237_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Temporal_hirest_398_398": {
         "media_root": "pnorm2zxy:s3://hirest/videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/hirest_temporal_398_398_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Temporal_internvid_25001_25001": {
         "media_root": "pnorm:s3://youtubeBucket/videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/internvid_temporal_25001_25001_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
     "Online_StreamForest_Temporal_queryd_13079_13079": {
         "media_root": "pnorm2zxy:s3://queryd/videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-General/temporal/queryd_temporal_13079_13079_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are a real-time streaming video analysis assistant. Please observe the live video stream and answer the question strictly based on the visual information."
     },
-
-
-
-
     "Online_StreamForest_Drive_ActionPrediction_2967": {
         "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/ActionPrediction_2967.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/ActionPrediction_2967_bbox1000_2967.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
     },
     "Online_StreamForest_Drive_LocPrediction_1423": {
         "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/LocPrediction_1423.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/LocPrediction_1423_bbox1000_1423.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
     },
     "Online_StreamForest_Drive_MoveDistancePrediction_7287": {
         "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/MoveDistancePrediction_7287.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/MoveDistancePrediction_7287_bbox1000_7287.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
     },
     "Online_StreamForest_Drive_Accident_Reason_Answering_5611": {
         "media_root": "pnorm2:s3://OMQA-DS-ALL/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Accident_Reason_Answering_5611.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
     },
     "Online_StreamForest_Drive_Detailed_Risk_prediction_7470": {
         "media_root": "pnorm2:s3://OMQA-DS-ALL/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Detailed_Risk_prediction_7470.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
     },
     "Online_StreamForest_Drive_Memory_of_past_traffic_information_9391": {
         "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Memory_of_past_traffic_information_9391.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Memory_of_past_traffic_information_9391_bbox1000_8784.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
     },
     "Online_StreamForest_Drive_Real_time_perception_of_traffic_information_12996": {
         "media_root": "pnorm2:s3://OMQA-DS-ALL/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Real_time_perception_of_traffic_information_12996.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Real_time_perception_of_traffic_information_12996_bbox1000_12996.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
+        "sample_ratio": 1.0,
         "system_message": "You are an expert driving analyst. Observe the streaming video of the driving scenario and answer the question relying strictly on the visual information."
-    },
-
-
-
-
-    "Online_QA_Seeker_interleave_llava_video": {
-        "media_root": "pnorm2:s3://llava_video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Seeker_Silence224_Standby448/llava-video_youtube_qa_mc_2_3_m_clue_single_w_tool_79848_merged_9973_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_QA_Seeker_interleave_longvideodb": {
-        "media_root": "videogpu:s3://videochat-o3/data/LongVideoDB/videos_4fps/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Seeker_Silence224_Standby448/longvideodb_gemini_clue_single_w_tool_7000_merged_3805_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_QA_Seeker_interleave_selfbuilt_1": {
-        "media_root": "videogpu:s3://videochat-o3/data/lxh20251224_video_source/videos/180to600_4fps/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Seeker_Silence224_Standby448/selfbuilt_1_qa_f180to600_clue_single_w_tool_5796_merged_2168_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
-    },
-    "Online_QA_Seeker_interleave_selfbuilt_2": {
-        "media_root": "videogpu:s3://videochat-o3/data/lxh20251224_video_source/videos/180to600_4fps/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/VC3_Online_data_annotations/Online_Seeker_Silence224_Standby448/selfbuilt_2_qa_f180to600_clue_single_w_tool_7491_merged_3691_stream.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "system_message": "You are a helpful assistant specializing in streaming video analysis.\nYou will receive the video as a sequence of short clips, each labeled with absolute time intervals\nin the exact format <Xs-Ys> (e.g., <0s-1s>). Follow these rules precisely:\n\n1. Use </Silence> when:\n   - No relevant event has started, OR\n   - The current input is irrelevant to the given question.\n\n2. Use </Standby> when:\n   - An event is in progress but has not yet completed, OR\n   - The current input is relevant but the question cannot yet be answered.\n\n3. Use </Response> only when:\n   - An event has fully concluded, OR\n   - The available information is sufficient to fully answer the question.\n   Provide a complete description at this point.\n\nDo not provide partial answers or speculate beyond the given information.\nWhenever you deliver an answer, begin with </Response>."
     },
 
 
@@ -413,1446 +197,1446 @@
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Chat_0-8k_307729.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Chat_8k-32k_1787": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Chat_8k-32k_1787.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Coding_0-8k_328614": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Coding_0-8k_328614.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Math_0-8k_269893": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Math_0-8k_269893.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Math_8k-32k_42": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Math_8k-32k_42.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Multilingual_0-8k_99739": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Multilingual_0-8k_99739.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Multilingual_8k-32k_218": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Multilingual_8k-32k_218.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Other_0-8k_254833": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Other_0-8k_254833.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Other_8k-32k_28": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Other_8k-32k_28.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_0-8k_136752": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_0-8k_136752.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_8k-32k_72": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_8k-32k_72.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_32k-128k_9": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_32k-128k_9.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Reasoning_0-8k_310545": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Reasoning_0-8k_310545.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Reasoning_8k-32k_27": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Reasoning_8k-32k_27.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Science_0-8k_103818": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Science_0-8k_103818.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "dolci_instruct_sft_xtuner_format_no_tool_Science_8k-32k_7": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Science_8k-32k_7.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1
     },
     "STEM_AI2D_GPT4V_train_0-0_merged_5507": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/AI2D_GPT4V",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_GPT4V_train_0-0_merged_5507.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_AI2D_InternVL_train_0-1_merged_10633": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/AI2D_InternVL",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_InternVL_train_0-1_merged_10633.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_AI2D_train_0-2_merged_28597": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/AI2D",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_train_0-2_merged_28597.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_CMM-Math_train_0-0_merged_1485": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CMM-Math",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CMM-Math_train_0-0_merged_1485.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_CoSyn_Chemical_train_0-1_merged_18222": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Chemical",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Chemical_train_0-1_merged_18222.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_CoSyn_Circuit_train_0-1_merged_16962": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Circuit",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Circuit_train_0-1_merged_16962.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_CoSyn_Math_train_0-3_merged_37427": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Math",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Math_train_0-3_merged_37427.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_CoSyn_Music_train_0-2_merged_21158": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Music",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Music_train_0-2_merged_21158.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_Geo170K_train_0-10_merged_106594": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/Geo170K",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_Geo170K_train_0-10_merged_106594.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_GeoQA+_train_0-6_merged_60261": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/GeoQA+",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_GeoQA+_train_0-6_merged_60261.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_GeomVerse_train_0-0_merged_6531": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/GeomVerse",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_GeomVerse_train_0-0_merged_6531.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_Geometry3K_train_0-1_merged_11355": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/Geometry3K",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_Geometry3K_train_0-1_merged_11355.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_InterGPS_train_0-0_merged_1326": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/InterGPS",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_InterGPS_train_0-0_merged_1326.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_MAVIS-Geo_train_0-4_merged_43933": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MAVIS-Geo",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MAVIS-Geo_train_0-4_merged_43933.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_MAVIS-Metagen_train_0-6_merged_62497": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MAVIS-Metagen",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MAVIS-Metagen_train_0-6_merged_62497.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_MapQA_train_0-14_merged_142630": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MapQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MapQA_train_0-14_merged_142630.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_MathV360K_TQA_train_0-0_merged_8437": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MathV360K_TQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MathV360K_TQA_train_0-0_merged_8437.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_MetaMathQA_train_0-10_merged_110000": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MetaMathQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MetaMathQA_train_0-10_merged_110000.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_PMC-VQA_train_0-2_merged_25959": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/PMC-VQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_PMC-VQA_train_0-2_merged_25959.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_PathVQA_train_0-2_merged_21776": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/PathVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_PathVQA_train_0-2_merged_21776.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_RAVEN_train_0-2_merged_23123": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/RAVEN",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_RAVEN_train_0-2_merged_23123.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_ScienceQA_train_0-1_merged_12633": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/ScienceQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_ScienceQA_train_0-1_merged_12633.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_UniGeo_train_0-0_merged_8431": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/UniGeo",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_UniGeo_train_0-0_merged_8431.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_VQA-RAD_train_0-0_merged_1561": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VQA-RAD",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VQA-RAD_train_0-0_merged_1561.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_VisualWebInstruct_filtered_train_0-19_merged_190450": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VisualWebInstruct_filtered",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VisualWebInstruct_filtered_train_0-19_merged_190450.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_VisualWebInstruct_train_0-14_merged_143407": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VisualWebInstruct",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VisualWebInstruct_train_0-14_merged_143407.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_VizWiz_train_0-0_merged_6054": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VizWiz",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VizWiz_train_0-0_merged_6054.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_WebSight_train_0-0_merged_7634": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/WebSight",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_WebSight_train_0-0_merged_7634.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "STEM_other_train_0-0_merged_3864": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/other",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_other_train_0-0_merged_3864.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1
     },
     "Caption_COYO-Recaption_train_1091735": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/COYO-Recaption",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_COYO-Recaption_train_1091735.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_PixMo-Cap_train_706911": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/PixMo-Cap",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_PixMo-Cap_train_706911.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_Sherlock_train_16936": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/Sherlock",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_Sherlock_train_16936.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_ST-VQA_train_13581": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/ST-VQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_ST-VQA_train_13581.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part00_train_21000_20806": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part00",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part00_train_21000_20806.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part01_train_21000_20802": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part01",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part01_train_21000_20802.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part02_train_21000_20829": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part02",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part02_train_21000_20829.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part03_train_21000_20847": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part03",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part03_train_21000_20847.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part04_train_21000_20856": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part04",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part04_train_21000_20856.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part05_train_21000_20864": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part05",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part05_train_21000_20864.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part06_train_21000_20841": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part06",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part06_train_21000_20841.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part07_train_21000_20805": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part07",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part07_train_21000_20805.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part08_train_21000_20837": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part08",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part08_train_21000_20837.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part09_train_21000_20853": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part09",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part09_train_21000_20853.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part10_train_21000_20846": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part10",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part10_train_21000_20846.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part11_train_21000_20846": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part11",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part11_train_21000_20846.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part12_train_21000_20835": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part12",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part12_train_21000_20835.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part13_train_21000_20827": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part13",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part13_train_21000_20827.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part14_train_21000_20825": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part14",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part14_train_21000_20825.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part15_train_21000_20843": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part15",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part15_train_21000_20843.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part16_train_21000_20840": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part16",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part16_train_21000_20840.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part17_train_21000_20852": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part17",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part17_train_21000_20852.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part18_train_21000_20817": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part18",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part18_train_21000_20817.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_WIT_Part19_train_20898_20742": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part19",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part19_train_20898_20742.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Caption_other_Caption_train_1068_1064": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/other",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_other_Caption_train_1068_1064.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_A-OKVQA_train_27504": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/A-OKVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_A-OKVQA_train_27504.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ALFWorld_train_31893": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ALFWorld",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ALFWorld_train_31893.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ALLaVA_train_720794": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ALLaVA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ALLaVA_train_720794.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ART500K_train_11045": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ART500K",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ART500K_train_11045.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Birds-to-Words_train_11169": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Birds-to-Words",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Birds-to-Words_train_11169.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_COCO_train_16332": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/COCO",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_COCO_train_16332.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Cambrian_Filter_train_93493": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Cambrian_Filter",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cambrian_Filter_train_93493.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Cambrian_train_5950": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Cambrian",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cambrian_train_5950.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Cauldron_mulberry_train_28068": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Cauldron_mulberry",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cauldron_mulberry_train_28068.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Co-Instruct_train_30507": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Co-Instruct",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Co-Instruct_train_30507.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ContrastiveCaption_train_17211": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ContrastiveCaption",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ContrastiveCaption_train_17211.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_DreamSim_train_11035": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/DreamSim",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_DreamSim_train_11035.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_EST-VQA_train_13543": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/EST-VQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_EST-VQA_train_13543.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_FlintstonesSV_train_17035": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/FlintstonesSV",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_FlintstonesSV_train_17035.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_GQA_train_46172": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/GQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_GQA_train_46172.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_HQ-Edit_train_36427": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/HQ-Edit",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_HQ-Edit_train_36427.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Hateful_Memes_train_7321": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Hateful_Memes",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Hateful_Memes_train_7321.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_IDK_train_16580": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/IDK",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_IDK_train_16580.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_IconQA_train_35911": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/IconQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_IconQA_train_35911.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_InternVL-SA-1B-Caption_train_16922": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/InternVL-SA-1B-Caption",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_InternVL-SA-1B-Caption_train_16922.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_KVQA_train_17634": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/KVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_KVQA_train_17634.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_KonIQ-10k_train_9361": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/KonIQ-10k",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_KonIQ-10k_train_9361.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_LLaVA-Instruct-300k_train_470800": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LLaVA-Instruct-300k",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LLaVA-Instruct-300k_train_470800.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_LLaVA-NeXT-Data_train_711541": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LLaVA-NeXT-Data",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LLaVA-NeXT-Data_train_711541.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_LRV_Normal_train_39491": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LRV_Normal",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LRV_Normal_train_39491.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_LVIS-InstructV4_train_145372": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LVIS-InstructV4",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LVIS-InstructV4_train_145372.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_MMChat-Twitter-Post_train_4317": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/MMChat-Twitter-Post",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_MMChat-Twitter-Post_train_4317.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_MagicBrush_train_9793": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/MagicBrush",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_MagicBrush_train_9793.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_NLVR2_train_54097": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/NLVR2",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NLVR2_train_54097.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_NewYorker_Caption_train_2554": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/NewYorker_Caption",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NewYorker_Caption_train_2554.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_NextQA_train_3092": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/NextQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NextQA_train_3092.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Objects365_train_5192": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Objects365",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Objects365_train_5192.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_PixMo-AskModelAnything_train_96280": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/PixMo-AskModelAnything",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-AskModelAnything_train_96280.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_PixMo-CapQA_train_237263": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/PixMo-CapQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-CapQA_train_237263.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_PixMo-Points-Explanations_train_44908": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/PixMo-Points-Explanations",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-Points-Explanations_train_44908.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_SVIT-core-150K_train_269361": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/SVIT-core-150K",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_SVIT-core-150K_train_269361.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ScanQA_train_10188": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ScanQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ScanQA_train_10188.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ShareGPT4V_Knowledge_train_1983": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ShareGPT4V_Knowledge",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4V_Knowledge_train_1983.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ShareGPT4V_SAM_train_122461": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ShareGPT4V_SAM",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4V_SAM_train_122461.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ShareGPT4o_train_73884": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ShareGPT4o",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4o_train_73884.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_TQA_train_26821": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/TQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_TQA_train_26821.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_VIST_train_21144": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/VIST",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_VIST_train_21144.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_VSR_train_2752": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/VSR",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_VSR_train_2752.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_ViQuAE_train_2304": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ViQuAE",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ViQuAE_train_2304.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Vision_FLAN_train_458760": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Vision_FLAN",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Vision_FLAN_train_458760.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_Visual7W_train_29965": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Visual7W",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Visual7W_train_29965.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_WebQA_train_6588": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/WebQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_WebQA_train_6588.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_idefics375k_train_404454": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/idefics375k",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_idefics375k_train_404454.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_nuScenes_train_6510": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/nuScenes",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_nuScenes_train_6510.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "General_other_General_train_3061": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/other_General",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_other_General_train_3061.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_ArxivQA_train_287009": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/ArxivQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_ArxivQA_train_287009.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_Chart2Text_train_34525": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/Chart2Text",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_Chart2Text_train_34525.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_ChartQA_train_34680": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/ChartQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_ChartQA_train_34680.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_CoSyn_Chart_train_308225": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Chart",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Chart_train_308225.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_CoSyn_Diagram_train_77143": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Diagram",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Diagram_train_77143.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_CoSyn_Graphic_train_19378": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Graphic",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Graphic_train_19378.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_CoSyn_Table_train_86475": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Table",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Table_train_86475.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_DVQA_train_474688": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/DVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_DVQA_train_474688.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_FigureQA_train_206844": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/FigureQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_FigureQA_train_206844.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_HiTab_train_3609": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/HiTab",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_HiTab_train_3609.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_Infographic_train_2763": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/Infographic",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_Infographic_train_2763.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_LRV_Chart_train_3568": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/LRV_Chart",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_LRV_Chart_train_3568.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_MAVIS_Function_train_25321": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MAVIS_Function",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MAVIS_Function_train_25321.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_MMC_Instruction_train_27094": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MMC_Instruction",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MMC_Instruction_train_27094.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_MMTab_train_165603": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MMTab",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MMTab_train_165603.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_MultiHiertt_train_4588": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MultiHiertt",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MultiHiertt_train_4588.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_PlotQA_train_138932": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/PlotQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_PlotQA_train_138932.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_RobuT_SQA_train_22281": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/RobuT_SQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_SQA_train_22281.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_RobuT_WTQ_train_44181": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/RobuT_WTQ",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_WTQ_train_44181.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_RobuT_WikiSQL_train_110868": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/RobuT_WikiSQL",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_WikiSQL_train_110868.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_SciTSR_train_8981": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/SciTSR",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_SciTSR_train_8981.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_SimChart9K_train_4453": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/SimChart9K",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_SimChart9K_train_4453.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_TabMWP_train_46321": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/TabMWP",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_TabMWP_train_46321.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_TinyChart_train_1014067": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/TinyChart",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_TinyChart_train_1014067.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_UReader_KG_train_39038": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/UReader_KG",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UReader_KG_train_39038.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_UReader_QA_train_121365": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/UReader_QA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UReader_QA_train_121365.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_UniChart_train_330018": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/UniChart",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UniChart_train_330018.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_VisText_train_15616": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/VisText",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_VisText_train_15616.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Chart_other_Chart_train_1982": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/other_Chart",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_other_Chart_train_1982.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_CoSyn_document_train_101510": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/CoSyn_document",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_CoSyn_document_train_101510.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_CoSyn_nutrition_train_12954": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/CoSyn_nutrition",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_CoSyn_nutrition_train_12954.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_DocReason_train_3983": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/DocReason",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_DocReason_train_3983.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_DocVQA_train_25911": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/DocVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_DocVQA_train_25911.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_Docmatix_train_19077": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/Docmatix",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_Docmatix_train_19077.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_EATEN_train_30000": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/EATEN",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_EATEN_train_30000.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_FinTabNet_train_50105": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/FinTabNet",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_FinTabNet_train_50105.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_InfoVQA_train_10125": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/InfoVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_InfoVQA_train_10125.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_InfographicVQA_train_5521": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/InfographicVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_InfographicVQA_train_5521.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_LLaVAR_GPT4_train_23267": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/LLaVAR_GPT4",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_LLaVAR_GPT4_train_23267.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_OCR-VQA_train_108933": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/OCR-VQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_OCR-VQA_train_108933.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_POIE_train_2250": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/POIE",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_POIE_train_2250.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_ScreenQA_train_64870": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/ScreenQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_ScreenQA_train_64870.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_TextVQA_train_39795": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/TextVQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_TextVQA_train_39795.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_UreaderOCR_train_5524": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/UreaderOCR",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_UreaderOCR_train_5524.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_Ureader_Chart_train_349915": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/Ureader_Chart",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_Ureader_Chart_train_349915.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_VisualMRC_train_3292": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/VisualMRC",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_VisualMRC_train_3292.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Document_other_Document_train_195": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/other_Document",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_other_Document_train_195.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_CLEVR-Change_train_2988": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/CLEVR-Change",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR-Change_train_2988.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_CLEVR_Math_train_7179": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/CLEVR_Math",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR_Math_train_7179.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_CLEVR_train_498929": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/CLEVR",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR_train_498929.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_MathV360K_VQA-AS_train_4054": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/MathV360K_VQA-AS",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_MathV360K_VQA-AS_train_4054.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_MovieNet_train_7379": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/MovieNet",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_MovieNet_train_7379.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_Super-CLEVR_train_6811": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/Super-CLEVR",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_Super-CLEVR_train_6811.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_TallyQA_train_91587": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/TallyQA",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_TallyQA_train_91587.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_VisualGenome_train_77404": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/VisualGenome",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_VisualGenome_train_77404.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "Grounding-and-Counting_other_Grounding-and-Counting_train_1146": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/other_Grounding-and-Counting",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_other_Grounding-and-Counting_train_1146.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_ArXiv_OCR_train_159300": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ArXiv_OCR",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ArXiv_OCR_train_159300.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_CTW_train_13577": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/CTW",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_CTW_train_13577.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_Chrome-Writing_train_9247": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Chrome-Writing",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Chrome-Writing_train_9247.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_HME_train_93641": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/HME",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_HME_train_93641.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_IAM_train_5659": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/IAM",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_IAM_train_5659.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_ICDAR-LSVT-zh_train_28213": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ICDAR-LSVT-zh",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR-LSVT-zh_train_28213.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_ICDAR2017_train_9900": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ICDAR2017",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR2017_train_9900.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_ICDAR2019_train_3392": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ICDAR2019",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR2019_train_3392.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_IIIT_5K_train_1976": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/IIIT_5K",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_IIIT_5K_train_1976.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_K12_Printing_train_211104": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/K12_Printing",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_K12_Printing_train_211104.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_MTWI_zh_train_8330": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/MTWI_zh",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_MTWI_zh_train_8330.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_Orand-Car-A_train_2000": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Orand-Car-A",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Orand-Car-A_train_2000.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_ReCTs_train_17000": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ReCTs",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ReCTs_train_17000.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_Rendered_Text_train_9996": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Rendered_Text",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Rendered_Text_train_9996.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_Sroie_train_31832": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Sroie",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Sroie_train_31832.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_TextOCR_train_47656": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/TextOCR",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_TextOCR_train_47656.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "OCR_VCR-Wiki_train_77935": {
         "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/VCR-Wiki",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_VCR-Wiki_train_77935.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 0.4
     },
     "llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 6893,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 26302,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_academic_v0_1_cap_processed_3124": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_academic_v0_1_cap_processed_3124.jsonl",
         "estimated_length": 3122,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 57924,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 4241,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 20346,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 5753,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_academic_v0_1_cap_processed_4627": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_academic_v0_1_cap_processed_4627.jsonl",
         "estimated_length": 4627,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_academic_v0_1_cap_processed_10514": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_academic_v0_1_cap_processed_10514.jsonl",
         "estimated_length": 10514,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 48468,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_shortcot20251216": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 18122,
         "data_augment": false,
-        "sample_ratio": 0.125
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_academic_v0_1_cap_processed_11985": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_academic_v0_1_cap_processed_11985.jsonl",
         "data_augment": false,
         "estimated_length": 11985,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_academic_v0_1_cap_processed_11985_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_0_30_s_academic_v0_1_cap_processed_11985_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_academic_v0_1_cap_processed_4627_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_1_2_m_academic_v0_1_cap_processed_4627_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_academic_v0_1_cap_processed_3124_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_2_3_m_academic_v0_1_cap_processed_3124_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_academic_v0_1_cap_processed_10514_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_30_60_s_academic_v0_1_cap_processed_10514_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0 
     },
     "llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_qwen3vl235b_rewrtten_cleaned": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_qwen3vl235b_rewrtten_cleaned.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624_qwen3vl235b_rewrtten_cleaned": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624_qwen3vl235b_rewrtten_cleaned.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_youtube_v0_1_cap_processed_79346_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_0_30_s_youtube_v0_1_cap_processed_79346_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_youtube_v0_1_cap_processed_24234_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_1_2_m_youtube_v0_1_cap_processed_24234_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_youtube_v0_1_cap_processed_24685_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_2_3_m_youtube_v0_1_cap_processed_24685_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_youtube_v0_1_cap_processed_19995_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_30_60_s_youtube_v0_1_cap_processed_19995_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1785,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 2031,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_nextqa_mc_qa_processed_5496_correct_samples_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_nextqa_mc_qa_processed_5496_correct_samples_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 4828,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_0_30_s_nextqa_oe_qa_processed_5492_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_nextqa_oe_qa_processed_5492_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 3534,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 3308,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_nextqa_mc_qa_processed_4633_correct_samples_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_nextqa_mc_qa_processed_4633_correct_samples_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 4086,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_1_2_m_nextqa_oe_qa_processed_4694_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_nextqa_oe_qa_processed_4694_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 3051,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 4907,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_nextqa_mc_qa_processed_52_correct_samples_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_nextqa_mc_qa_processed_52_correct_samples_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 44,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_2_3_m_nextqa_oe_qa_processed_61_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_nextqa_oe_qa_processed_61_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 29,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 3063,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_nextqa_mc_qa_processed_6843_correct_samples_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_nextqa_mc_qa_processed_6843_correct_samples_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 5942,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "llava-video_30_60_s_nextqa_oe_qa_processed_6843_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
         "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_nextqa_oe_qa_processed_6843_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 4400,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0
     },
     "perception_test_correct_samples_qwen3vl235b_rewrtten": {
         "media_root": "pnorm2:s3://perception/videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/perception_test_correct_samples_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 1857,
         "data_augment": false,
-        "sample_ratio": 0.025,
+        "sample_ratio": 1.0,
         "video_sample_fps": 2
     },
     "sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten": {
@@ -1860,205 +1644,439 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
         "estimated_length": 2775,
         "data_augment": false,
-        "sample_ratio": 0.025,
+        "sample_ratio": 1.0,
         "video_sample_fps": 2
-    },
-    "sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten_fps4": {
-        "media_root": "pnorm2:s3://videochate/Sports-QA/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl",
-        "estimated_length": 2775,
-        "data_augment": false,
-        "sample_ratio": 0.025,
-        "video_sample_fps": 4
     },
     "star-train_46k_correct_samples_qwen3vl235b_rewrtten": {
         "media_root": "p2:s3://star/Charades_v1_480/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/star-train_46k_correct_samples_qwen3vl235b_rewrtten_clean.jsonl",
         "estimated_length": 17386,
         "data_augment": false,
-        "sample_ratio": 0.025,
+        "sample_ratio": 1.0,
         "video_sample_fps": 2
-    },
-    "star-train_46k_correct_samples_qwen3vl235b_rewrtten_fps4": {
-        "media_root": "p2:s3://star/Charades_v1_480/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/star-train_46k_correct_samples_qwen3vl235b_rewrtten_clean.jsonl",
-        "estimated_length": 17386,
-        "data_augment": false,
-        "sample_ratio": 0.025,
-        "video_sample_fps": 4
     },
     "timelens-100k_0-to-60_5300_fps4": {
         "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_0-to-60_5300_format2.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_0-to-60_5300.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.1,
+        "sample_ratio": 1,
         "video_sample_fps": 4
-    },
-    "timelens-100k_0-to-60_5300_fps8": {
-        "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_0-to-60_5300_format2.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.1,
-        "video_sample_fps": 8
     },
     "timelens-100k_0-to-60_5300": {
         "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_0-to-60_5300_format2.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_0-to-60_5300.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1,
         "video_sample_fps": 2
     },
     "timelens-100k_60-to-120_6157": {
         "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_60-to-120_6157_format2.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_60-to-120_6157.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1,
         "video_sample_fps": 2
     },
     "timelens-100k_120-to-180_6840": {
         "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_120-to-180_6840_format2.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_120-to-180_6840.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
+        "sample_ratio": 1,
         "video_sample_fps": 2
     },
     "timelens-100k_over180_1137": {
         "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos_frames/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_over180_1137_format2.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_over180_1137.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
+        "sample_ratio": 1,
         "video_sample_fps": 2
+    },
+    "timelens-100k_over180_1137_fps1": {
+        "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos_frames/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens-100k/timelens-100k_over180_1137.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1,
+        "video_sample_fps": 1
     },
     "cinepile/cinepile_train_sample_qa_2.5Pro_thinking_processed_xtuner.jsonl": {
         "media_root": "pnorm2:s3://cinepile/ori_video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/cinepile/cinepile_train_sample_qa_2.5Pro_thinking_processed_xtuner_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "cinepile/cinepile_train_sample_qa_3Pro-Preview_thinking_20251124_v1_processed_xtuner_short.jsonl": {
         "media_root": "pnorm2:s3://cinepile/ori_video/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/cinepile/cinepile_train_sample_qa_3Pro-Preview_thinking_20251124_v1_processed_xtuner_short_clean.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_long.jsonl": {
         "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_long_updated.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_short.jsonl": {
         "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_short.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_long.jsonl": {
         "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_long_updated.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_short.jsonl": {
         "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_short.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_2.5Pro_thinking_processed_xtuner_long.jsonl": {
         "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_2.5Pro_thinking_processed_xtuner_long_updated.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_3Pro-Preview_thinking_20251124_v1_processed_xtuner_long.jsonl": {
         "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_3Pro-Preview_thinking_20251124_v1_processed_xtuner_long_updated.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "scivideo20251020_caption_2.5Pro_processed_xtuner_long.jsonl": {
         "media_root": "videogpu:s3://videochat-o3/data/frames/scivideo/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_caption_2.5Pro_processed_xtuner_long.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "scivideo20251020_caption_2.5Pro_processed_xtuner_short.jsonl": {
         "media_root": "videogpu:s3://yanziang/reasoning_videos/en-video-youtube-wangyi/20250603_p1/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_caption_2.5Pro_processed_xtuner_short.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_long.jsonl": {
         "media_root": "videogpu:s3://videochat-o3/data/frames/scivideo/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_long.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_short.jsonl": {
         "media_root": "videogpu:s3://yanziang/reasoning_videos/en-video-youtube-wangyi/20250603_p1/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_short.jsonl",
         "data_augment": false,
-        "sample_ratio": 1.0,
-        "video_sample_fps": 1
+        "sample_ratio": 1,
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     },
     "Molmo2-AskModelAnything_20260115": {
         "media_root": "h-ceph2:s3://jtx202512/allenai/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-AskModelAnything_20260115.jsonl",
         "estimated_length": 39833,
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1.0 
     },
     "Molmo2-Cap_20260115": {
         "media_root": "h-ceph2:s3://jtx202512/allenai/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-Cap_20260115.jsonl",
         "estimated_length": 74078,
         "data_augment": false,
-        "sample_ratio": 0.5
+        "sample_ratio": 1.0 
     },
     "Molmo2-VideoCapQA_20260115_merged": {
         "media_root": "h-ceph2:s3://jtx202512/allenai/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-VideoCapQA_20260115_merged.jsonl",
         "estimated_length": 163683,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0
     },
     "Molmo2-VideoSubtitleQA_with_subtitles_20260207_merged": {
         "media_root": "h-ceph2:s3://jtx202512/allenai/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-VideoSubtitleQA_with_subtitles_20260207_merged.jsonl",
         "estimated_length": 90801,
         "data_augment": false,
-        "sample_ratio": 0.1
+        "sample_ratio": 1.0 
+    },
+    "EgoIT_video_82937": {
+        "media_root": "pnorm2:s3://videochat3/video/EgoIT-99K_frames_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/EgoIT_video_82937_xtuner_format_clean.jsonl",
+        "data_augment": false,
+        "estimated_length": 82937,
+        "sample_ratio": 0.5
     },
     "vript_under60s_400k_merged": {
         "media_root": "pnorm2:s3://Vript/vript_long_videos_clips_unzip/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vript_under60s_400k_merged.jsonl",
         "estimated_length": 400000,
         "data_augment": false,
-        "sample_ratio": 0.025
+        "sample_ratio": 1.0,
+        "video_sample_fps": 2
     },
     "caption_smit_qwen3vl_rewrtten_448k": {
         "media_root": "pvideo:s3://S-MiT/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/caption_smit_qwen3vl_rewrtten_448k.jsonl",
         "estimated_length": 448000,
         "data_augment": false,
-        "sample_ratio": 0.025,
-        "video_sample_fps": 1
+        "sample_ratio": 0.25,
+        "video_sample_fps": 2
+    },
+    "vitt_event_5086_2685": {
+        "media_root": "sssd:s3://ViTT",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vitt_event_5086_2685_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "anet_caption_event_10009_10009": {
+        "media_root": "p2:s3://anet",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/anet_caption_event_10009_10009_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "coin_event_9026_9026": {
+        "media_root": "pnorm:s3://COIN_320p",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/coin_event_9026_9026_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "hirest_event_918_842": {
+        "media_root": "pnorm2zxy:s3://hirest",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/hirest_event_918_842_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "got10k_spatiotemporal_obj_58218_58218": {
+        "media_root": "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/got10k_spatiotemporal_obj_58218_58218_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2,
+        "video_read_type": "img2"
+    },
+    "lasot_spatiotemporal_det_14173_14173": {
+        "media_root": "pnorm2:s3://lasot/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/lasot_spatiotemporal_det_14173_14173_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2,
+        "video_read_type": "img2"
+    },
+    "lasot_spatiotemporal_tracking_50782_50782": {
+        "media_root": "pnorm2:s3://lasot/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/lasot_spatiotemporal_tracking_50782_50782_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2,
+        "video_read_type": "img2"
+    },
+    "anet_rtl_temporal_10068_10068": {
+        "media_root": "p2:s3://anet/ANet_320p_fps30/train",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/anet_rtl_temporal_10068_10068_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "internvid_temporal_25001_25001": {
+        "media_root": "pnorm:s3://youtubeBucket/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/internvid_temporal_25001_25001_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "charades_temporal_11237_11237": {
+        "media_root": "p2:s3://star/Charades_v1_480/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/charades_temporal_11237_11237_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "hirest_temporal_398_398": {
+        "media_root": "pnorm2zxy:s3://hirest/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/hirest_temporal_398_398_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "queryd_temporal_13079_13079": {
+        "media_root": "pnorm2zxy:s3://queryd/videos/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/queryd_temporal_13079_13079_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "lasot_spatial_relative_18911_18911": {
+        "media_root": "pnorm2:s3://lasot/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/lasot_spatial_relative_18911_18911_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2,
+        "video_read_type": "img2"
+    },
+    "caption_vidln_oops-vidln-oops_train_11k_10697": {
+        "media_root": "p2:s3://oops/oops_video/train",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_oops-vidln-oops_train_11k_10697_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "caption_vidln_uvo_dense-vidln-uvo_dense_train_1k_563": {
+        "media_root": "sssd:s3://UVO/uvo_videos_dense",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_uvo_dense-vidln-uvo_dense_train_1k_563_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "caption_vidln_uvo_sparse-vidln-uvo_sparse_train_6k_5702": {
+        "media_root": "sssd:s3://UVO/uvo_videos_sparse",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_uvo_sparse-vidln-uvo_sparse_train_6k_5702_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "caption_vidln_kinetics-vidln-kinetics_train_28k_27215": {
+        "media_root": "",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/caption_vidln_kinetics-vidln-kinetics_train_28k_27215_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "guiworld_en_20241029_fix_94980_clean": {
+        "media_root": "pnormshare:s3://public-dataset-p2/en-public-gui-world/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/guiworld_en_20241029_fix_94980_clean.jsonl",
+        "data_augment": false,
+        "video_sample_fps": 4,
+        "sample_ratio": 0.25
+    },
+    "reasoning_star-star-train_46k_45731_clean": {
+        "media_root": "p2:s3://star/Charades_v1_480",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/reasoning_star-star-train_46k_45731_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2,
+        "video_sample_fps": 2
+    },
+    "classification_k710-k710-train_40k_40000": {
+        "media_root": "",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/classification_k710-k710-train_40k_40000_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2
+    },
+    "classification_ssv2-ssv2-train_40k_40000_clean": {
+        "media_root": "pssd:s3://ssv2-video/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/classification_ssv2-ssv2-train_40k_40000_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.2,
+        "video_sample_fps": 2
+    },
+    "vqa_rgbd-nturgbd_clean_110k_109416": {
+        "media_root": "pssd:s3://nturgbd/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_rgbd-nturgbd_clean_110k_109416_clean.jsonl",
+        "data_augment": false,
+        "estimated_length": 109416,
+        "sample_ratio": 0.25,
+        "video_sample_fps": 2
+    },
+    "ssv2_paxion_antonyms_train_classification_40k_38494": {
+        "media_root": "pssd:s3://ssv2-video/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/ssv2_paxion_antonyms_train_classification_40k_38494_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_sample_fps": 2
+    },
+    "vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435": {
+        "media_root": "p2:s3://tvqa/frames_fps3_hq/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_read_type": "img2"
+    },
+    "reasoning_clevrer_mc-clevrer_mc-train_43k_debug_43k_42620": {
+        "media_root": "p2:s3://clevrer/video_train/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/reasoning_clevrer_mc-clevrer_mc-train_43k_debug_43k_42620.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.1,
+        "video_sample_fps": 2
+    },
+    "reasoning_clevrer_qa-clevrer_qa-train_mc_40k_40000": {
+        "media_root": "p2:s3://clevrer/video_train/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/reasoning_clevrer_qa-clevrer_qa-train_mc_40k_40000.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_sample_fps": 2
+    },
+    "vqa_tgif_count-openend_qa_train_openend_26839_26839": {
+        "media_root": "p2:s3://tgif/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_count-openend_qa_train_openend_26839_26839.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_read_type": "gif",
+        "video_sample_fps": 4
+    },
+    "vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696": {
+        "media_root": "p2:s3://tgif/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_read_type": "gif",
+        "video_sample_fps": 4
+    },
+    "pevideo_train100k": {
+        "media_root": "pnorm2:s3://pe-video/train/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/pevideo_train100k_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 0.25,
+        "video_sample_fps": 2
+    },
+    "finevideo_train_86922": {
+        "media_root": "pnorm2:s3://videochat3_frames/finevideo_fps2/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/finevideo_train_86922.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_read_type": "img2"
+    },
+    "cinepile_v2_mc_subtitles_merged_9k": {
+        "media_root": "pnorm2:s3://cinepile/ori_video/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/cinepile_v2_mc_subtitles_merged_9k_clean.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0
+    },
+    "motionbench_train_4998_fps4": {
+        "media_root": "pnorm2:s3://videochat3_frames/motionbench_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/motionbench_train_4998.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_sample_fps": 4,
+        "video_read_type": "img2"
+    },
+    "motionbench_train_4998": {
+        "media_root": "pnorm2:s3://videochat3_frames/motionbench_fps4/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/motionbench_train_4998.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0,
+        "video_sample_fps": 2,
+        "video_read_type": "img2"
+    },
+    "vcg-plus_112K_clean_97k_96444_16k": {
+        "media_root": "p2:s3://anet/ANet_320p_fps30/",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vcg-plus_112K_clean_97k_96444_merged.jsonl",
+        "data_augment": false,
+        "sample_ratio": 1.0
     },
     "atomic_motion_sft_4fps": {
         "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/videos/",
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/sft.jsonl",
         "estimated_length": 3500,
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4
     },
     "atomic_motion_sft_8fps": {
@@ -2066,7 +2084,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/sft.jsonl",
         "estimated_length": 3500,
         "data_augment": false,
-        "sample_ratio": 0.25,
+        "sample_ratio": 0.5,
         "video_sample_fps": 8
     },
     "atomic_motion_sft_30fps": {
@@ -2074,7 +2092,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/sft.jsonl",
         "estimated_length": 3500,
         "data_augment": false,
-        "sample_ratio": 0.05,
+        "sample_ratio": 0.1,
         "video_sample_fps": 30
     },
     "atomic_02_atomic2_extended_motion_sft_4fps": {
@@ -2082,7 +2100,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/sft.jsonl",
         "estimated_length": 1000,
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4
     },
     "atomic_02_atomic2_extended_motion_sft_8fps": {
@@ -2090,7 +2108,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/sft.jsonl",
         "estimated_length": 1000,
         "data_augment": false,
-        "sample_ratio": 0.25,
+        "sample_ratio": 0.5,
         "video_sample_fps": 8
     },
     "atomic_02_atomic2_extended_motion_sft_30fps": {
@@ -2098,7 +2116,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/sft.jsonl",
         "estimated_length": 1000,
         "data_augment": false,
-        "sample_ratio": 0.05,
+        "sample_ratio": 0.1,
         "video_sample_fps": 30
     },
     "atomic_Atomic_OpenQA_sft_4fps": {
@@ -2106,7 +2124,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/sft.jsonl",
         "estimated_length": 3500,
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4
     },
     "atomic_Atomic_OpenQA_sft_8fps": {
@@ -2114,7 +2132,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/sft.jsonl",
         "estimated_length": 3500,
         "data_augment": false,
-        "sample_ratio": 0.25,
+        "sample_ratio": 0.5,
         "video_sample_fps": 8
     },
     "atomic_Atomic_OpenQA_sft_30fps": {
@@ -2122,7 +2140,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic_OpenQA/sft.jsonl",
         "estimated_length": 3500,
         "data_augment": false,
-        "sample_ratio": 0.05,
+        "sample_ratio": 0.1,
         "video_sample_fps": 30
     },
     "atomic_Atomic2_OpenQA_sft_4fps": {
@@ -2130,7 +2148,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/sft.jsonl",
         "estimated_length": 1000,
         "data_augment": false,
-        "sample_ratio": 0.5,
+        "sample_ratio": 1.0,
         "video_sample_fps": 4
     },
     "atomic_Atomic2_OpenQA_sft_8fps": {
@@ -2138,7 +2156,7 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/sft.jsonl",
         "estimated_length": 1000,
         "data_augment": false,
-        "sample_ratio": 0.25,
+        "sample_ratio": 0.5,
         "video_sample_fps": 8
     },
     "atomic_Atomic2_OpenQA_sft_30fps": {
@@ -2146,85 +2164,14 @@
         "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/Atomic2_OpenQA/sft.jsonl",
         "estimated_length": 1000,
         "data_augment": false,
-        "sample_ratio": 0.05,
+        "sample_ratio": 0.1,
         "video_sample_fps": 30
     },
-    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new": {
-        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.11,
-        "estimated_length": 16000
-    },
-    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new_2fps": {
-        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.01,
-        "video_sample_fps": 2,
-        "estimated_length": 16000
-    },
-    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new_4fps": {
-        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.01,
-        "video_sample_fps": 4,
-        "estimated_length": 16000
-    },
-    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_short_vc3format_new_8fps": {
-        "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_short20260411_vc3format.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.005,
-        "video_sample_fps": 8,
-        "estimated_length": 16000
-    },
-    "lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_long_vc3format_new": {
+    "timelines_merge_all_202605030205_over10min": {
         "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/lvdb_grounding/lvdb_35k_qwen_anno_drop0_crossIoUGe0.9_embedSimGe0.5_long20260411_vc3format.jsonl",
+        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelines20260503/timelines_merge_all_202605030205_over10min_xtuner_format.jsonl",
         "data_augment": false,
-        "sample_ratio": 0.24,
-        "video_read_type": "img2",
-        "video_sample_fps": 1,
-        "video_max_total_pixels": 123312537,
-        "estimated_length": 10000
-    },
-    "motionbench_train_4998_fps4": {
-        "media_root": "pnorm2:s3://videochat3_frames/motionbench_fps4/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/motionbench_train_4998.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.5,
-        "video_sample_fps": 4,
-        "video_read_type": "img2"
-    },
-    "vqa_tgif_count-openend_qa_train_openend_26839_26839": {
-        "media_root": "p2:s3://tgif/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_count-openend_qa_train_openend_26839_26839.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.05,
-        "video_sample_fps": 4,
-        "video_read_type": "gif"
-    },
-    "vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696": {
-        "media_root": "p2:s3://tgif/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tgif_transition_qa-tgif_transition_qa-train_53k_52696.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.05,
-        "video_sample_fps": 4,
-        "video_read_type": "gif"
-    },
-    "vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435": {
-        "media_root": "p2:s3://tvqa/frames_fps3_hq/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/vqa_tvqa-tvqa_123k_122039_merged_subtitles_17435_clean.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.025,
-        "video_read_type": "img2"
-    },
-    "cinepile_v2_mc_subtitles_merged_6k": {
-        "media_root": "pnorm2:s3://cinepile/ori_video/",
-        "anno_path": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vflash_video/cinepile_v2_mc_subtitles_merged_6k.jsonl",
-        "data_augment": false,
-        "sample_ratio": 0.025
+        "video_max_frames": 1024,
+        "frame_max_pixels": 112896
     }
 }

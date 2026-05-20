@@ -2,7 +2,7 @@ JOB_NAME=V11_OL
 NNODES=8
 
 
-VERTION=v3
+VERTION=v6
 
 # VERTION=debug
 
@@ -15,3 +15,5 @@ srun -p videop1 \
     --preempt \
     bash training_scripts/stage4_online/VideoChat3_4B_train_v11_online_${VERTION}.sh
         # --preempt \
+
+# /mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/stage2/VideoChat3_4B_train_stage2_image_video_minisft_final_lr8e-5_vtlr2e-5_sohav2/20260322024754/hf-6060

@@ -147,6 +147,11 @@ docs/en/api/generated/
 docs/zh_cn/_build/
 docs/zh_cn/api/generated/
 
+!training_configs/stage2_new/
+!training_scripts/stage2_new/
+!training_data_annotations/stage2_new/
+
+
 
 !training_configs/stage4_online/
 !training_scripts/stage4_online/

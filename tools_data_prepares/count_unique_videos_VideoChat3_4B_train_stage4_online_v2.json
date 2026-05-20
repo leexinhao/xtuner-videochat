@@ -1,0 +1,3355 @@
+{
+  "summary": {
+    "data_json": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/training_data_annotations/stage4_online/VideoChat3_4B_train_stage4_online_v2.json",
+    "datasets_counted": 314,
+    "unique_jsonl_paths_scanned": 306,
+    "parallel_jobs": 16,
+    "global_unique_video_keys": 1609504,
+    "global_unique_note": "global_unique_video_keys 按 (media_root, logical_video_id) 去重；若需跨数据集按相对路径合并而忽略 media_root，请自行后处理。"
+  },
+  "per_dataset": [
+    {
+      "dataset_key": "ActivityNet_grounding_stream",
+      "media_root": "videogpu:s3://video-online/ActivityNet/video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/ActivityNet_grounding_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3739,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "ActivityNet_narration_stream",
+      "media_root": "videogpu:s3://video-online/ActivityNet/video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/narration/ActivityNet_narration_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 13551,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "ActivityNet_qa_stream",
+      "media_root": "videogpu:s3://video-online/ActivityNet/video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/ActivityNet_qa_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 8449,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "ActivityNet_stream",
+      "media_root": "videogpu:s3://video-online/ActivityNet/video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_caption/ActivityNet_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 496,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "COIN_stream",
+      "media_root": "videogpu:s3://video-online/COIN_320p/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/action_caption/COIN_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 5596,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_COYO-Recaption_train_1091735",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/COYO-Recaption",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_COYO-Recaption_train_1091735.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_PixMo-Cap_train_706911",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/PixMo-Cap",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_PixMo-Cap_train_706911.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_ST-VQA_train_13581",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/ST-VQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_ST-VQA_train_13581.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_Sherlock_train_16936",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/Sherlock",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_caption_part/Caption_Sherlock_train_16936.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part00_train_21000_20806",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part00",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part00_train_21000_20806.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part01_train_21000_20802",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part01",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part01_train_21000_20802.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part02_train_21000_20829",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part02",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part02_train_21000_20829.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part03_train_21000_20847",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part03",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part03_train_21000_20847.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part04_train_21000_20856",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part04",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part04_train_21000_20856.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part05_train_21000_20864",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part05",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part05_train_21000_20864.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part06_train_21000_20841",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part06",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part06_train_21000_20841.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part07_train_21000_20805",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part07",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part07_train_21000_20805.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part08_train_21000_20837",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part08",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part08_train_21000_20837.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part09_train_21000_20853",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part09",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part09_train_21000_20853.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part10_train_21000_20846",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part10",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part10_train_21000_20846.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part11_train_21000_20846",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part11",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part11_train_21000_20846.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part12_train_21000_20835",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part12",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part12_train_21000_20835.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part13_train_21000_20827",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part13",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part13_train_21000_20827.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part14_train_21000_20825",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part14",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part14_train_21000_20825.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part15_train_21000_20843",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part15",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part15_train_21000_20843.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part16_train_21000_20840",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part16",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part16_train_21000_20840.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part17_train_21000_20852",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part17",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part17_train_21000_20852.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part18_train_21000_20817",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part18",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part18_train_21000_20817.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_WIT_Part19_train_20898_20742",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/WIT_Part19",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_WIT_Part19_train_20898_20742.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Caption_other_Caption_train_1068_1064",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Caption/other",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_newest_no_think_norepeat/Caption_other_Caption_train_1068_1064.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_ArxivQA_train_287009",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/ArxivQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_ArxivQA_train_287009.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_Chart2Text_train_34525",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/Chart2Text",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_Chart2Text_train_34525.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_ChartQA_train_34680",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/ChartQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_ChartQA_train_34680.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Chart_train_308225",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Chart",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Chart_train_308225.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Diagram_train_77143",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Diagram",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Diagram_train_77143.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Graphic_train_19378",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Graphic",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Graphic_train_19378.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_CoSyn_Table_train_86475",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/CoSyn_Table",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_CoSyn_Table_train_86475.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_DVQA_train_474688",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/DVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_DVQA_train_474688.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_FigureQA_train_206844",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/FigureQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_FigureQA_train_206844.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_HiTab_train_3609",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/HiTab",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_HiTab_train_3609.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_Infographic_train_2763",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/Infographic",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_Infographic_train_2763.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_LRV_Chart_train_3568",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/LRV_Chart",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_LRV_Chart_train_3568.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MAVIS_Function_train_25321",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MAVIS_Function",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MAVIS_Function_train_25321.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MMC_Instruction_train_27094",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MMC_Instruction",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MMC_Instruction_train_27094.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MMTab_train_165603",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MMTab",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MMTab_train_165603.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_MultiHiertt_train_4588",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/MultiHiertt",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_MultiHiertt_train_4588.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_PlotQA_train_138932",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/PlotQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_PlotQA_train_138932.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_RobuT_SQA_train_22281",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/RobuT_SQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_SQA_train_22281.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_RobuT_WTQ_train_44181",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/RobuT_WTQ",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_WTQ_train_44181.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_RobuT_WikiSQL_train_110868",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/RobuT_WikiSQL",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_RobuT_WikiSQL_train_110868.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_SciTSR_train_8981",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/SciTSR",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_SciTSR_train_8981.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_SimChart9K_train_4453",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/SimChart9K",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_SimChart9K_train_4453.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_TabMWP_train_46321",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/TabMWP",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_TabMWP_train_46321.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_TinyChart_train_1014067",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/TinyChart",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_TinyChart_train_1014067.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_UReader_KG_train_39038",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/UReader_KG",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UReader_KG_train_39038.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_UReader_QA_train_121365",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/UReader_QA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UReader_QA_train_121365.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_UniChart_train_330018",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/UniChart",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_UniChart_train_330018.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_VisText_train_15616",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/VisText",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_VisText_train_15616.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Chart_other_Chart_train_1982",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Chart/other_Chart",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Chart_other_Chart_train_1982.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_CoSyn_document_train_101510",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/CoSyn_document",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_CoSyn_document_train_101510.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_CoSyn_nutrition_train_12954",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/CoSyn_nutrition",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_CoSyn_nutrition_train_12954.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_DocReason_train_3983",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/DocReason",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_DocReason_train_3983.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_DocVQA_train_25911",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/DocVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_DocVQA_train_25911.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_Docmatix_train_19077",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/Docmatix",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_Docmatix_train_19077.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_EATEN_train_30000",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/EATEN",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_EATEN_train_30000.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_FinTabNet_train_50105",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/FinTabNet",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_FinTabNet_train_50105.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_InfoVQA_train_10125",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/InfoVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_InfoVQA_train_10125.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_InfographicVQA_train_5521",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/InfographicVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_InfographicVQA_train_5521.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_LLaVAR_GPT4_train_23267",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/LLaVAR_GPT4",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_LLaVAR_GPT4_train_23267.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_OCR-VQA_train_108933",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/OCR-VQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_OCR-VQA_train_108933.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_POIE_train_2250",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/POIE",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_POIE_train_2250.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_ScreenQA_train_64870",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/ScreenQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_ScreenQA_train_64870.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_TextVQA_train_39795",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/TextVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_TextVQA_train_39795.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_UreaderOCR_train_5524",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/UreaderOCR",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_UreaderOCR_train_5524.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_Ureader_Chart_train_349915",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/Ureader_Chart",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_Ureader_Chart_train_349915.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_VisualMRC_train_3292",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/VisualMRC",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_VisualMRC_train_3292.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Document_other_Document_train_195",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Document/other_Document",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Document_other_Document_train_195.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Ego_timeqa_stream",
+      "media_root": "videogpu:s3://video-online/ego_timeqa/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/Ego_timeqa_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9431,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_A-OKVQA_train_27504",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/A-OKVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_A-OKVQA_train_27504.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ALFWorld_train_31893",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ALFWorld",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ALFWorld_train_31893.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ALLaVA_train_720794",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ALLaVA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ALLaVA_train_720794.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ART500K_train_11045",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ART500K",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ART500K_train_11045.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Birds-to-Words_train_11169",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Birds-to-Words",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Birds-to-Words_train_11169.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_COCO_train_16332",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/COCO",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_COCO_train_16332.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Cambrian_Filter_train_93493",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Cambrian_Filter",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cambrian_Filter_train_93493.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Cambrian_train_5950",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Cambrian",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cambrian_train_5950.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Cauldron_mulberry_train_28068",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Cauldron_mulberry",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Cauldron_mulberry_train_28068.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Co-Instruct_train_30507",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Co-Instruct",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Co-Instruct_train_30507.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ContrastiveCaption_train_17211",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ContrastiveCaption",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ContrastiveCaption_train_17211.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_DreamSim_train_11035",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/DreamSim",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_DreamSim_train_11035.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_EST-VQA_train_13543",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/EST-VQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_EST-VQA_train_13543.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_FlintstonesSV_train_17035",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/FlintstonesSV",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_FlintstonesSV_train_17035.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_GQA_train_46172",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/GQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_GQA_train_46172.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_HQ-Edit_train_36427",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/HQ-Edit",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_HQ-Edit_train_36427.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Hateful_Memes_train_7321",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Hateful_Memes",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Hateful_Memes_train_7321.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_IDK_train_16580",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/IDK",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_IDK_train_16580.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_IconQA_train_35911",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/IconQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_IconQA_train_35911.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_InternVL-SA-1B-Caption_train_16922",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/InternVL-SA-1B-Caption",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_InternVL-SA-1B-Caption_train_16922.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_KVQA_train_17634",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/KVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_KVQA_train_17634.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_KonIQ-10k_train_9361",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/KonIQ-10k",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_KonIQ-10k_train_9361.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LLaVA-Instruct-300k_train_470800",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LLaVA-Instruct-300k",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LLaVA-Instruct-300k_train_470800.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LLaVA-NeXT-Data_train_711541",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LLaVA-NeXT-Data",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LLaVA-NeXT-Data_train_711541.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LRV_Normal_train_39491",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LRV_Normal",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LRV_Normal_train_39491.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_LVIS-InstructV4_train_145372",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/LVIS-InstructV4",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_LVIS-InstructV4_train_145372.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_MMChat-Twitter-Post_train_4317",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/MMChat-Twitter-Post",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_MMChat-Twitter-Post_train_4317.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_MagicBrush_train_9793",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/MagicBrush",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_MagicBrush_train_9793.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_NLVR2_train_54097",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/NLVR2",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NLVR2_train_54097.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_NewYorker_Caption_train_2554",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/NewYorker_Caption",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NewYorker_Caption_train_2554.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_NextQA_train_3092",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/NextQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_NextQA_train_3092.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Objects365_train_5192",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Objects365",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Objects365_train_5192.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_PixMo-AskModelAnything_train_96280",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/PixMo-AskModelAnything",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-AskModelAnything_train_96280.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_PixMo-CapQA_train_237263",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/PixMo-CapQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-CapQA_train_237263.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_PixMo-Points-Explanations_train_44908",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/PixMo-Points-Explanations",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_PixMo-Points-Explanations_train_44908.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_SVIT-core-150K_train_269361",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/SVIT-core-150K",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_SVIT-core-150K_train_269361.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ScanQA_train_10188",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ScanQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ScanQA_train_10188.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ShareGPT4V_Knowledge_train_1983",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ShareGPT4V_Knowledge",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4V_Knowledge_train_1983.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ShareGPT4V_SAM_train_122461",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ShareGPT4V_SAM",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4V_SAM_train_122461.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ShareGPT4o_train_73884",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ShareGPT4o",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ShareGPT4o_train_73884.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_TQA_train_26821",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/TQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_TQA_train_26821.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_VIST_train_21144",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/VIST",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_VIST_train_21144.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_VSR_train_2752",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/VSR",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_VSR_train_2752.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_ViQuAE_train_2304",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/ViQuAE",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_ViQuAE_train_2304.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Vision_FLAN_train_458760",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Vision_FLAN",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Vision_FLAN_train_458760.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_Visual7W_train_29965",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/Visual7W",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_Visual7W_train_29965.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_WebQA_train_6588",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/WebQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_WebQA_train_6588.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_idefics375k_train_404454",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/idefics375k",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_idefics375k_train_404454.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_nuScenes_train_6510",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/nuScenes",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_nuScenes_train_6510.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "General_other_General_train_3061",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/General/other_General",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_general_no_think/General_other_General_train_3061.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_CLEVR-Change_train_2988",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/CLEVR-Change",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR-Change_train_2988.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_CLEVR_Math_train_7179",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/CLEVR_Math",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR_Math_train_7179.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_CLEVR_train_498929",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/CLEVR",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_CLEVR_train_498929.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_MathV360K_VQA-AS_train_4054",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/MathV360K_VQA-AS",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_MathV360K_VQA-AS_train_4054.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_MovieNet_train_7379",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/MovieNet",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_MovieNet_train_7379.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_Super-CLEVR_train_6811",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/Super-CLEVR",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_Super-CLEVR_train_6811.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_TallyQA_train_91587",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/TallyQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_TallyQA_train_91587.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_VisualGenome_train_77404",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/VisualGenome",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_VisualGenome_train_77404.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Grounding-and-Counting_other_Grounding-and-Counting_train_1146",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/Grounding-and-Counting/other_Grounding-and-Counting",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/Grounding-and-Counting_other_Grounding-and-Counting_train_1146.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "LLaVA_Video_grounding_stream",
+      "media_root": "videogpu:s3://video-online/LLaVA_Video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/LLaVA_Video_grounding_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 12527,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "LLaVA_Video_qa_youtube_1",
+      "media_root": "videogpu:s3://video-online/LLaVA_Video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/LLaVA_Video_qa_youtube_1_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9597,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "LLaVA_Video_qa_youtube_2",
+      "media_root": "videogpu:s3://video-online/LLaVA_Video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/LLaVA_Video_qa_youtube_2_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 15461,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "LLaVA_Video_stream",
+      "media_root": "videogpu:s3://video-online/LLaVA_Video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_caption/LLaVA_Video_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 4529,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-AskModelAnything_20260115",
+      "media_root": "h-ceph2:s3://jtx202512/allenai/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-AskModelAnything_20260115.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 39833,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-Cap_20260115",
+      "media_root": "h-ceph2:s3://jtx202512/allenai/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-Cap_20260115.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 74078,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-VideoCapQA_20260115_merged",
+      "media_root": "h-ceph2:s3://jtx202512/allenai/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-VideoCapQA_20260115_merged.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 163683,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Molmo2-VideoSubtitleQA_with_subtitles_20260207_merged",
+      "media_root": "h-ceph2:s3://jtx202512/allenai/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Molmo2_anno_xtuner_format/Molmo2-VideoSubtitleQA_with_subtitles_20260207_merged.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 90801,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ArXiv_OCR_train_159300",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ArXiv_OCR",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ArXiv_OCR_train_159300.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_CTW_train_13577",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/CTW",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_CTW_train_13577.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Chrome-Writing_train_9247",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Chrome-Writing",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Chrome-Writing_train_9247.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_HME_train_93641",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/HME",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_HME_train_93641.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_IAM_train_5659",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/IAM",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_IAM_train_5659.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ICDAR-LSVT-zh_train_28213",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ICDAR-LSVT-zh",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR-LSVT-zh_train_28213.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ICDAR2017_train_9900",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ICDAR2017",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR2017_train_9900.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ICDAR2019_train_3392",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ICDAR2019",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ICDAR2019_train_3392.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_IIIT_5K_train_1976",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/IIIT_5K",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_IIIT_5K_train_1976.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_K12_Printing_train_211104",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/K12_Printing",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_K12_Printing_train_211104.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_MTWI_zh_train_8330",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/MTWI_zh",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_MTWI_zh_train_8330.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Orand-Car-A_train_2000",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Orand-Car-A",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Orand-Car-A_train_2000.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_ReCTs_train_17000",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/ReCTs",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_ReCTs_train_17000.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Rendered_Text_train_9996",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Rendered_Text",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Rendered_Text_train_9996.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_Sroie_train_31832",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/Sroie",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_Sroie_train_31832.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_TextOCR_train_47656",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/TextOCR",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_TextOCR_train_47656.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "OCR_VCR-Wiki_train_77935",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/remake/OCR/VCR-Wiki",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/beedata_annos_remake_20260111_no_think/OCR_VCR-Wiki_train_77935.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_QA_Seeker_interleave_llava_video",
+      "media_root": "pnorm2:s3://llava_video/2_3_m_youtube_v0_1/liwei_youtube_videos/videos/youtube_video_2024/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Seeker_173K/llava-video_youtube_qa_mc_2_3_m_clue_single_w_tool_79848_merged_9973_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9693,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_QA_Seeker_interleave_longvideodb",
+      "media_root": "videogpu:s3://videochat-o3/data/LongVideoDB/videos_4fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Seeker_173K/longvideodb_gemini_clue_single_w_tool_7000_merged_3805_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3786,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_QA_Seeker_interleave_selfbuilt_1",
+      "media_root": "videogpu:s3://videochat-o3/data/lxh20251224_video_source/videos/180to600_4fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Seeker_173K/selfbuilt_1_qa_f180to600_clue_single_w_tool_5796_merged_2168_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2098,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_QA_Seeker_interleave_selfbuilt_2",
+      "media_root": "videogpu:s3://videochat-o3/data/lxh20251224_video_source/videos/180to600_4fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Seeker_173K/selfbuilt_2_qa_f180to600_clue_single_w_tool_7491_merged_3691_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3653,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Drive_Accident_Reason_Answering_5611",
+      "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Accident_Reason_Answering_5611.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 5611,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Drive_ActionPrediction_2967",
+      "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/ActionPrediction_2967.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 607,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Drive_Detailed_Risk_prediction_7470",
+      "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-Drive/event/Detailed_Risk_prediction_7470.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 5602,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Drive_LocPrediction_1423",
+      "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/LocPrediction_1423.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 427,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Drive_Memory_of_past_traffic_information_9391",
+      "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Memory_of_past_traffic_information_9391.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2240,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Drive_MoveDistancePrediction_7287",
+      "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-Drive/dynamic/MoveDistancePrediction_7287.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 535,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Drive_Real_time_perception_of_traffic_information_12996",
+      "media_root": "pnorm2:s3://OMQA-DS-ALL/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-Drive/static/Real_time_perception_of_traffic_information_12996.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2235,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Event_anet_caption_10009_10009",
+      "media_root": "p2:s3://anet",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/event/anet_caption_event_10009_10009_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 10009,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Event_coin_9026_9026",
+      "media_root": "pnorm:s3://COIN_320p",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/event/coin_event_9026_9026_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9026,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatial_RefCOCO_spatial_43140",
+      "media_root": "pnorm2:s3://coco-caption/train2014/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatial/RefCOCO_spatial_43140_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatial_all_seeing_spatial_45000",
+      "media_root": "p2hddimg:s3://SA-1B/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_45000.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatial_all_seeing_spatial_vqa_42842",
+      "media_root": "p2hddimg:s3://SA-1B/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatial/all_seeing_spatial_vqa_42842.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatial_lasot_relative_18911_18911",
+      "media_root": "pnorm2:s3://lasot/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatial/lasot_spatial_relative_18911_18911_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1216,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatial_vg_spatial_43208",
+      "media_root": "pnorm2:s3://vg-dataset/images/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatial/vg_spatial_43208_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatiotemporal_ava_action_6220",
+      "media_root": "videogpu:s3://video-online/AVA_frame_4fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/ava_spatiotemporal_action_6220_6192_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 234,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatiotemporal_got10k_58218_58218",
+      "media_root": "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/got10k_spatiotemporal_obj_58218_58218_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 8089,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatiotemporal_lasot_det_14173_14173",
+      "media_root": "pnorm2:s3://lasot/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_det_14173_14173_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1253,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Spatiotemporal_lasot_tracking_50782_50782",
+      "media_root": "pnorm2:s3://lasot/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/spatiotemporal/lasot_spatiotemporal_tracking_50782_50782_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1056,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Temporal_anet_rtl_10068_10068",
+      "media_root": "p2:s3://anet/ANet_320p_fps30/train",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/temporal/anet_rtl_temporal_10068_10068_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 6907,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Temporal_charades_11237_11237",
+      "media_root": "p2:s3://star/Charades_v1_480/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/temporal/charades_temporal_11237_11237_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 4918,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Temporal_hirest_398_398",
+      "media_root": "pnorm2zxy:s3://hirest/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/temporal/hirest_temporal_398_398_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 398,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Temporal_internvid_25001_25001",
+      "media_root": "pnorm:s3://youtubeBucket/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/temporal/internvid_temporal_25001_25001_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 23240,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Online_StreamForest_Temporal_queryd_13079_13079",
+      "media_root": "pnorm2zxy:s3://queryd/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_StreamForest/OnlineIT-General/temporal/queryd_temporal_13079_13079_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1290,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "QVHighlight_grounding_stream",
+      "media_root": "videogpu:s3://video-online/qvhighlight/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/QVHighlight_grounding_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 8423,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "QVHighlight_narration_stream_converted",
+      "media_root": "videogpu:s3://video-online/qvhighlight/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/narration/QVHighlight_narration_stream_converted.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 11051,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "QVHighlight_qa_stream",
+      "media_root": "videogpu:s3://video-online/qvhighlight/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/qa/QVHighlight_qa_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 10598,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "QVHighlight_stream_converted",
+      "media_root": "videogpu:s3://video-online/qvhighlight/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_caption/QVHighlight_stream_converted.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2469,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Queryd_stream",
+      "media_root": "videogpu:s3://video-online/queryd/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/Queryd_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 663,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_AI2D_GPT4V_train_0-0_merged_5507",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/AI2D_GPT4V",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_GPT4V_train_0-0_merged_5507.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_AI2D_InternVL_train_0-1_merged_10633",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/AI2D_InternVL",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_InternVL_train_0-1_merged_10633.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_AI2D_train_0-2_merged_28597",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/AI2D",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_AI2D_train_0-2_merged_28597.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CMM-Math_train_0-0_merged_1485",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CMM-Math",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CMM-Math_train_0-0_merged_1485.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Chemical_train_0-1_merged_18222",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Chemical",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Chemical_train_0-1_merged_18222.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Circuit_train_0-1_merged_16962",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Circuit",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Circuit_train_0-1_merged_16962.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Math_train_0-3_merged_37427",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Math",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Math_train_0-3_merged_37427.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_CoSyn_Music_train_0-2_merged_21158",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/CoSyn_Music",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_CoSyn_Music_train_0-2_merged_21158.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_Geo170K_train_0-10_merged_106594",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/Geo170K",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_Geo170K_train_0-10_merged_106594.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_GeoQA+_train_0-6_merged_60261",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/GeoQA+",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_GeoQA+_train_0-6_merged_60261.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_GeomVerse_train_0-0_merged_6531",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/GeomVerse",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_GeomVerse_train_0-0_merged_6531.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_Geometry3K_train_0-1_merged_11355",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/Geometry3K",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_Geometry3K_train_0-1_merged_11355.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_InterGPS_train_0-0_merged_1326",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/InterGPS",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_InterGPS_train_0-0_merged_1326.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MAVIS-Geo_train_0-4_merged_43933",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MAVIS-Geo",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MAVIS-Geo_train_0-4_merged_43933.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MAVIS-Metagen_train_0-6_merged_62497",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MAVIS-Metagen",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MAVIS-Metagen_train_0-6_merged_62497.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MapQA_train_0-14_merged_142630",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MapQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MapQA_train_0-14_merged_142630.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MathV360K_TQA_train_0-0_merged_8437",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MathV360K_TQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MathV360K_TQA_train_0-0_merged_8437.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_MetaMathQA_train_0-10_merged_110000",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/MetaMathQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_MetaMathQA_train_0-10_merged_110000.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_PMC-VQA_train_0-2_merged_25959",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/PMC-VQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_PMC-VQA_train_0-2_merged_25959.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_PathVQA_train_0-2_merged_21776",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/PathVQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_PathVQA_train_0-2_merged_21776.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_RAVEN_train_0-2_merged_23123",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/RAVEN",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_RAVEN_train_0-2_merged_23123.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_ScienceQA_train_0-1_merged_12633",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/ScienceQA",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_ScienceQA_train_0-1_merged_12633.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_UniGeo_train_0-0_merged_8431",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/UniGeo",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_UniGeo_train_0-0_merged_8431.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VQA-RAD_train_0-0_merged_1561",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VQA-RAD",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VQA-RAD_train_0-0_merged_1561.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VisualWebInstruct_filtered_train_0-19_merged_190450",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VisualWebInstruct_filtered",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VisualWebInstruct_filtered_train_0-19_merged_190450.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VisualWebInstruct_train_0-14_merged_143407",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VisualWebInstruct",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VisualWebInstruct_train_0-14_merged_143407.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_VizWiz_train_0-0_merged_6054",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/VizWiz",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_VizWiz_train_0-0_merged_6054.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_WebSight_train_0-0_merged_7634",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/WebSight",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_WebSight_train_0-0_merged_7634.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "STEM_other_train_0-0_merged_3864",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/STEM/other",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/image/honey_meta_merged_no_think_stem_norepeat/STEM_other_train_0-0_merged_3864.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "Youcookv2_stream",
+      "media_root": "videogpu:s3://video-online/YouCookv2/raw_videos/training/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/action_caption/Youcookv2_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1180,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "atomic_02_atomic2_extended_motion_sft_30fps",
+      "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/sft.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1000,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "atomic_02_atomic2_extended_motion_sft_4fps",
+      "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/sft.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1000,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "atomic_02_atomic2_extended_motion_sft_8fps",
+      "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/02_atomic2_extended_motion/sft.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1000,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "atomic_motion_sft_30fps",
+      "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/sft.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3500,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "atomic_motion_sft_4fps",
+      "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/sft.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3500,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "atomic_motion_sft_8fps",
+      "media_root": "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/motion-videos/01_atomic_motion/sft.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3500,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "caption_smit_qwen3vl_rewrtten_448k",
+      "media_root": "pvideo:s3://S-MiT/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/caption_smit_qwen3vl_rewrtten_448k.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 447865,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "cinepile/cinepile_train_sample_qa_2.5Pro_thinking_processed_xtuner.jsonl",
+      "media_root": "pnorm2:s3://cinepile/ori_video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/cinepile/cinepile_train_sample_qa_2.5Pro_thinking_processed_xtuner_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 6841,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "cinepile/cinepile_train_sample_qa_3Pro-Preview_thinking_20251124_v1_processed_xtuner_short.jsonl",
+      "media_root": "pnorm2:s3://cinepile/ori_video/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/cinepile/cinepile_train_sample_qa_3Pro-Preview_thinking_20251124_v1_processed_xtuner_short_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1232,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "didemo_stream",
+      "media_root": "videogpu:s3://video-online/didemo/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/didemo_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 8394,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Chat_0-8k_307729",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Chat_0-8k_307729.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Chat_8k-32k_1787",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Chat_8k-32k_1787.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Coding_0-8k_328614",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Coding_0-8k_328614.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Math_0-8k_269893",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Math_0-8k_269893.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Math_8k-32k_42",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Math_8k-32k_42.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Multilingual_0-8k_99739",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Multilingual_0-8k_99739.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Multilingual_8k-32k_218",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Multilingual_8k-32k_218.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Other_0-8k_254833",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Other_0-8k_254833.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Other_8k-32k_28",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Other_8k-32k_28.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_0-8k_136752",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_0-8k_136752.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_32k-128k_9",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_32k-128k_9.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_8k-32k_72",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Precise_IF_8k-32k_72.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Reasoning_0-8k_310545",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Reasoning_0-8k_310545.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Reasoning_8k-32k_27",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Reasoning_8k-32k_27.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Science_0-8k_103818",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Science_0-8k_103818.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "dolci_instruct_sft_xtuner_format_no_tool_Science_8k-32k_7",
+      "media_root": "hhdd:s3://datapipe/frame/bee_15m/Dolci-Instruct-SFT",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/text/Dolci-Instruct-SFT/dolci_instruct_sft_xtuner_format_no_tool_Science_8k-32k_7.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 0,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "how_to_step_stream",
+      "media_root": "videogpu:s3://video-online/how_to_step/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/action_caption/how_to_step_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 19346,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_0_30_s_academic_mc_v0_1_qa_processed_5753_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1356,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_0_30_s_academic_oe_v0_1_qa_processed_48468_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 10901,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_v0_1_cap_processed_11985",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_0_30_s_academic_v0_1_cap_processed_11985.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 10739,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_academic_v0_1_cap_processed_11985_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_0_30_s_academic_v0_1_cap_processed_11985_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 10736,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_activitynetqa_oe_qa_processed_2950_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 295,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_nextqa_mc_qa_processed_5496_correct_samples_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_nextqa_mc_qa_processed_5496_correct_samples_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 144,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_nextqa_oe_qa_processed_5492_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_0_30_s_nextqa_oe_qa_processed_5492_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 145,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_0_30_s_youtube_mc_v0_1_qa_processed_39353_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9977,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_0_30_s_youtube_oe_v0_1_qa_processed_420200_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 79344,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_0_30_s_youtube_v0_1_cap_processed_79346_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_0_30_s_youtube_v0_1_cap_processed_79346_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 79315,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_1_2_m_academic_mc_v0_1_qa_processed_4241_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 908,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_1_2_m_academic_oe_v0_1_qa_processed_26302_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3745,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_v0_1_cap_processed_4627",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_1_2_m_academic_v0_1_cap_processed_4627.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3745,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_academic_v0_1_cap_processed_4627_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_1_2_m_academic_v0_1_cap_processed_4627_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3739,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_activitynetqa_oe_qa_processed_8590_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 823,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_nextqa_mc_qa_processed_4633_correct_samples_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_nextqa_mc_qa_processed_4633_correct_samples_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 143,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_nextqa_oe_qa_processed_4694_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_1_2_m_nextqa_oe_qa_processed_4694_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 143,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_1_2_m_youtube_mc_v0_1_qa_processed_39710_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9939,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_1_2_m_youtube_oe_v0_1_qa_processed_137645_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 24233,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_1_2_m_youtube_v0_1_cap_processed_24234_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_1_2_m_youtube_v0_1_cap_processed_24234_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 23996,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_2_3_m_academic_mc_v0_1_qa_processed_6901_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1723,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_2_3_m_academic_oe_v0_1_qa_processed_18134_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3121,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_v0_1_cap_processed_3124",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_2_3_m_academic_v0_1_cap_processed_3124.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3121,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_academic_v0_1_cap_processed_3124_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_2_3_m_academic_v0_1_cap_processed_3124_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3120,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_activitynetqa_oe_qa_processed_7460_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 746,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_nextqa_mc_qa_processed_52_correct_samples_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_nextqa_mc_qa_processed_52_correct_samples_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 11,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_nextqa_oe_qa_processed_61_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_2_3_m_nextqa_oe_qa_processed_61_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 11,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_2_3_m_youtube_mc_v0_1_qa_processed_39967_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9995,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_2_3_m_youtube_oe_v0_1_qa_processed_141495_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 22164,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_2_3_m_youtube_v0_1_cap_processed_24685_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_2_3_m_youtube_v0_1_cap_processed_24685_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 24647,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_30_60_s_academic_mc_v0_1_qa_processed_20346_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 4432,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_shortcot20251216",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216/llava-video_30_60_s_academic_oe_v0_1_qa_processed_57924_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9060,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_v0_1_cap_processed_10514",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/llava_video/llava-video_30_60_s_academic_v0_1_cap_processed_10514.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9060,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_academic_v0_1_cap_processed_10514_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_30_60_s_academic_v0_1_cap_processed_10514_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9057,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_activitynetqa_oe_qa_processed_4530_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 453,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_nextqa_mc_qa_processed_6843_correct_samples_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_nextqa_mc_qa_processed_6843_correct_samples_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 149,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_nextqa_oe_qa_processed_6843_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnormshare:s3://public-dataset-p2/en-public-llava-video-178k/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/llava-video_30_60_s_nextqa_oe_qa_processed_6843_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 148,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_qwen3vl235b_rewrtten_cleaned",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_30_60_s_youtube_mc_v0_1_qa_processed_39927_qwen3vl235b_rewrtten_cleaned.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 9997,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624_qwen3vl235b_rewrtten_cleaned",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20251216_youtube/llava-video_30_60_s_youtube_oe_v0_1_qa_processed_110624_qwen3vl235b_rewrtten_cleaned.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 19991,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "llava-video_30_60_s_youtube_v0_1_cap_processed_19995_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochat3_frames/llava-video-178k_frames_fps4/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_xtuner_format_20260116_cap/llava-video_30_60_s_youtube_v0_1_cap_processed_19995_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 19935,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_long_updated.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2567,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_processed_xtuner_short.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 7901,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_long.jsonl",
+      "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_long_updated.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1056,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_short.jsonl",
+      "media_root": "pnorm2:s3://longvideodb-373k-videos-decompress/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_caption_2.5Pro_thinking_processed_xtuner_short.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 3415,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_2.5Pro_thinking_processed_xtuner_long.jsonl",
+      "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_2.5Pro_thinking_processed_xtuner_long_updated.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1145,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_3Pro-Preview_thinking_20251124_v1_processed_xtuner_long.jsonl",
+      "media_root": "videogpu2:s3://lvdb-2fps-10min/videos_2fps/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/longvideodb/longvideodb_video_metas_clean_free-form_qa_20251022_singleQA_3Pro-Preview_thinking_20251124_v1_processed_xtuner_long_updated.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 233,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "perception_test_correct_samples_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://perception/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/perception_test_correct_samples_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1857,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "media_root": "videogpu:s3://videochat-o3/data/frames/scivideo/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_long.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 6295,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "media_root": "videogpu:s3://yanziang/reasoning_videos/en-video-youtube-wangyi/20250603_p1/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_other_caption_2.5Pro_processed_xtuner_short.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 6062,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo20251020_caption_2.5Pro_processed_xtuner_long.jsonl",
+      "media_root": "videogpu:s3://videochat-o3/data/frames/scivideo/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_caption_2.5Pro_processed_xtuner_long.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 7109,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "scivideo20251020_caption_2.5Pro_processed_xtuner_short.jsonl",
+      "media_root": "videogpu:s3://yanziang/reasoning_videos/en-video-youtube-wangyi/20250603_p1/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/Gemini20260130/scivideo/scivideo20251020_caption_2.5Pro_processed_xtuner_short.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2794,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten",
+      "media_root": "pnorm2:s3://videochate/Sports-QA/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2775,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten_fps4",
+      "media_root": "pnorm2:s3://videochate/Sports-QA/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/sports_qa_3k_correct_samples_llm_judge_qwen3vl235b_rewrtten.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2775,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "star-train_46k_correct_samples_qwen3vl235b_rewrtten",
+      "media_root": "p2:s3://star/Charades_v1_480/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/star-train_46k_correct_samples_qwen3vl235b_rewrtten_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2950,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "star-train_46k_correct_samples_qwen3vl235b_rewrtten_fps4",
+      "media_root": "p2:s3://star/Charades_v1_480/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/llava_video_other_xtuner_format_20260125/star-train_46k_correct_samples_qwen3vl235b_rewrtten_clean.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 2950,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "tacos_stream",
+      "media_root": "videogpu:s3://video-online/tacos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research/xtuner_online/train_VC3_data_annotations/Online_Streamo_465K/event_grounding/tacos_stream.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 61,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_0-to-60_5300",
+      "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_0-to-60_5300_format2.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 5300,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_0-to-60_5300_fps4",
+      "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_0-to-60_5300_format2.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 5300,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_0-to-60_5300_fps8",
+      "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_0-to-60_5300_format2.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 5300,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_120-to-180_6840",
+      "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_120-to-180_6840_format2.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 6820,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_60-to-120_6157",
+      "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_60-to-120_6157_format2.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 6157,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "timelens-100k_over180_1137",
+      "media_root": "pnorm2:s3://videochat3/TimeLens-100K/videos_frames/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/timelens_new/timelens-100k_over180_1137_format2.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 1137,
+      "status": "ok"
+    },
+    {
+      "dataset_key": "vript_under60s_400k_merged",
+      "media_root": "pnorm2:s3://Vript/vript_long_videos_clips_unzip/",
+      "anno_paths": [
+        "/mnt/petrelfs/zengxiangyu/Research_lixinhao/videochat3_data_annotations/video/vript_under60s_400k_merged.jsonl"
+      ],
+      "missing_paths": [],
+      "unique_logical_videos": 394901,
+      "status": "ok"
+    }
+  ],
+  "global_video_keys_sample": [
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000001",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000002",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000003",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000004",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000005",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000006",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000007",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000008",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000009",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000010",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000011",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000012",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000013",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000014",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000015",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000016",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000017",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000018",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000019",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000020",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000021",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000022",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000023",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000024",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000025",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000027",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000028",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000029",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000030",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000031",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000032",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000033",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000034",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000035",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000036",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000037",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000038",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000039",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000040",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000041",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000042",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000043",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000044",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000045",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000046",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000047",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000048",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000049",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000050",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000051",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000052",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000053",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000054",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000055",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000056",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000057",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000058",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000059",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000060",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000061",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000062",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000063",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000064",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000065",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000066",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000067",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000068",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000069",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000070",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000071",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000072",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000073",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000074",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000075",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000076",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000077",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000078",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000079",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000080",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000081",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000082",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000083",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000084",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000085",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000086",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000087",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000088",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000089",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000090",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000091",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000092",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000093",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000094",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000095",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000096",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000097",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000098",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000099",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000100",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000101",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000102",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000103",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000104",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000105",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000106",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000107",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000108",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000109",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000110",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000111",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000112",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000113",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000114",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000115",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000116",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000117",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000118",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000119",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000120",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000121",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000122",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000123",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000124",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000125",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000126",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000127",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000128",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000129",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000130",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000131",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000132",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000133",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000134",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000135",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000136",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000137",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000138",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000139",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000140",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000141",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000143",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000144",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000145",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000146",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000147",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000148",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000149",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000150",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000151",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000153",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000155",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000156",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000157",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000158",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000159",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000160",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000161",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000162",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000163",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000164",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000165",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000166",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000167",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000169",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000170",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000171",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000172",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000173",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000174",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000175",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000176",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000177",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000178",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000179",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000180",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000181",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000182",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000183",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000184",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000185",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000186",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000187",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000188",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000189",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000190",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000191",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000192",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000193",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000194",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000195",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000196",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000197",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000198",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000199",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000200",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000201",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000202",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000203",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000204",
+    "/mnt/petrelfs/share/videointern/GOT/OpenDataLab___GOT-10k/raw/GOT-10k/train/::GOT-10k_Train_000205"
+  ],
+  "global_video_keys_sample_note": "仅展示前 200 条字符串形式，完整集合未写入 JSON 以免体积过大。"
+}

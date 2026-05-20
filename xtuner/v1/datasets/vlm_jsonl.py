@@ -32,9 +32,9 @@ class VLMJsonlDataset(JsonlDataset):
 
     def __getitem__(self, item):
         try:
-            with open(self.path) as f:
+            with open(self.path, "rb") as f:
                 f.seek(self.offsets[item])
-                line = f.readline()
+                line = f.readline().decode("utf-8")
 
             raw_data = json.loads(line)
 
