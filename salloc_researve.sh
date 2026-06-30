@@ -9,7 +9,7 @@ salloc -p ${PARTITION} \
     -n${NNODE} \
     --gres=gpu:${NUM_GPUS} \
     --ntasks-per-node=1 \
-    -w SH-IDC1-10-140-37-7 \
+    -w SH-IDC1-10-140-37-50 \
     --preempt \
     --cpus-per-task=${NUM_CPUS} \
 

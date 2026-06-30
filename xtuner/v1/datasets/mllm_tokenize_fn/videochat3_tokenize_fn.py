@@ -176,6 +176,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         video_max_frames: int = 2048,  # Max frames per video
         fixed_num_sampled_frames: int | None = None,
         video_sample_fps: Union[int, float] = 2,  # Sample fps for video
+        video_read_type: str | None = None,
         system_message: str | None = None,
         add_vision_id: bool = False,
         max_length: int | None = None,
@@ -202,6 +203,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
         self.video_processor.max_frames = video_max_frames
         self.video_processor.num_frames = fixed_num_sampled_frames
         self.video_processor.fps = video_sample_fps
+        self.video_read_type = video_read_type
 
         self.add_vision_id = add_vision_id
     
@@ -213,7 +215,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             f"[{self.data_name}] image_min_pixels: {self.image_processor.min_pixels}, image_max_pixels: {self.image_processor.max_pixels},"
             f"video_max_total_pixels: {self.video_max_total_pixels}, frame_min_pixels: {frame_min_pixels}, frame_max_pixels: {frame_max_pixels},"
             f"video_min_frames: {video_min_frames}, video_max_frames: {video_max_frames}, fixed_num_sampled_frames: {fixed_num_sampled_frames}, video_sample_fps: {video_sample_fps},"
-            f"add_vision_id: {self.add_vision_id}, "
+            f"video_read_type: {self.video_read_type}, add_vision_id: {self.add_vision_id}, "
             f"spatial_merge_length: {self.spatial_merge_length}, temporal_merge_length: {self.temporal_merge_length}"
         )
 
@@ -235,6 +237,7 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
             f"{video_max_frames}_"
             f"{fixed_num_sampled_frames}_"
             f"{video_sample_fps}_"
+            f"{self.video_read_type}_"
             f"{self.add_vision_id}_"
             f"{self.spatial_merge_length}_"
             f"{self.temporal_merge_length}_"
@@ -295,11 +298,18 @@ class VideoChat3TokenizeFunction(BaseMLLMTokenizeFunction):
 
 
     def _my_load_video(self, video_path: str, video_meta: VideoChat3VideoMetadata, frame_sample_indices: list):
-        video_backend = video_meta.video_backend if video_meta and video_meta.video_backend else "decord"
+        video_backend = self.video_read_type or (video_meta.video_backend if video_meta and video_meta.video_backend else "decord")
         if "s3://" in video_path and self.ceph_client is None:
             raise RuntimeError("Ceph client is not available. Cannot load video from s3:// path.")
+        if video_backend not in VIDEO_READER_MAP:
+            raise ValueError(f"Unsupported video_backend: {video_backend}")
         
-        frames = VIDEO_READER_MAP[video_backend](video_path, frame_sample_indices, self.ceph_client)
+        frames = VIDEO_READER_MAP[video_backend](
+            video_path,
+            frame_sample_indices,
+            self.ceph_client,
+            video_meta=video_meta,
+        )
         assert len(frames) == len(frame_sample_indices), f"len(frames) {len(frames)} != len(frame_sample_indices) {len(frame_sample_indices)}"
         real_w, real_h = frames[0].size
         assert video_meta.width == real_w, f"video_meta.width {video_meta.width} != real_w {real_w}"
@@ -659,6 +669,7 @@ class VideoChat3TokenizeFnConfig(BaseMLLMTokenizeFnConfig):
     video_max_frames: int = 1024 
     fixed_num_sampled_frames: int | None = None
     video_sample_fps: Union[int, float] = 2 
+    video_read_type: str | None = None
     # When handling multiple images, it's helpful to add labels to the images and videos for better reference.
     add_vision_id: bool = False
 
@@ -677,6 +688,7 @@ class VideoChat3TokenizeFnConfig(BaseMLLMTokenizeFnConfig):
             frame_max_pixels=self.frame_max_pixels,
             fixed_num_sampled_frames=self.fixed_num_sampled_frames,
             video_sample_fps=self.video_sample_fps,
+            video_read_type=self.video_read_type,
             video_max_total_pixels=self.video_max_total_pixels,
             add_vision_id=self.add_vision_id,
             max_length=self.max_length,

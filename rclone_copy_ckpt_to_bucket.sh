@@ -1,8 +1,8 @@
-ckpt_name=VideoChat3_4B_train_stage4_v11base128k_lr2e-5_seq128k_v11_SFv2_Streamo_Seeker
+ckpt_name=stage3/VideoChat3_4B_train_stage3_minisft_finalbase_lr2e-5_long_96k_v11_internvideo3
 
 
-ckpt_path=/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/stage4/$ckpt_name
-bucket_path=videogpu:zhuyuhan/videochat3/checkpoints/stage4/$ckpt_name
+ckpt_path=/mnt/petrelfs/zengxiangyu/Research_lixinhao/xtuner-videochat/work_dir/$ckpt_name
+bucket_path=videogpu:zhuyuhan/videochat3/checkpoints/$ckpt_name
 
 rclone copy $ckpt_path $bucket_path --transfers 16 --checkers 16 --progress
 

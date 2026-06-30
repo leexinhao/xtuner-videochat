@@ -99,6 +99,7 @@ def read_frames_gif(
     video_path,
     frame_sample_indices,
     client=None,
+    video_meta=None,
 ):
     byteio = None
 
@@ -154,11 +155,12 @@ def read_frames_decord(
     video_path,
     frame_sample_indices,
     client=None,
+    video_meta=None,
 ):
     byteio = None
     decord_video_threads = int(os.getenv("XTUNER_DECORD_VIDEO_THREADS", 1))
     if video_path.endswith('.avi'):
-        return read_frames_av(video_path, frame_sample_indices, client)
+        return read_frames_av(video_path, frame_sample_indices, client, video_meta=video_meta)
     assert VideoReader is not None, "Please install decord: pip install decord"
     if "s3://" in video_path:
         video_bytes = client.get(video_path)
@@ -192,6 +194,7 @@ def read_frames_av(
     video_path,
     frame_sample_indices,
     client=None,
+    video_meta=None,
 ):
     assert av is not None, "Please install av: pip install av"
     if 's3://' in video_path:
@@ -227,6 +230,7 @@ def read_frames_dir(
     video_path,
     frame_sample_indices,
     client=None,
+    video_meta=None,
 ):
     def extract_frame_number(filename):
         # Extract the numeric part from the filename using regular expressions
@@ -295,6 +299,7 @@ def read_frames_dir2(
     video_path,
     frame_sample_indices,
     client=None,
+    video_meta=None,
 ):
 
     def sort_frames2(frame_paths):
@@ -337,6 +342,59 @@ def read_frames_dir2(
                 
         except Exception as e:
             raise ValueError(f"Meet Error at read frames for {video_path}: {frame_fname}!!!")
+    return frames
+
+
+def read_frames_indexed_jpg(
+    video_path,
+    frame_sample_indices,
+    client=None,
+    video_meta=None,
+):
+    if video_meta is None:
+        raise ValueError("indexed_jpg reader requires video_meta.")
+
+    total_num_frames = int(video_meta.total_num_frames)
+    if total_num_frames <= 0:
+        raise ValueError(f"Invalid total_num_frames for {video_path}: {total_num_frames}")
+
+    if "s3://" in video_path:
+        if client is None:
+            raise RuntimeError("Ceph client is required for s3 video_path.")
+        base_path = video_path.rstrip("/") + "/"
+    else:
+        base_path = video_path
+
+    frames = []
+    for idx in frame_sample_indices:
+        idx = int(idx)
+        if idx < 0:
+            logger.warning(
+                f"WARNING: {idx} is negative for video {video_path}, use the first frame instead."
+            )
+            idx = 0
+        elif idx >= total_num_frames:
+            logger.warning(
+                f"WARNING: {idx} is out of range for video {video_path} "
+                f"(total_num_frames = {total_num_frames}), use the last frame instead."
+            )
+            idx = total_num_frames - 1
+
+        frame_fname = f"{idx + 1:08d}.jpg"
+        try:
+            if "s3://" in video_path:
+                frame_path = base_path + frame_fname
+                img_bytes = client.get(frame_path)
+                frames.append(Image.open(io.BytesIO(img_bytes)).convert("RGB"))
+            else:
+                frame_path = os.path.join(base_path, frame_fname)
+                frames.append(Image.open(frame_path).convert("RGB"))
+        except Exception as e:
+            raise ValueError(
+                f"Meet Error at read indexed_jpg frame for {frame_path}!!! "
+                f"Original error: {type(e).__name__}: {e!r}"
+            ) from e
+
     return frames
 
 
@@ -428,5 +486,6 @@ VIDEO_READER_MAP = {
     "img2": read_frames_dir2,
     "frame": read_frames_dir2,
     "frame2": read_frames_dir2,
+    "indexed_jpg": read_frames_indexed_jpg,
     "av": read_frames_av,
 }

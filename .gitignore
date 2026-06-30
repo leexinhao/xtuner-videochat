@@ -156,3 +156,8 @@ docs/zh_cn/api/generated/
 !training_configs/stage4_online/
 !training_scripts/stage4_online/
 !training_data_annotations/stage4_online/
+
+
+
+
+zxy_data_transfer/

@@ -1,4 +1,4 @@
-JOB_NAME=S3_96k_Point
+JOB_NAME=S3N_96k_v11_iv3
 NNODES=16
 
 srun -p videop1 \
@@ -8,4 +8,5 @@ srun -p videop1 \
     --cpus-per-task=128 \
     --gres=gpu:8 \
     --preempt \
-    bash training_scripts/stage3/VideoChat3_4B_train_stage3_minisft_finalbase_lr2e-5_long_96k_v11_Point.sh
+    -x SH-IDC1-10-140-37-[7,50,55] \
+    bash training_scripts/stage3_new/VideoChat3_4B_train_stage3new_lr2e-5_96k_v11_internvideo3.sh
