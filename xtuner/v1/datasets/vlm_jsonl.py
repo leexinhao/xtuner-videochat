@@ -56,4 +56,5 @@ class VLMJsonlDataset(JsonlDataset):
             assert isinstance(data, dict), f"Expected dict, got {type(data)}"
             if "labels" in data:
                 data["labels"] = len(data["input_ids"]) * [-100]
+        data["dataset_id"] = self.dataset_id
         return data

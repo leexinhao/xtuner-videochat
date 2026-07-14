@@ -322,6 +322,7 @@ class TrainerConfig(BaseModel):
     do_clip: bool = True
     grad_norm_dtype: torch.dtype = torch.float32
     hooks_config: HooksConfig = HooksConfig()
+    enable_dataset_loss: bool = False
 
     @model_validator(mode="after")
     def _convert_work_dir(self):
@@ -441,10 +442,24 @@ class Trainer:
         grad_norm_dtype: torch.dtype = torch.float32,
         trainer_cfg: TrainerConfig | None = None,
         hooks_config: HooksConfig = HooksConfig(),
+        enable_dataset_loss: bool = False,
     ):
         self._do_clip = do_clip
         self._grad_norm_dtype = grad_norm_dtype
         self._dataloader_config = dataloader_cfg
+        self._enable_dataset_loss = enable_dataset_loss
+
+        # Only build dataset_id_to_name mapping when enable_dataset_loss is True
+        self.dataset_id_to_name = {}
+        if enable_dataset_loss and self._dataloader_config.dataset_config_list is not None:
+            dataset_name_to_id = {}
+            next_id = 0
+            for config in self._dataloader_config.dataset_config_list:
+                name = config["dataset"].name
+                if name not in dataset_name_to_id:
+                    dataset_name_to_id[name] = next_id
+                    next_id += 1
+            self.dataset_id_to_name = {v: k for k, v in dataset_name_to_id.items()}
 
         self._total_step = total_step
         self._total_epoch = total_epoch
@@ -534,6 +549,9 @@ class Trainer:
                 logger.warning("Outside dataset_cfg will override inner dataset_config_list")
             dataloader_cfg.dataset_config_list = dataset_cfg
 
+        # Pass enable_dataset_loss to dataloader_cfg for collator optimization
+        dataloader_cfg.enable_dataset_loss = enable_dataset_loss
+
         self._dataloader = dataloader_cfg.build(
             tokenizer=self.tokenizer,
             dp_mesh=self.data_mesh["dp"],
@@ -566,6 +584,7 @@ class Trainer:
 
         if loss_cfg is None:
             loss_cfg = CELossConfig()
+        loss_cfg.enable_dataset_loss = enable_dataset_loss
         self.loss_cfg = loss_cfg
 
         # TODO: TMP hardcode here
@@ -635,6 +654,7 @@ class Trainer:
             do_clip=config.do_clip,
             grad_norm_dtype=config.grad_norm_dtype,
             hooks_config=config.hooks_config,
+            enable_dataset_loss=config.enable_dataset_loss,
             trainer_cfg=config,
         )
         self.config = config
@@ -659,7 +679,10 @@ class Trainer:
             loss_ctx_input_list: list[CELossContextInputItem] = []
             for data in data_batch:
                 seq_ctx = data["seq_ctx"].to(DEVICE)
-                loss_ctx_input = CELossContextInputItem(shifted_labels=data["shifted_labels"]).to(DEVICE)
+                loss_ctx_input = CELossContextInputItem(
+                    shifted_labels=data["shifted_labels"],
+                    dataset_ids=data.get("dataset_ids"),
+                ).to(DEVICE)
                 if self.sp_mesh.size() > 1:
                     seq_ctx = seq_ctx.split(sequence_parallel_mesh=self.sp_mesh)
                     loss_ctx_input = loss_ctx_input.sp_split(self.sp_mesh)
@@ -716,6 +739,17 @@ class Trainer:
                 extra_info_updated = ModelForwardExtraLogInfo(extra_info)
                 extra_info_dict = extra_info_updated.get()
             loss_log.update(extra_info_dict)
+
+            keys_to_rename = []
+            for k in loss_log.keys():
+                if k.startswith("dataset_loss_") and k[13:].isdigit():
+                    keys_to_rename.append(k)
+
+            for k in keys_to_rename:
+                d_id = int(k[13:])
+                if d_id in self.dataset_id_to_name:
+                    name = self.dataset_id_to_name[d_id]
+                    loss_log[f"dataset_loss_{name}"] = loss_log.pop(k)
 
             if "maxvio" in other_log:
                 loss_log["maxvio"] = other_log["maxvio"]

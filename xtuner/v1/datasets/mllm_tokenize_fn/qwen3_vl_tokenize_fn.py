@@ -212,6 +212,7 @@ class Qwen3VLTokenizeFunction(BaseMLLMTokenizeFunction):
         video_max_total_pixels: int | None = None,  # Max pixels within a frame
         video_min_total_pixels: int | None = None,  # Min pixels within a frame
         system_message: str | None = None,
+        enable_3d_rope: bool = True,
         add_vision_id: bool = True,
         max_length: int | None = None,
         oss_loader_cfg: OSSLoaderConfig | None = None,
@@ -225,6 +226,7 @@ class Qwen3VLTokenizeFunction(BaseMLLMTokenizeFunction):
         self.oss_loader = None
         self.debug = debug
         self.oss_time_log_thr = oss_time_log_thr
+        self.enable_3d_rope = enable_3d_rope
         if oss_loader_cfg is not None:
             self.oss_loader = Qwen3VLOSSLoader(
                 backend=oss_loader_cfg.backend,
@@ -376,6 +378,11 @@ class Qwen3VLTokenizeFunction(BaseMLLMTokenizeFunction):
         return ret
 
     def calc_num_tokens_multi_modal_get_item(self, data_item: dict) -> CacheItem:
+        if len(self._video_path) > 0:
+            assert len(self._image_path) == 0, "image and video cannot be mixed"
+            return self.calc_num_tokens_video_get_item(data_item)
+
+        assert len(self._video_path) == 0, "image and video cannot be mixed"
         try:
             assert len(self._image_wh_list) >= 1, "image must have `hw` attribute when packing data"
             for size in self._image_wh_list:
@@ -426,6 +433,11 @@ class Qwen3VLTokenizeFunction(BaseMLLMTokenizeFunction):
         return {"num_tokens": len(input_ids)}
 
     def multi_modal_get_item(self, data_item: dict, media_root: str = "") -> QwenVL3DataItem:
+        if len(self._video_path) > 0:
+            assert len(self._image_path) == 0, "image and video cannot be mixed"
+            return self.video_get_item(data_item, media_root)
+
+        assert len(self._video_path) == 0, "image and video cannot be mixed"
         results = [self.process_image_unified(file, media_root) for file in self._image_path]
         image, grid_thw = zip(*results)
 
@@ -488,6 +500,357 @@ class Qwen3VLTokenizeFunction(BaseMLLMTokenizeFunction):
         return ret
 
 
+    def calc_frame_info(self, data_item):
+        """视频处理逻辑比较复杂，需要特意说明.
+
+        1. 对于 video 数据，建议用户提供 origin_video_length 和 origin_fps 这两个字段。如果不存在，则会基于预设的 rand_video_max_frames 参数
+        随机采样，并且最终数据不会带任何时间戳。不过每个 video 的 image_wh 在 qwen3vl 中是必备的
+
+        2. 如果仅仅存在上述两个字段，那么默认会基于这 2 个字段和用户指定的 fps 来采样视频帧，并且会在每个 <VIDEO_CONTEXT> 前面加上每一帧的时间戳
+
+        3. 如果除了上述两个字段还存在 processed_video_length 和 processed_fps 这两个字段，那么
+            a. 如果 processed_fps 可以整除用户指定的 fps(可以降采样)，则重新计算新的 fps=processed_fps//fps，然后基于 fps 来采样视频帧，并且会在每个 <VIDEO_CONTEXT> 前面加上每一帧的时间戳
+            b. 如果不满足上述情况，则忽略用户传入的 fps 参数：
+                a. 如果处理后的视频长度不超过 rand_video_max_frames，则直接全部使用，并基于这些信息算出每一帧的时间戳，追加到 <VIDEO_CONTEXT> 前面
+                b. 如果处理后的视频长度超过 rand_video_max_frames，则会均匀采样随机帧数，并基于这些信息算出每一帧的时间戳，追加到 <VIDEO_CONTEXT> 前面
+
+        4. 如果处理上述字段还额外存在 frames_timestamp，则不需要自己算每一帧的时间戳，则是直接用这个信息重复 3 的计算过程
+        """
+        num_frames_indices_list = []
+        origin_fps_list = []
+        timestamps_list = []
+        if len(self._video_extra_info_list) > 0:
+            for video_extra_info in self._video_extra_info_list:
+                origin_fps = video_extra_info["origin_fps"]
+                origin_fps_list.append(origin_fps)
+                origin_video_length = video_extra_info["origin_video_length"]
+
+                processed_video_length = video_extra_info.get("processed_video_length")
+                processed_fps = video_extra_info.get("processed_fps")
+                assert (processed_video_length is None) == (processed_fps is None), (
+                    f"processed_video_length and processed_fps must both exist or both not exist, "
+                    f"data_name: {self.data_name}, data_id: {data_item.get('id', '')}. Discard this data."
+                )
+                frames_timestamp = video_extra_info.get("frames_timestamp")
+
+                if processed_video_length is None:
+                    indices = sample_frames(
+                        origin_total_num_frames=origin_video_length,
+                        origin_fps=origin_fps,
+                        fps=self.video_processor.fps,
+                        min_frames=self.video_processor.min_frames,
+                        max_frames=self.video_processor.max_frames,
+                    )
+                    indices, timestamps = calculate_timestamps(
+                        indices,
+                        origin_fps,
+                        merge_size=self.video_processor.merge_size,
+                    )
+                else:
+                    assert processed_fps is not None
+                    if frames_timestamp is not None:
+                        assert len(frames_timestamp) == processed_video_length, (
+                            f"frames_timestamp must have the same length as processed_video_length, "
+                            f"data_name: {self.data_name}, data_id: {data_item.get('id', '')}. Discard this data."
+                        )
+
+                    if processed_fps % self.video_processor.fps == 0:
+                        indices = sample_frames(
+                            origin_total_num_frames=processed_video_length,
+                            origin_fps=processed_fps,
+                            fps=self.video_processor.fps,
+                            min_frames=self.video_processor.min_frames,
+                            max_frames=self.video_processor.max_frames,
+                        )
+                        if frames_timestamp is not None:
+                            frames_timestamp = [frames_timestamp[i] for i in indices]
+                        indices, timestamps = calculate_timestamps(
+                            indices,
+                            processed_fps,
+                            merge_size=self.video_processor.merge_size,
+                            timestamps=frames_timestamp,
+                        )
+                    else:
+                        if processed_video_length > self.rand_video_max_frames:
+                            indices = sample_frames(
+                                origin_total_num_frames=processed_video_length,
+                                origin_fps=processed_fps,
+                                num_frames=self.rand_video_max_frames,
+                            )
+                            if frames_timestamp is not None:
+                                frames_timestamp = [frames_timestamp[i] for i in indices]
+                            indices, timestamps = calculate_timestamps(
+                                indices,
+                                processed_fps,
+                                merge_size=self.video_processor.merge_size,
+                                timestamps=frames_timestamp,
+                            )
+                        else:
+                            indices = list(range(processed_video_length))
+                            indices, timestamps = calculate_timestamps(
+                                indices,
+                                processed_fps,
+                                merge_size=self.video_processor.merge_size,
+                                timestamps=frames_timestamp,
+                            )
+                timestamps_list.append(timestamps)
+                num_frames_indices_list.append(indices)
+
+        if len(num_frames_indices_list) == 0:
+            for video_path in self._video_path:
+                num_frames = generate_random_int_from_dict(
+                    {"data_item": data_item, "video_path": video_path},
+                    self.video_processor.min_frames,
+                    self.rand_video_max_frames,
+                )
+                if num_frames % self.video_processor.merge_size != 0:
+                    num_frames += self.video_processor.merge_size - num_frames % self.video_processor.merge_size
+                num_frames_indices_list.append(int(num_frames))
+        if len(timestamps_list) > 0:
+            assert len(num_frames_indices_list) == len(timestamps_list), (
+                "num_frames_list and timestamps_list should have the same length"
+            )
+            for num_frames_indices, timestamps in zip(num_frames_indices_list, timestamps_list):
+                assert len(num_frames_indices) == len(timestamps) * 2
+
+        if len(origin_fps_list) > 0:
+            assert len(origin_fps_list) == len(num_frames_indices_list), (
+                "origin_fps_list and num_frames_indices_list should have the same length"
+            )
+        for num_frames_indices in num_frames_indices_list:
+            if isinstance(num_frames_indices, list):
+                assert len(num_frames_indices) % self.video_processor.merge_size == 0, (
+                    "num_frames must be divisible by merge_size"
+                )
+            else:
+                assert isinstance(num_frames_indices, int), f"num_frames_indices must be int {type(num_frames_indices)}"
+                assert num_frames_indices % self.video_processor.merge_size == 0, (
+                    "num_frames must be divisible by merge_size"
+                )
+        return num_frames_indices_list, origin_fps_list, timestamps_list
+
+    def calc_num_tokens_video_get_item(self, data_item: dict) -> CacheItem:
+        assert len(self._video_wh_list) >= 1, "video wh list must be non-empty"
+        frames_indices_list, _, timestamps_list = self.calc_frame_info(data_item)
+        num_image_token_list = []
+        total_sum_media_grid_thw = 0
+        for i, wh in enumerate(self._video_wh_list):
+            height, width = wh
+            if isinstance(frames_indices_list[i], int):
+                num_frames = frames_indices_list[i]
+            else:
+                num_frames = len(frames_indices_list[i])
+            try:
+                resized_height, resized_width = video_smart_resize(
+                    num_frames=num_frames,
+                    height=height,
+                    width=width,
+                    temporal_factor=self.video_processor.temporal_patch_size,
+                    factor=self.video_processor.patch_size * self.video_processor.merge_size,
+                    min_pixels=self.size.shortest_edge,
+                    max_pixels=self.size.longest_edge,
+                )
+            except ValueError as e:
+                print(f"ERROR of {self._video_wh_list}: {e}, data_name: {self.data_name}")
+                return {"num_tokens": 0}  # type: ignore
+
+            assert num_frames % self.video_processor.merge_size == 0, "num_frames must be divisible by merge_size"
+
+            grid_t = num_frames // self.video_processor.temporal_patch_size
+            grid_h, grid_w = (
+                resized_height // self.video_processor.patch_size,
+                resized_width // self.video_processor.patch_size,
+            )
+            sum_media_grid_thw = grid_t * grid_h * grid_w // self.merge_length
+            frame_seqlen = grid_h * grid_w // self.merge_length
+            num_image_token_list.append([frame_seqlen] * grid_t)
+            total_sum_media_grid_thw += sum_media_grid_thw
+
+        messages = ChatMessages(messages=data_item["messages"])
+        replace_video_token(
+            messages,
+            self.chat_template,
+            num_image_token_list,
+            timestamps_list=timestamps_list,
+            add_vision_id=self.add_vision_id,
+        )
+        tokenized = messages.tokenize(self.tokenizer, self.chat_template)
+        input_ids = tokenized["input_ids"]
+
+        is_pretrain = False
+        if len(messages.messages) == 1 and messages.messages[0].role == "pretrain":
+            is_pretrain = True
+        if is_pretrain:
+            if self.add_bos_token:
+                input_ids = [self.bos_token_id] + input_ids
+            if self.add_eos_token:
+                input_ids = input_ids + [self.eos_token_id]
+
+        input_ids, _, _ = self._truncated_data_item(input_ids)
+
+        num_image_tokens_1 = (torch.tensor(input_ids) == self.video_context_token_id).sum()
+        num_image_tokens_2 = total_sum_media_grid_thw
+        if num_image_tokens_1 != num_image_tokens_2:
+            logger.warning(
+                f"num_video_tokens of input_ids {num_image_tokens_1} != num_video_tokens of media_grid_thw {num_image_tokens_2}, "
+                f"data_name: {self.data_name}, data_id: {data_item.get('id', '')}. Discard this data."
+            )
+            return {"num_tokens": 0}
+
+        return {"num_tokens": len(input_ids)}
+
+    def video_get_item(self, data_item: dict, media_root: str = "") -> QwenVL3DataItem:
+        num_image_tokens_list = []
+        pixel_values_list = []
+        num_imgs_list = []
+        total_sum_media_grid_thw = 0
+        grid_thw_list = []
+
+        frames_indices_list, _, timestamps_list = self.calc_frame_info(data_item)
+
+        for i, video_path in enumerate(self._video_path):
+            frames_indices = frames_indices_list[i]
+            timestamps = None
+            if len(timestamps_list) > 0:
+                timestamps = timestamps_list[i]
+
+            video_path = os.path.join(media_root, video_path)
+            if len(self._video_extra_info_list) > 0:
+                video_extra_dict = self._video_extra_info_list[i]
+            else:
+                video_extra_dict = None
+
+            if self.oss_loader is not None:
+                image_list, frame_indices, timestamps = self.oss_loader(
+                    video_path,
+                    image_type="video",
+                    frames_indices=frames_indices,
+                    timestamps=timestamps,
+                    video_extra_dict=video_extra_dict,
+                )
+            else:
+                image_list, frame_indices, timestamps = read_qwen3_vl_video(
+                    video_path,
+                    frames_indices=frames_indices,
+                    timestamps=timestamps,
+                    video_extra_dict=video_extra_dict,
+                )
+
+            assert len(image_list) % self.video_processor.merge_size == 0, "num_frames must be divisible by merge_size"
+            assert len(frame_indices) % self.video_processor.merge_size == 0, (
+                "num_frames must be divisible by merge_size"
+            )
+            if len(timestamps_list) > 0:
+                if timestamps is not None:
+                    assert len(timestamps) * 2 == len(image_list) == len(frame_indices)
+                timestamps_list[i] = timestamps
+
+            video_data = torch.stack(image_list)
+            num_frames = len(image_list)
+
+            video_result = self.video_processor._preprocess(
+                [video_data],
+                size=self.size,
+                image_mean=tuple(self.video_processor.image_mean),
+                image_std=tuple(self.video_processor.image_std),
+                patch_size=self.video_processor.patch_size,
+                temporal_patch_size=self.video_processor.temporal_patch_size,
+                merge_size=self.video_processor.merge_size,
+                return_tensors="pt",
+            )
+            image_tensor = video_result["pixel_values_videos"]
+            if isinstance(image_tensor, list):
+                image_tensor = image_tensor[0]
+            pixel_values_list.append(image_tensor)
+
+            grid_thw = video_result["video_grid_thw"]
+            grid_thw_list.append(grid_thw)
+
+            sum_media_grid_thw = grid_thw.prod() // self.merge_length
+            frame_seqlen = grid_thw[0][1:].prod() // self.merge_length
+
+            height, width = self._video_wh_list[i]
+            resized_height, resized_width = video_smart_resize(
+                num_frames=num_frames,
+                height=height,
+                width=width,
+                temporal_factor=self.video_processor.temporal_patch_size,
+                factor=self.video_processor.patch_size * self.video_processor.merge_size,
+                min_pixels=self.video_processor.size["shortest_edge"],
+                max_pixels=self.video_processor.size["longest_edge"],
+            )
+            grid_t = num_frames // self.video_processor.temporal_patch_size
+            grid_h, grid_w = (
+                resized_height // self.video_processor.patch_size,
+                resized_width // self.video_processor.patch_size,
+            )
+            sum_media_grid_thw_check = grid_t * grid_h * grid_w // self.merge_length
+            assert sum_media_grid_thw == sum_media_grid_thw_check, (
+                f"sum_media_grid_thw {sum_media_grid_thw} != sum_media_grid_thw_check {sum_media_grid_thw_check}, "
+                f"data_name: {self.data_name}, data_id: {data_item.get('id', '')}. Discard this data."
+            )
+            num_image_tokens_list.append([frame_seqlen] * grid_thw[0][0])
+            num_imgs_list.append(num_frames)
+            total_sum_media_grid_thw += sum_media_grid_thw
+
+        messages = ChatMessages(messages=data_item["messages"])
+        replace_video_token(
+            messages,
+            self.chat_template,
+            num_image_tokens_list,
+            timestamps_list=timestamps_list,
+            add_vision_id=self.add_vision_id,
+        )
+        tokenized = messages.tokenize(self.tokenizer, self.chat_template)
+        input_ids = tokenized["input_ids"]
+        labels = tokenized["labels"]
+
+        is_pretrain = False
+        if len(messages.messages) == 1 and messages.messages[0].role == "pretrain":
+            is_pretrain = True
+        if is_pretrain:
+            if self.add_bos_token:
+                input_ids = [self.bos_token_id] + input_ids
+                labels = [self.bos_token_id] + labels
+            if self.add_eos_token:
+                input_ids = input_ids + [self.eos_token_id]
+                labels = labels + [self.eos_token_id]
+            np_labels = np.array(labels)
+            np_labels[np_labels == self.img_start_token_id] = -100
+            np_labels[np_labels == self.video_context_token_id] = -100
+            np_labels[np_labels == self.img_end_token_id] = -100
+            labels = np_labels.tolist()
+
+        position_ids = get_rope_index_3(
+            torch.tensor(input_ids).unsqueeze(0),
+            spatial_merge_size=self.image_processor.merge_size,
+            video_grid_thw=torch.cat(grid_thw_list),
+        )
+
+        input_ids, labels, position_ids = self._truncated_data_item(input_ids, labels, position_ids)
+
+        num_image_tokens_1 = (torch.tensor(input_ids) == self.video_context_token_id).sum()
+        num_image_tokens_2 = total_sum_media_grid_thw
+        assert num_image_tokens_1 == num_image_tokens_2, (
+            f"num_video_tokens of input_ids {num_image_tokens_1} != num_video_tokens of media_grid_thw {num_image_tokens_2}, "
+            f"data_name: {self.data_name}, data_id: {data_item.get('id', '')}. Discard this data."
+        )
+
+        pixel_values = torch.cat(pixel_values_list, dim=0)
+
+        ret = QwenVL3DataItem(
+            input_ids=input_ids,
+            labels=labels,
+            pixel_values=pixel_values,
+            image_grid_thw=torch.cat(grid_thw_list),
+            position_ids=position_ids,
+            num_tokens=len(input_ids),
+            num_img_tokens=[total_sum_media_grid_thw],
+            num_imgs=num_imgs_list,
+        )
+        return ret
+
+
 class Qwen3VLTokenizeFnConfig(BaseMLLMTokenizeFnConfig):
     model_config = ConfigDict(title="Base dataset config for xtuner", extra="forbid")
     processor_path: str
@@ -501,6 +864,8 @@ class Qwen3VLTokenizeFnConfig(BaseMLLMTokenizeFnConfig):
     video_max_frames: int | None = None
     fps: int | None = None
     rand_video_max_frames: int = 24
+
+    enable_3d_rope: bool = True
 
     # When handling multiple images or multiple videos,
     # it's helpful to add labels to the images and videos for better reference.
@@ -524,6 +889,7 @@ class Qwen3VLTokenizeFnConfig(BaseMLLMTokenizeFnConfig):
             video_max_frames=self.video_max_frames,
             rand_video_max_frames=self.rand_video_max_frames,
             fps=self.fps,
+            enable_3d_rope=self.enable_3d_rope,
             add_vision_id=self.add_vision_id,
             max_length=self.max_length,
             system_message=self.system_message,

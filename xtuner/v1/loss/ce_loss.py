@@ -30,6 +30,7 @@ class CELossConfig(BaseLossConfig):
 
     mode: Annotated[Literal["eager", "chunk", "liger"], Parameter(help="loss calculation mode")] = "eager"  # type: ignore
     loss_reduction: Annotated[Literal["token", "sample", "square"], Parameter(help="loss reduction mode")] = "token"
+    enable_dataset_loss: Annotated[bool, Parameter(help="enable dataset loss")] = False
 
     @property
     def loss_ctx_cls(self) -> type["CELossContext"]:
@@ -46,10 +47,12 @@ class CELossKwargs(BaseLossKwargs):
     Args:
         shifted_labels (torch.Tensor): The shifted labels for the input sequences.
         loss_weight (torch.Tensor): The weight for each token in the loss computation.
+        dataset_ids (torch.Tensor | None): The dataset id for each token.
     """
 
     shifted_labels: torch.Tensor
     loss_weight: torch.Tensor
+    dataset_ids: torch.Tensor | None = None
 
 
 class CELossContextInputItem(BaseModel):
@@ -57,17 +60,24 @@ class CELossContextInputItem(BaseModel):
 
     Args:
         shifted_labels (torch.Tensor): The shifted labels for the input sequences.
+        dataset_ids (torch.Tensor | None): The dataset id for each token.
     """
 
     model_config = ConfigDict(title="CELossContextInputItem", extra="forbid", arbitrary_types_allowed=True)
     shifted_labels: torch.Tensor
+    dataset_ids: torch.Tensor | None = None
 
     def sp_split(self, sp_mesh: DeviceMesh) -> Self:
         shifted_labels = sp_split(self.shifted_labels, sp_mesh=sp_mesh, split_dim=1, padding_value=-100)
-        return type(self)(shifted_labels=shifted_labels)
+        dataset_ids = None
+        if self.dataset_ids is not None:
+            dataset_ids = sp_split(self.dataset_ids, sp_mesh=sp_mesh, split_dim=1, padding_value=0)
+        return type(self)(shifted_labels=shifted_labels, dataset_ids=dataset_ids)
 
     def to(self, device: torch.device | str) -> Self:
         self.shifted_labels = self.shifted_labels.to(device)
+        if self.dataset_ids is not None:
+            self.dataset_ids = self.dataset_ids.to(device)
         return self
 
 
@@ -104,6 +114,7 @@ class CELossContext(BaseLossContext[CELossContextInputItem]):
         sp_mesh: DeviceMesh | None = None,
     ) -> list[CELossKwargs]:
         shifted_labels_list = [item.shifted_labels for item in data_batches]
+        dataset_ids_list = [item.dataset_ids for item in data_batches]
 
         loss_weight_list: list[torch.Tensor] = []
         for i, shifted_labels in enumerate(shifted_labels_list):
@@ -154,11 +165,13 @@ class CELossContext(BaseLossContext[CELossContextInputItem]):
         for i, item in enumerate(data_batches):
             shifted_labels = shifted_labels_list[i]
             loss_weight = loss_weight_list[i]
+            dataset_ids = dataset_ids_list[i]
             # Step 2.a in the loss calculation: normalize the loss weight by the global denominator
             loss_weight = loss_weight / (global_denominator + 1e-12)
             loss_kwargs = CELossKwargs(
                 shifted_labels=shifted_labels,
                 loss_weight=loss_weight,
+                dataset_ids=dataset_ids,
             )
             batches_loss_kwargs.append(loss_kwargs)
         return batches_loss_kwargs
@@ -182,14 +195,41 @@ class CELossContext(BaseLossContext[CELossContextInputItem]):
         loss_weight = loss_weight.flatten()
 
         rank_grad_tokens = (shifted_labels != self.loss_cfg.ignore_idx).sum()
+        extra_metrics = {}
         if rank_grad_tokens == 0:
             loss = logits.sum() * 0
         else:
             loss = F.cross_entropy(logits, shifted_labels, reduction="none", ignore_index=self.loss_cfg.ignore_idx)
-            # Step 2.b in the loss calculation: sum the loss over all tokens
-            loss = (loss * loss_weight).sum()
 
-        return loss, (logits, {})
+            # Compute weighted_loss once and reuse
+            weighted_loss = loss * loss_weight
+
+            if self.loss_cfg.enable_dataset_loss and loss_kwargs.dataset_ids is not None:
+                dataset_ids = loss_kwargs.dataset_ids.flatten().to(torch.long)
+
+                # Use unique + scatter for GPU-efficient aggregation (no CPU sync)
+                unique_ids, inverse_indices = torch.unique(dataset_ids, sorted=True, return_inverse=True)
+
+                d_loss_sums = torch.zeros_like(unique_ids, dtype=torch.float32)
+                d_weight_sums = torch.zeros_like(unique_ids, dtype=torch.float32)
+
+                d_loss_sums.scatter_add_(0, inverse_indices, weighted_loss)
+                d_weight_sums.scatter_add_(0, inverse_indices, loss_weight)
+
+                # Use _stats_* prefix for chunk mode aggregation, _dataset_* for eager mode
+                if self.loss_cfg.mode == "chunk":
+                    extra_metrics["_stats_unique_ids"] = unique_ids
+                    extra_metrics["_stats_loss_sums"] = d_loss_sums
+                    extra_metrics["_stats_weight_sums"] = d_weight_sums
+                else:
+                    extra_metrics["_dataset_unique_ids"] = unique_ids
+                    extra_metrics["_dataset_loss_sums"] = d_loss_sums
+                    extra_metrics["_dataset_weight_sums"] = d_weight_sums
+
+            # Step 2.b in the loss calculation: sum the loss over all tokens
+            loss = weighted_loss.sum()
+
+        return loss, (logits, extra_metrics)
 
     def chunk_mode(
         self,
@@ -199,7 +239,40 @@ class CELossContext(BaseLossContext[CELossContextInputItem]):
         loss_kwargs: CELossKwargs,
     ):
         if self.loss_cfg.mode == "chunk":
-            return super().chunk_mode(hidden_states, head_weight, head_bias, loss_kwargs)
+            loss, (logits, extra_info) = super().chunk_mode(hidden_states, head_weight, head_bias, loss_kwargs)
+
+            # Post-process dataset stats from chunks
+            if "_stats_unique_ids" in extra_info:
+                all_ids = extra_info.pop("_stats_unique_ids")
+                all_loss_sums = extra_info.pop("_stats_loss_sums")
+                all_weight_sums = extra_info.pop("_stats_weight_sums")
+
+                # Handle list fallback from ModelForwardExtraLogInfo
+                if isinstance(all_ids, list):
+                    all_ids = torch.cat([t.view(-1) for t in all_ids], dim=0)
+                else:
+                    all_ids = all_ids.view(-1)
+                if isinstance(all_loss_sums, list):
+                    all_loss_sums = torch.cat([t.view(-1) for t in all_loss_sums], dim=0)
+                else:
+                    all_loss_sums = all_loss_sums.view(-1)
+                if isinstance(all_weight_sums, list):
+                    all_weight_sums = torch.cat([t.view(-1) for t in all_weight_sums], dim=0)
+                else:
+                    all_weight_sums = all_weight_sums.view(-1)
+
+                unique_ids, inverse_indices = torch.unique(all_ids.to(torch.long), sorted=True, return_inverse=True)
+                final_loss_sums = torch.zeros_like(unique_ids, dtype=torch.float32)
+                final_weight_sums = torch.zeros_like(unique_ids, dtype=torch.float32)
+
+                final_loss_sums.scatter_add_(0, inverse_indices, all_loss_sums)
+                final_weight_sums.scatter_add_(0, inverse_indices, all_weight_sums)
+
+                extra_info["_dataset_unique_ids"] = unique_ids
+                extra_info["_dataset_loss_sums"] = final_loss_sums
+                extra_info["_dataset_weight_sums"] = final_weight_sums
+
+            return loss, (logits, extra_info)
         else:
             assert self.liger_loss_fct is not None, "liger_loss_fct must be initialized in liger mode"
             shifted_labels = loss_kwargs.shifted_labels  # (bs, seq_len)

@@ -18,7 +18,12 @@ from xtuner.v1.utils.oss_utils import get_oss_backend
 try:
     from decord import VideoReader
 except ImportError:
-    pass
+    VideoReader = None
+
+try:
+    import cv2
+except ImportError:
+    cv2 = None
 
 
 def pil_loader(img_str):
@@ -155,11 +160,57 @@ def read_frames_decord(
     return frames, oss_read_time, video_get_batch_time, vlen, frames_indices, timestamps
 
 
+def read_frames_cv2(video_path, frames_indices, timestamps=None):
+    if cv2 is None:
+        raise ImportError("opencv-python (cv2) is not installed; cannot decode video without decord.")
+
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        raise RuntimeError(f"Failed to open video: {video_path}")
+
+    vlen = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    if vlen <= 0:
+        cap.release()
+        raise RuntimeError(f"Invalid video length: {video_path}")
+
+    if isinstance(frames_indices, list):
+        assert timestamps is not None, "timestamps should be provided when frames_indices is a list"
+        assert len(frames_indices) == len(timestamps) * 2, "frames_indices and timestamps should have the same length"
+        try:
+            _ = [0 for i in frames_indices]
+        except Exception as e:
+            print(
+                f"！！！Warning: Error sample frames from {video_path} of index {frames_indices}: {e}. Rand {len(frames_indices)} frames."
+            )
+            timestamps = None
+            frames_indices = np.linspace(0, vlen - 1, len(frames_indices)).round().astype(int).tolist()
+    else:
+        assert timestamps is None, "timestamps should be None when frames_indices is an int"
+        frames_indices = np.linspace(0, vlen - 1, frames_indices).round().astype(int).tolist()
+
+    frame_list = []
+    for idx in frames_indices:
+        cap.set(cv2.CAP_PROP_POS_FRAMES, int(idx))
+        ok, frame_bgr = cap.read()
+        if not ok:
+            # Skip unreadable frames
+            continue
+        frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
+        frame_list.append(frame_rgb)
+
+    cap.release()
+    frames = numpy_to_tensor(frame_list)
+    oss_read_time = 0
+    video_get_batch_time = 0
+    return frames, oss_read_time, video_get_batch_time, vlen, frames_indices, timestamps
+
+
 # qwen3 vl 一定是均匀采样
 def read_qwen3_vl_video(
     path,
     frames_indices,
     timestamps=None,
+    video_extra_dict=None,
     client=None,
     debug=False,
     oss_time_log_thr=10,
@@ -183,9 +234,14 @@ def read_qwen3_vl_video(
         or path.endswith(".rmvb")
         or path.endswith(".ts")
     ):
-        frames, oss_read_time, video_get_batch_time, vlen, frame_indices, timestamps = read_frames_decord(
-            path, frames_indices, timestamps, client=client
-        )
+        if VideoReader is not None:
+            frames, oss_read_time, video_get_batch_time, vlen, frame_indices, timestamps = read_frames_decord(
+                path, frames_indices, timestamps, client=client
+            )
+        else:
+            frames, oss_read_time, video_get_batch_time, vlen, frame_indices, timestamps = read_frames_cv2(
+                path, frames_indices, timestamps
+            )
     else:
         raise ValueError(f"Unsupported video format: {path}")
     end_time = time.time() - start_time
